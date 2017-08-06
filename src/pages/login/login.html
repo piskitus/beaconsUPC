@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <form>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input [(ngModel)]="user.password" name="password" type="password" required></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button icon-start (click)="signin()" type="submit" color="light" block><ion-icon name="person-add"></ion-icon> Registrarse</button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button icon-start (click)="login()" type="submit" color="primary" block><ion-icon name="log-in"></ion-icon> Iniciar Sesión</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-list>
+
+</ion-content>

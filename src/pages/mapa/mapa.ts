@@ -36,7 +36,14 @@ export class MapaPage {
       center: this.coords,
       zoom: 17
     });
-  }
+
+    // Colocamos el marcador
+    let miMarker = new google.maps.Marker({
+              icon : 'assets/img/pin_icon.png',
+              map: this.map,
+              position: this.coords
+          });
+    }
 
   obtenerPosicion():any{
     this.geolocation.getCurrentPosition().then(res => {
