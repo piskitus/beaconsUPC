@@ -11,6 +11,11 @@
 
   <ion-list>
     <form>
+      <ion-row text-center>
+        <ion-col>
+          <ion-img width="150" height="150" src="assets/img/ibeacon_icon.png"></ion-img>
+        </ion-col>
+      </ion-row>
       <ion-item>
         <ion-label floating>Email</ion-label>
         <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" required></ion-input>
@@ -19,6 +24,7 @@
         <ion-label floating>Contraseña</ion-label>
         <ion-input [(ngModel)]="user.password" name="password" type="password" required></ion-input>
       </ion-item>
+
       <ion-row>
         <ion-col col-6>
           <button ion-button icon-start (click)="signin()" type="submit" color="light" block><ion-icon name="person-add"></ion-icon> Registrarse</button>

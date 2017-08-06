@@ -7,10 +7,11 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { IBeacon } from '@ionic-native/ibeacon';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { AuthProvider } from '../providers/auth/auth';
+import { BeaconProvider } from '../providers/beacon/beacon';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCZWjxucxAMcoJOmkF5xLGxol4NjQRNels",
@@ -23,20 +24,18 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   providers: [
     StatusBar,
@@ -44,6 +43,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
     AuthProvider,
+    BeaconProvider,
+    IBeacon
   ]
 })
 export class AppModule {}

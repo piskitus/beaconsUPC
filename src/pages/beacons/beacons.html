@@ -14,5 +14,16 @@
 
 
 <ion-content padding>
-
+  <ion-list>
+      <ion-item *ngFor="let beacon of beacons">
+        <h2>uuid: {{ beacon.uuid }}</h2>
+        <p>minor: {{ beacon.minor }}</p>
+        <p>major: {{ beacon.major }}</p>
+        <p>proximity: {{ beacon.proximity }}</p>
+        <p>tx: {{ beacon.tx }}</p>
+        <p>rssi: {{ beacon.rssi }}</p>
+        <p>accuracy: {{ beacon.accuracy }}</p>
+        <h3>distance: {{ beacon.distance }}</h3>
+      </ion-item>
+</ion-list>
 </ion-content>
