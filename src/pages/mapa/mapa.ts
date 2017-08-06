@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
-/**
- * Generated class for the MapaPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+declare var google: any;
 
 @IonicPage()
 @Component({
@@ -15,11 +11,45 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MapaPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  map: any; // Manejador del mapa.
+  coords : any = { lat: 0, lng: 0 }
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public  platform: Platform,
+    private geolocation: Geolocation)
+    {
+      platform.ready().then(() => {
+      // La plataforma esta lista y ya tenemos acceso a los plugins.
+      this.obtenerPosicion();
+     });
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapaPage');
+  }
+
+  loadMap(){
+    let mapContainer = document.getElementById('map');
+    this.map = new google.maps.Map(mapContainer, {
+      center: this.coords,
+      zoom: 17
+    });
+  }
+
+  obtenerPosicion():any{
+    this.geolocation.getCurrentPosition().then(res => {
+      this.coords.lat = res.coords.latitude;
+      this.coords.lng = res.coords.longitude;
+
+      this.loadMap();
+    })
+    .catch(
+      (error)=>{
+        console.log(error);
+      }
+    );
   }
 
 }
