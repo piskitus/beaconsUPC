@@ -3,6 +3,8 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
+import { IBeacon } from '@ionic-native/ibeacon';
+import { BeaconProvider } from '../providers/beacon/beacon';
 
 //import { HomePage } from '../pages/home/home';
 
@@ -17,7 +19,9 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    private auth: AuthProvider) {
+    private auth: AuthProvider,
+    private ibeacon: IBeacon,
+    private beaconProvider: BeaconProvider) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -34,6 +38,12 @@ export class MyApp {
 
       statusBar.styleDefault();
       splashScreen.hide();
+      //Enciendo bluetooth al abrir la aplicación
+      this.ibeacon.enableBluetooth();
+
+      //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
+      //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
+      beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
     });
   }
 }

@@ -8,8 +8,11 @@ export class BeaconModel {
   tx: number;
   accuracy: number;
   distance: number;
+  time: number;
+  key: string;
 
   constructor(public beacon: any) {
+    this.key = beacon.uuid +":"+ beacon.major +":"+ beacon.minor;
     this.uuid = beacon.uuid;
     this.major = beacon.major;
     this.minor = beacon.minor;
@@ -18,5 +21,6 @@ export class BeaconModel {
     this.tx = beacon.tx;
     this.accuracy = beacon.accuracy;
     this.distance = null;
+    this.time = null;
   }
 }

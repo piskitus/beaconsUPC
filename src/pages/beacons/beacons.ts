@@ -1,5 +1,5 @@
 //Core stuff
-import { Component, NgZone } from '@angular/core'; //ngZone:optimizar el rendimiento al iniciar un trabajo que consiste en una o más tareas asíncronas
+import { Component, ChangeDetectorRef} from '@angular/core'; //ngZone:optimizar el rendimiento al iniciar un trabajo que consiste en una o más tareas asíncronas
 import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-angular';
 
 //plugins
@@ -17,71 +17,58 @@ import { BeaconModel } from '../../models/beacon-model';
   selector: 'page-beacons',
   templateUrl: 'beacons.html',
 })
+
+
 export class BeaconsPage {
 
-  beacons: BeaconModel[] = [];
-  zone: any;
+  beacons = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
-  private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events) {
+  private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef) {
 
-    // required for UI update
-    this.zone = new NgZone({ enableLongStackTrace: false });
+    beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
 
   }
+
+  private handleBeaconStatusChanged = (beacons) => {
+      const maxAge = 60000; //60 segundos de vida
+      let displayableBeacons: Array<any> = [];
+      let currentTimestamp = (new Date()).getTime();
+      for (let key in beacons) {
+        let beacon = beacons[key];
+        //let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
+        let age = (currentTimestamp - beacon.timestamp);
+        let isWithinAgeLimit = age <= maxAge;
+        beacon.age = age;
+        beacon.color = this.setBeaconColor(age);
+        if (isWithinAgeLimit) {
+          displayableBeacons.push(beacon);
+        }
+      }
+      this.beacons = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
+      this.changeDetectorRef.detectChanges();
+    }
+
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InfoPage');
-    // this.initScanner();
-    // this.startRanging();
 
     this.platform.ready().then(() => {
-      this.beaconProvider.initialise().then((isInitialised) => {
-        console.log("isInitialised?",isInitialised);
-        if (isInitialised) {
-          this.listenToBeaconEvents();
-        }
-      });
-    });
-
-  }
-
-  listenToBeaconEvents() {
-    this.events.subscribe('didRangeBeaconsInRegion', (data) => {
-      console.log("ENtro listenToBeaconEvents", JSON.stringify(data,null,10));
-
-      // update the UI with the beacon list
-      this.zone.run(() => {
-
-        let beaconList = data.beacons;
-
-        //Si detecto algún beacon limpio la lista
-        if(beaconList.length >= 1){
-          this.beacons = [];
-          //Manera tradicional de hacer un FOR
-          for(var i=0; i<beaconList.length;i++){
-            let beaconObject = new BeaconModel(beaconList[i])
-            //this.beacons.push(beaconObject);
-            this.beacons[i] = beaconObject;
-            this.beacons[i].distance = this.calculateAccuracy(beaconObject.tx, beaconObject.rssi)
-          }
-        }
-      });
 
     });
+
   }
 
-  calculateAccuracy(txPower, rssi) {
-  if (rssi === 0) {
-    return -1; // if we cannot determine accuracy, return -1.
+  setBeaconColor(age){
+    if(age <= 20000){
+      return "#D5F5E3";//verde clarito
+    }
+    else if(age > 20000 && age <= 40000){
+      return "#FCF3CF";//Amarillo clarito
+    }
+    else{
+      return "#FADBD8";//Rojo clarito
+    }
   }
 
-  var ratio = rssi * 1 / txPower;
-  if (ratio < 1.0) {
-    return Math.pow(ratio, 10);
-  } else {
-    return (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
-  }
-}
 
 }
