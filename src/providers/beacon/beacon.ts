@@ -8,6 +8,7 @@ export class BeaconProvider {
   region: any;
   beacons = {};
   beaconStatusChangedHandlers = [];
+  regionStatusInfo = {};
 
   constructor(private iBeacon: IBeacon) {  }
 
@@ -20,7 +21,9 @@ export class BeaconProvider {
     // Subscribe to some of the delegate’s event handlers (detect beacons)
     this.delegate.didRangeBeaconsInRegion().subscribe(
       data => {
-        console.log("Detected Beacons: ", data.beacons.length);//Muestro en la consola del inspector cuantos beacons detecto
+        //let dateTime = ((new Date()).getTime()/1000);
+        let dateTime = new Date().toISOString()
+        console.log(dateTime+" Detected Beacons: "+ data.beacons.length);//Muestro en la consola del inspector cuantos beacons detecto
         if (data.beacons.length != 0) {//Si detecto beacons, llamo a la función que los guarda
           this.saveBeacons(data);
         }
@@ -38,11 +41,13 @@ export class BeaconProvider {
       this.delegate.didEnterRegion().subscribe(
         data => {
           console.log("didEnterRegion: ", data.region.identifier);
+          //this.regionChangeStatus(data.region.identifier, true);
         }
       );
       this.delegate.didExitRegion().subscribe(
         data => {
           console.log("didExitRegion: ", data.region.identifier);
+          //this.regionChangeStatus(data.region.identifier, false);
         }
       );
       //Inicio el monitoreo y el ranging
@@ -92,6 +97,21 @@ export class BeaconProvider {
   getBeacons(): any {
     return this.beacons;
   };
+
+  regionChangeStatus(region:any, state:boolean){
+
+    if (state == true){//He detectado la región
+      console.log("ENTRO------>", region+" "+state);
+    }
+    else{
+      console.log("Salgo------>", region+" "+state);
+    }
+
+  }
+
+  getRegionStatus(): any{
+    return this.regionStatusInfo[0];
+  }
 
 
 

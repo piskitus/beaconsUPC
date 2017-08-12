@@ -23,12 +23,14 @@ import { BeaconModel } from '../../models/beacon-model';
 export class BeaconsPage {
 
   beacons = [];
+  regionStatus = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
   private localNotifications: LocalNotifications) {
 
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
+
 
   }
 
@@ -57,7 +59,9 @@ export class BeaconsPage {
     this.platform.ready().then(() => {
 
       setInterval(() => { //Para definir un intervalo
-        console.log("Han pasado 5 segundos");
+        //console.log("Han pasado 5 segundos");
+        this.regionStatus = this.beaconProvider.getRegionStatus();
+        //console.log("------------------------>",JSON.stringify(this.regionStatus, null, 2))
         //this.setLocalNotification();
       }, 5000);
 
