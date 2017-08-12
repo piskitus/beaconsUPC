@@ -8,6 +8,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IBeacon } from '@ionic-native/ibeacon';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
 
 import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
@@ -22,6 +25,24 @@ export const firebaseConfig = {
   messagingSenderId: "837769766760"
 };
 
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '1a910b3b'
+  },
+  'push': {
+    'sender_id': '837769766760',
+    'pluginConfig': {
+      'ios': {
+        'badge': true,
+        'sound': true
+      },
+      'android': {
+        'iconColor': '#343434'
+      }
+    }
+  }
+};
+
 @NgModule({
   declarations: [
     MyApp
@@ -32,6 +53,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -44,7 +66,8 @@ export const firebaseConfig = {
     Geolocation,
     AuthProvider,
     BeaconProvider,
-    IBeacon
+    IBeacon,
+    LocalNotifications
   ]
 })
 export class AppModule {}

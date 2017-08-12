@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { BeaconProvider } from '../providers/beacon/beacon';
+import { Push, PushToken } from '@ionic/cloud-angular';
 
-//import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +21,8 @@ export class MyApp {
     splashScreen: SplashScreen,
     private auth: AuthProvider,
     private ibeacon: IBeacon,
-    private beaconProvider: BeaconProvider) {
+    private beaconProvider: BeaconProvider,
+    private push: Push) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -30,6 +31,8 @@ export class MyApp {
       this.auth.Session.subscribe(session=>{
         if(session){
             this.rootPage = 'MisTabsPage';
+            this.registerAppInServer();
+
         }
           else{
             this.rootPage = 'LoginPage';
@@ -45,5 +48,20 @@ export class MyApp {
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
       beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
     });
+  }
+
+//For push notifications
+  registerAppInServer(){
+    this.push.register().then((t: PushToken) => {
+      return this.push.saveToken(t);
+    }).then((t: PushToken) => {
+      console.log('Token saved:', t.token);
+    });
+
+    //handler (decido que hacer cuando el usuario hace click en la notificación push que le llegó)
+    this.push.rx.notification()
+      .subscribe((msg) => {
+        alert(msg.title + ': ' + msg.text);
+      });
   }
 }

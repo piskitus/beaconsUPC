@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-ang
 
 //plugins
 import { IBeacon } from '@ionic-native/ibeacon';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 //providers
 import { BeaconProvider } from '../../providers/beacon/beacon';
@@ -24,7 +25,8 @@ export class BeaconsPage {
   beacons = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
-  private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef) {
+  private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
+  private localNotifications: LocalNotifications) {
 
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
 
@@ -54,6 +56,11 @@ export class BeaconsPage {
 
     this.platform.ready().then(() => {
 
+      setInterval(() => { //Para definir un intervalo
+        console.log("Han pasado 5 segundos");
+        //this.setLocalNotification();
+      }, 5000);
+
     });
 
   }
@@ -70,5 +77,12 @@ export class BeaconsPage {
     }
   }
 
+  setLocalNotification(){
+    this.localNotifications.schedule({
+      id: 1,
+      title: 'Hola',
+      text: 'Single ILocalNotification'
+    });
+  }
 
 }
