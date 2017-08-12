@@ -10,6 +10,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 import { MyApp } from './app.component';
@@ -67,7 +69,9 @@ const cloudSettings: CloudSettings = {
     AuthProvider,
     BeaconProvider,
     IBeacon,
-    LocalNotifications
+    LocalNotifications,
+    Diagnostic,
+    LocationAccuracy
   ]
 })
 export class AppModule {}
