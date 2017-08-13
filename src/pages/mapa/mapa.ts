@@ -53,11 +53,8 @@ export class MapaPage {
       this.coords.lat = res.coords.latitude;
       this.coords.lng = res.coords.longitude;
 
-      //Guardar en firebase
-      this.dbFirebase.guardaAlgo(this.coords).then(res=>{
-            console.log('Algo guardado en firebase:');
-            //this.cerrarModal();
-        })
+
+      //this.firebaseSave(this.coords);
 
       this.loadMap();
     })
@@ -66,6 +63,14 @@ export class MapaPage {
         console.log(error);
       }
     );
+  }
+
+  //Guardar en firebase
+  firebaseSave(algo){
+    this.dbFirebase.guardaAlgo(algo).then(res=>{
+          console.log('Algo guardado en firebase:');
+          //this.cerrarModal();
+      })
   }
 
 

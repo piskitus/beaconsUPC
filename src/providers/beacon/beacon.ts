@@ -10,6 +10,7 @@ export class BeaconProvider {
   beacons = {};
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
+  nearBeaconMinor:number;
 
   constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {  }
 
@@ -75,13 +76,25 @@ export class BeaconProvider {
   }
 
   saveBeacons(data) {
+    let nearBeaconMinor
+    let accuracy: number = 100.00;
         for (let beacon of data.beacons) {
           beacon.accuracy = this.calculateAccuracy(beacon.rssi, beacon.tx);
           beacon.key = beacon.uuid + ':' + beacon.major + ':' + beacon.minor;
           beacon.timestamp = (new Date()).getTime();
           this.beacons[beacon.key] = beacon;
+          //console.log("Beacon accuracy -> ", beacon.accuracy);
+
+          if (beacon.accuracy < accuracy ){
+            //console.log("Entro -> ", beacon.accuracy, " vs ", accuracy);
+            nearBeaconMinor = beacon.minor;
+            accuracy = beacon.accuracy;
+          }
+
         }
         this.notifyBeaconStatusChanged();
+        this.nearBeaconMinor = nearBeaconMinor;
+        //console.log("Near Beacon num: ", this.nearBeaconMinor);
   }
 
   notifyBeaconStatusChanged(): any {
@@ -99,6 +112,10 @@ export class BeaconProvider {
   getBeacons(): any {
     return this.beacons;
   };
+
+  getNearBeaconMinor(): any{
+    return this.nearBeaconMinor;
+  }
 
   regionChangeStatus(region:any, state:boolean){
 
