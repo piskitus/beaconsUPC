@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 declare var google: any;
 
@@ -18,7 +19,8 @@ export class MapaPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public  platform: Platform,
-    private geolocation: Geolocation)
+    private geolocation: Geolocation,
+    private dbFirebase :FirebaseDbProvider,)
     {
       platform.ready().then(() => {
       // La plataforma esta lista y ya tenemos acceso a los plugins.
@@ -43,12 +45,19 @@ export class MapaPage {
               map: this.map,
               position: this.coords
           });
+
     }
 
   obtenerPosicion():any{
     this.geolocation.getCurrentPosition().then(res => {
       this.coords.lat = res.coords.latitude;
       this.coords.lng = res.coords.longitude;
+
+      //Guardar en firebase
+      this.dbFirebase.guardaAlgo(this.coords).then(res=>{
+            console.log('Algo guardado en firebase:');
+            //this.cerrarModal();
+        })
 
       this.loadMap();
     })
@@ -58,5 +67,6 @@ export class MapaPage {
       }
     );
   }
+
 
 }

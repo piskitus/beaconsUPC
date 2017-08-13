@@ -17,6 +17,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
 import { BeaconProvider } from '../providers/beacon/beacon';
+import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCZWjxucxAMcoJOmkF5xLGxol4NjQRNels",
@@ -71,7 +72,8 @@ const cloudSettings: CloudSettings = {
     IBeacon,
     LocalNotifications,
     Diagnostic,
-    LocationAccuracy
+    LocationAccuracy,
+    FirebaseDbProvider
   ]
 })
 export class AppModule {}

@@ -31,6 +31,11 @@ export class AuthProvider {
     return this.afAuth.authState;
   }
 
+  // Obtenemos el id de usuario.
+ getUser(){
+    return this.afAuth.auth.currentUser.uid;
+ }
+
   // Logout de usuario
   logout(){
     this.afAuth.auth.signOut().then(()=>{

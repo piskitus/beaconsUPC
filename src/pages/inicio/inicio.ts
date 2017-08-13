@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
 @Component({
@@ -10,8 +11,10 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 })
 export class InicioPage {
 
+  coords: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
-    public platform: Platform, private locationAccuracy: LocationAccuracy) {
+    public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,) {
 
     platform.ready().then(() => {
       //Miro si la localización está activada
@@ -58,5 +61,14 @@ export class InicioPage {
 
     });
   }
+
+  ionViewDidEnter(){
+
+    this.dbFirebase.getAlgos().subscribe(algo=>{
+      this.coords = algo;
+      console.log("ALGO---> ", JSON.stringify(this.coords));
+    })
+
+}
 
 }
