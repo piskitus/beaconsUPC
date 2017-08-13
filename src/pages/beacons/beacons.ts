@@ -35,7 +35,7 @@ export class BeaconsPage {
   }
 
   private handleBeaconStatusChanged = (beacons) => {
-      const maxAge = 60000; //60 segundos de vida
+      const maxAge = 30000; //30 segundos de vida
       let displayableBeacons: Array<any> = [];
       let currentTimestamp = (new Date()).getTime();
       for (let key in beacons) {
@@ -70,10 +70,10 @@ export class BeaconsPage {
   }
 
   setBeaconColor(age){
-    if(age <= 20000){
-      return "#D5F5E3";//verde clarito
+    if(age <= 10000){
+      return "#D6EAF8";//Azul clarito
     }
-    else if(age > 20000 && age <= 40000){
+    else if(age > 10000 && age <= 20000){
       return "#FCF3CF";//Amarillo clarito
     }
     else{

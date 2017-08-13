@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBeacon } from '@ionic-native/ibeacon';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Injectable()
 export class BeaconProvider {
@@ -10,7 +11,7 @@ export class BeaconProvider {
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
 
-  constructor(private iBeacon: IBeacon) {  }
+  constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {  }
 
   start(identifier, uuid): any {
     this.delegate = this.iBeacon.Delegate();// create a new delegate and register it with the native layer
@@ -41,6 +42,7 @@ export class BeaconProvider {
       this.delegate.didEnterRegion().subscribe(
         data => {
           console.log("didEnterRegion: ", data.region.identifier);
+          this.setLocalNotification(data.region.identifier)
           //this.regionChangeStatus(data.region.identifier, true);
         }
       );
@@ -113,13 +115,13 @@ export class BeaconProvider {
     return this.regionStatusInfo[0];
   }
 
-
-
-
-
-
-
-
+  setLocalNotification(region){
+    this.localNotifications.schedule({
+      id: 1,
+      title: ('Bienvenido a '+region),
+      text: 'Que pases un buen día!'
+    });
+  }
   //Calculadora de proximidad
   calculateAccuracy(rssi, tx): void {
     let ratio = rssi / tx;
