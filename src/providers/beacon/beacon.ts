@@ -43,7 +43,7 @@ export class BeaconProvider {
       this.delegate.didEnterRegion().subscribe(
         data => {
           console.log("didEnterRegion: ", data.region.identifier);
-          this.setLocalNotification(data.region.identifier)
+          //this.setLocalNotification(data.region.identifier)
           //this.regionChangeStatus(data.region.identifier, true);
         }
       );
@@ -85,7 +85,7 @@ export class BeaconProvider {
           this.beacons[beacon.key] = beacon;
           //console.log("Beacon accuracy -> ", beacon.accuracy);
 
-          if (beacon.accuracy < accuracy ){
+          if (beacon.accuracy < accuracy){
             //console.log("Entro -> ", beacon.accuracy, " vs ", accuracy);
             nearBeaconMinor = beacon.minor;
             accuracy = beacon.accuracy;

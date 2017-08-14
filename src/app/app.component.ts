@@ -6,6 +6,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { BeaconProvider } from '../providers/beacon/beacon';
 import { Push, PushToken } from '@ionic/cloud-angular';
+import { Geofence } from '@ionic-native/geofence';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class MyApp {
     private auth: AuthProvider,
     private ibeacon: IBeacon,
     private beaconProvider: BeaconProvider,
-    private push: Push) {
+    private push: Push,
+    private geofence: Geofence) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -46,8 +48,20 @@ export class MyApp {
 
       //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
-      beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
+      //beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
+      beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
     });
+
+
+    // initialize the plugin of geofence
+    geofence.initialize().then(
+    // resolved promise does not return a value
+    () => {
+      console.log('Geofence Plugin Ready')
+      this.addGeofence(); //AÑADO LA ZONA para controlar la entrada
+    },
+    (err) => console.log(err)
+  )
   }
 
 //For push notifications
@@ -65,4 +79,25 @@ export class MyApp {
       });
   }
 
+  addGeofence() {
+    //options describing
+    let fence = {
+      id: '69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb', //any unique ID
+      latitude:       41.319147, //center of geofence radius
+      longitude:      2.020015,
+      radius:         150, //radius to edge of geofence in meters
+      transitionType: 1, //1: Enter, 2: Leave, 3: Both
+      notification: { //notification settings
+          id:             1, //any unique ID
+          title:          '¿Estás llegando a casa?', //notification title
+          text:           'Abre la app para tener una mejor experiencia!', //notification body
+          openAppOnClick: true //open app when notification is tapped
+      }
+    }
+
+    this.geofence.addOrUpdate(fence).then(
+       () => console.log('Geofence added'),
+       (err) => console.log('Geofence failed to add')
+     );
+  }
 }

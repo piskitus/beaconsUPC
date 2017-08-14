@@ -12,6 +12,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { Geofence } from '@ionic-native/geofence';
 
 
 import { MyApp } from './app.component';
@@ -73,7 +74,8 @@ const cloudSettings: CloudSettings = {
     LocalNotifications,
     Diagnostic,
     LocationAccuracy,
-    FirebaseDbProvider
+    FirebaseDbProvider,
+    Geofence
   ]
 })
 export class AppModule {}

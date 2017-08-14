@@ -26,24 +26,38 @@ export class InicioPage {
   beaconsInfo = [
   {
     minor: 1,
-    title: "Estás cerca del lila",
-    color: "purple",
-    description: "Has entrado a la zona lila, bienvenido!",
-    image: "assets/img/beacon_purple.jpg",
+    title: "Habitación de Xènia",
+    color: "orange",
+    description: "Has entrado a la habitación de Xènia, bienvenido!",
+    image: "assets/img/ibeacon_icon.png",
   },
   {
     minor: 2,
-    title: "Estás cerca del verde",
-    color: "green",
-    description: "Has entrado a la zona verde, bienvenido!",
-    image: "assets/img/beacon_green.jpg",
+    title: "Habitación de Nerea",
+    color: "yellow",
+    description: "Has entrado a la habitación de Nerea, holi!",
+    image: "assets/img/ibeacon_icon.png",
   },
   {
     minor: 3,
-    title: "Estás cerca del azul",
+    title: "Habitación de Marc",
     color: "blue",
-    description: "Has entrado a la zona azul, bienvenido!",
-    image: "assets/img/beacon_blue.jpg",
+    description: "FUERA DE AQUÍ, esta es una zona restringida!",
+    image: "assets/img/ibeacon_icon.png",
+  },
+  {
+    minor: 4,
+    title: "Comedor",
+    color: "green",
+    description: "Has entrado al comedor, bienvenido!",
+    image: "assets/img/ibeacon_icon.png",
+  },
+  {
+    minor: 5,
+    title: "Cocina",
+    color: "red",
+    description: "Has entrado a la cocina, bienvenido!",
+    image: "assets/img/ibeacon_icon.png",
   }
 ];
 
