@@ -1,5 +1,8 @@
 {
   "name": "beaconsUPC",
   "app_id": "1a910b3b",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

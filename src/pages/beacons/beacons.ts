@@ -1,6 +1,6 @@
 //Core stuff
 import { Component, ChangeDetectorRef} from '@angular/core'; //ngZone:optimizar el rendimiento al iniciar un trabajo que consiste en una o más tareas asíncronas
-import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Events, LoadingController } from 'ionic-angular';
 
 //plugins
 import { IBeacon } from '@ionic-native/ibeacon';
@@ -27,7 +27,7 @@ export class BeaconsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
-  private localNotifications: LocalNotifications) {
+  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController) {
 
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
 
@@ -55,6 +55,8 @@ export class BeaconsPage {
 
 
   ionViewDidLoad() {
+
+    this.presentLoading();
 
     this.platform.ready().then(() => {
 
@@ -88,5 +90,13 @@ export class BeaconsPage {
       text: 'Single ILocalNotification'
     });
   }
+
+  presentLoading() {
+  let loader = this.loadingCtrl.create({
+    content: "Buscando beacons...",
+    duration: 2500
+  });
+  loader.present();
+}
 
 }
