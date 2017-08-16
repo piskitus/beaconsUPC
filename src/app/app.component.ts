@@ -50,19 +50,28 @@ export class MyApp {
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
       //beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
       beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
-    });
+      });
+
+      //TODO: que solo inicialice el geofence si NO detecta ninguno creado ya
+      geofence.getWatched().then(
+        (data) => {
+          //EN data veo los geofences que estoy viendo
+        },
+        (err) => {
+
+        }
+      )
+
+      this.initializeGeofence();
+
+      // geofence.removeAll().then( //Borrar todas las Geofences
+      //   () => {},
+      //   (err) => {}
+      // )
 
 
-    // initialize the plugin of geofence
-    geofence.initialize().then(
-    // resolved promise does not return a value
-    () => {
-      console.log('Geofence Plugin Ready')
-      this.addGeofence(); //AÑADO LA ZONA para controlar la entrada
-    },
-    (err) => console.log(err)
-  )
-  }
+
+    }
 
 //For push notifications
   registerAppInServer(){
@@ -79,6 +88,20 @@ export class MyApp {
       });
   }
 
+//Inicializo Geofence
+  initializeGeofence(){
+    // initialize the plugin of geofence
+    this.geofence.initialize().then(
+    // resolved promise does not return a value
+    () => {
+      console.log('Geofence Plugin Ready')
+      this.addGeofence(); //AÑADO LA ZONA para controlar la entrada
+    },
+    (err) => console.log(err)
+    )
+  }
+
+//AÑADO LA ZONA A INTEGRAR EN GOOGLE SERVICES PARA QUE VAYA VIENDO SI ENTRO EN EL PERÍMETRO ESTABLECIDO
   addGeofence() {
     //options describing
     let fence = {

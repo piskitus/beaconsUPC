@@ -71,7 +71,7 @@ export class InicioPage {
 
       setInterval(() => { //Para definir un intervalo
         this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();
-        console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
+        //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
         this.playWithNearestBeacon(this.nearBeaconMinor);
       }, 1000);//Cada segundo
 
@@ -119,10 +119,10 @@ export class InicioPage {
 
   ionViewDidEnter(){
 
-    this.dbFirebase.getAlgos().subscribe(algo=>{
-      this.coords = algo;
-      console.log("ALGO---> ", JSON.stringify(this.coords));
-    })
+    // this.dbFirebase.getAlgos().subscribe(algo=>{
+    //   this.coords = algo;
+    //   console.log("ALGO---> ", JSON.stringify(this.coords));
+    // })
 }
 
 playWithNearestBeacon(minor){

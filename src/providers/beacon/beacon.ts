@@ -11,6 +11,8 @@ export class BeaconProvider {
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
   nearBeaconMinor:number;
+  BeaconMinorDetected1:number = null;//to do resilency
+  BeaconMinorDetected2:number = null;
 
   constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {  }
 
@@ -93,8 +95,7 @@ export class BeaconProvider {
 
         }
         this.notifyBeaconStatusChanged();
-        this.nearBeaconMinor = nearBeaconMinor;
-        //console.log("Near Beacon num: ", this.nearBeaconMinor);
+        this.beaconNearestHandle(nearBeaconMinor);
   }
 
   notifyBeaconStatusChanged(): any {
@@ -139,6 +140,25 @@ export class BeaconProvider {
       text: 'Que pases un buen día!'
     });
   }
+
+//Función para determinar el beacon más cercano y guardarlo para mostrar la info en la pantalla de inicio
+  beaconNearestHandle(nearBeaconMinor){
+    if (this.BeaconMinorDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
+      this.nearBeaconMinor = nearBeaconMinor;
+    }
+
+    if(this.BeaconMinorDetected1 != null){//No entro con el primer beacon cercano detectado
+      this.BeaconMinorDetected2 = this.BeaconMinorDetected1; //Guardo el beacon cercano encontrado anteriormente
+    }
+
+    this.BeaconMinorDetected1 = nearBeaconMinor;//Guardo el beacon detectado ahora
+
+    if(this.BeaconMinorDetected1 == this.BeaconMinorDetected2){//Esta función añade robustez por si no se detecta el beacon cercano por error o se detecta otro más cerca por error
+      this.nearBeaconMinor = nearBeaconMinor;                  //Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
+    }                                                          // Tengo que detectar 2 veces seguidas un beacon como EL MÁS CERCANO para que lo elija como cercano
+
+  }
+
   //Calculadora de proximidad
   calculateAccuracy(rssi, tx): void {
     let ratio = rssi / tx;
