@@ -16,7 +16,7 @@ export class InicioPage {
   nearBeaconMinor: number;
 
   nearBeacon: any = {
-    minor: 0,
+    minor: 0, //Plantilla que se muestra en la ventana principal
     title: 'hola',
     color: 'yellow',
     description: 'La magia está apunto de empezar',
@@ -24,6 +24,13 @@ export class InicioPage {
   }
 
   beaconsInfo = [
+  {
+    minor: 0,
+    title: 'hola',
+    color: 'yellow',
+    description: 'La magia está apunto de empezar',
+    image: 'assets/img/ibeacon_icon.png'
+  },
   {
     minor: 1,
     title: "Habitación de Xènia",
@@ -73,7 +80,7 @@ export class InicioPage {
         this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();
         //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
         this.playWithNearestBeacon(this.nearBeaconMinor);
-      }, 1000);//Cada segundo
+      }, 2500);//Cada 2,5 segundos
 
     });
 
@@ -127,7 +134,7 @@ export class InicioPage {
 
 playWithNearestBeacon(minor){
   if(this.nearBeacon.minor != minor){
-    this.nearBeacon = this.beaconsInfo[minor-1];
+    this.nearBeacon = this.beaconsInfo[minor];
   }
 }
 

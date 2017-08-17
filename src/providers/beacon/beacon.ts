@@ -10,7 +10,7 @@ export class BeaconProvider {
   beacons = {};
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
-  nearBeaconMinor:number;
+  nearBeaconMinor:number = 0;
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
 
