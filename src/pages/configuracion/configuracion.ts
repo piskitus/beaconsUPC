@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Push, PushToken } from '@ionic/cloud-angular';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
 @Component({
@@ -12,13 +13,15 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 export class ConfiguracionPage {
 
   locationPermission:boolean = false;
+  email:any = "marcalarcon1994@gmail.com";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
-  private locationAccuracy: LocationAccuracy) {
+  private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfiguracionPage');
+
   }
 
   cerrarSesion(){
@@ -27,6 +30,12 @@ export class ConfiguracionPage {
 
   disablePushNotifications(){
       this.push.unregister();
+  }
+
+  resetPassword(){
+    //Recojo el email del usuario de la base de datos por si lo tengo que usar (por ejemplo para el cambio de contraseña)
+    //this.email = this.dbFirebase.getUserEmail();
+    this.auth.resetPassword(this.email);
   }
 
   activarUbicacion(){ //Función para solicitar la activación de la ubicación

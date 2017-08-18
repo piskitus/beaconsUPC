@@ -31,10 +31,15 @@ export class FirebaseDbProvider {
     return this.afDB.list('markers');
   }
 
+  getUserEmail(){
+
+  }
+
+
 
   //DELETES
   borrarAlgo(id){
-        this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+id).remove();
+      this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+id).remove();
   }
 
 

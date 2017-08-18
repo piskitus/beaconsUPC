@@ -13,6 +13,7 @@ export class AvisosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AvisosPage');
+    
   }
 
 }

@@ -13,8 +13,8 @@ export class AuthProvider {
   // Registro de usuario
   registerUser(email:string, password:string){
   return this.afAuth.auth.createUserWithEmailAndPassword( email, password)
-  .then((res)=>{
-   // El usuario se ha creado correctamente.
+  .then((newUser)=>{// El usuario se ha creado correctamente. (guardo los datos en la base de datos)
+    firebase.database().ref('/userProfile').child(newUser.uid).set({ email: email });
   })
   .catch(err=>Promise.reject(err))
   }
@@ -25,6 +25,11 @@ export class AuthProvider {
       .then(user => Promise.resolve(user))
       .catch(err => Promise.reject(err))
   }
+
+  //Reset de password
+  resetPassword(email: string): firebase.Promise<void> {
+  return firebase.auth().sendPasswordResetEmail(email);
+}
 
   // Devuelve la session
   get Session(){

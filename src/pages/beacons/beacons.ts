@@ -1,6 +1,6 @@
 //Core stuff
 import { Component, ChangeDetectorRef} from '@angular/core'; //ngZone:optimizar el rendimiento al iniciar un trabajo que consiste en una o más tareas asíncronas
-import { IonicPage, NavController, NavParams, Platform, Events, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Events, LoadingController, ModalController } from 'ionic-angular';
 
 //plugins
 import { IBeacon } from '@ionic-native/ibeacon';
@@ -27,7 +27,7 @@ export class BeaconsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
-  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController) {
+  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController, public modalCtrl : ModalController) {
 
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
 
@@ -97,6 +97,13 @@ export class BeaconsPage {
     duration: 2500
   });
   loader.present();
+}
+
+//MODALES QUE SE ABREN AL HACER CLICK EN LOS BOTONES DEL FAB
+nuevoBeacon(){
+// aquí vamos a abrir el modal para añadir nuestro sitio.
+ let modalBeacon = this.modalCtrl.create( 'ModalAddBeaconPage'/*,this.coords Aquí puede ir info*/);
+ modalBeacon.present();
 }
 
 }
