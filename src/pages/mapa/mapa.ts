@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController,  LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
@@ -22,16 +22,20 @@ export class MapaPage {
     public  platform: Platform,
     private geolocation: Geolocation,
     private dbFirebase :FirebaseDbProvider,
-    public modalCtrl : ModalController)
+    public modalCtrl : ModalController,
+    public loadingCtrl: LoadingController)
     {
       platform.ready().then(() => {
       // La plataforma esta lista y ya tenemos acceso a los plugins.
-      setInterval(() => {this.obtenerPosicion();},5000);
-     });
+
+      //Pone el mapa en la posición recibida
+      this.obtenerPosicion();
+      });
     }
 
   ionViewDidLoad() {//Solo se ejecuta la primera vez que abro esta pestaña, las siguientes es en ionViewDidEnter()
     this.getMarkersFromDB();
+    this.presentLoading();
 
   }
 
@@ -119,5 +123,13 @@ chargeMarkersIntoMap(){
       }
 
   }
+
+  presentLoading() {
+  let loader = this.loadingCtrl.create({
+    content: "Cargando mapa...",
+    duration: 2000
+  });
+  loader.present();
+}
 
 }
