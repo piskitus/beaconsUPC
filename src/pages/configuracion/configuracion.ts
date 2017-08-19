@@ -32,12 +32,6 @@ export class ConfiguracionPage {
       this.push.unregister();
   }
 
-  resetPassword(){
-    //Recojo el email del usuario de la base de datos por si lo tengo que usar (por ejemplo para el cambio de contraseña)
-    //this.email = this.dbFirebase.getUserEmail();
-    this.auth.resetPassword(this.email);
-  }
-
   activarUbicacion(){ //Función para solicitar la activación de la ubicación
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
       if(canRequest) {
