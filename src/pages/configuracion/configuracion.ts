@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Push, PushToken } from '@ionic/cloud-angular';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
@@ -16,7 +16,7 @@ export class ConfiguracionPage {
   email:any = "marcalarcon1994@gmail.com";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
-  private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider) {
+  private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController) {
   }
 
   ionViewDidLoad() {
@@ -53,6 +53,12 @@ export class ConfiguracionPage {
 
   changePermissionToggle(){
     //alert(this.locationPermission);
+  }
+
+  abrirPanelAdministracion(){
+  // aquí vamos a abrir el modal para añadir nuestro sitio.
+   let modalAdmin = this.modalCtrl.create( 'AdministracionPage'/*,this.coords Aquí puede ir info*/);
+   modalAdmin.present();
   }
 
 }
