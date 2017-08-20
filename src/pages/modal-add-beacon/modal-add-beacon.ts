@@ -11,7 +11,7 @@ export class ModalAddBeaconPage {
 
   title: string = '';
   description: string = '';
-  color: any = '';
+  color: any = 'white';//color por defecto
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider) {
   }
