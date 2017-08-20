@@ -29,42 +29,42 @@ export class InicioPage {
     title: 'hola',
     color: 'yellow',
     description: 'La magia está apunto de empezar',
-    image: 'assets/img/ibeacon_icon.png'
+    image: 'assets/img/icon.png'
   },
   {
     minor: 1,
-    title: "Habitación de Xènia",
+    title: "Lorem ipsum dolor sit amet, co",
     color: "orange",
-    description: "Has entrado a la habitación de Xènia, bienvenido!",
-    image: "assets/img/ibeacon_icon.png",
+    description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+    image: "assets/img/icon.png",
   },
   {
     minor: 2,
     title: "Habitación de Nerea",
     color: "yellow",
     description: "Has entrado a la habitación de Nerea, holi!",
-    image: "assets/img/ibeacon_icon.png",
+    image: "assets/img/icon.png",
   },
   {
     minor: 3,
     title: "Habitación de Marc",
     color: "blue",
     description: "FUERA DE AQUÍ, esta es una zona restringida!",
-    image: "assets/img/ibeacon_icon.png",
+    image: "assets/img/icon.png",
   },
   {
     minor: 4,
     title: "Comedor",
     color: "green",
     description: "Has entrado al comedor, bienvenido!",
-    image: "assets/img/ibeacon_icon.png",
+    image: "assets/img/icon.png",
   },
   {
     minor: 5,
     title: "Cocina",
     color: "red",
     description: "Has entrado a la cocina, bienvenido!",
-    image: "assets/img/ibeacon_icon.png",
+    image: "assets/img/icon.png",
   }
 ];
 

@@ -9,6 +9,10 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 })
 export class ModalAddBeaconPage {
 
+  title: string = '';
+  description: string = '';
+  color: any = '';
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider) {
   }
 

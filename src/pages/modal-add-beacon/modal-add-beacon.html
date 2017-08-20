@@ -12,6 +12,48 @@
 </ion-header>
 
 
-<ion-content padding>
+<!-- <ion-content padding>
+  <ion-list>
+    <form (ngSubmit)="guardarBeacon()">
+          <ion-item>
+            <ion-label color="primary" floating>Título</ion-label>
+            <ion-input [(ngModel)]="title" name="title" type="text" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" floating>Descripción</ion-label>
+            <ion-textarea [(ngModel)]="description" name="description" type="text" required></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label>Color de fondo</ion-label>
+            <ion-select [(ngModel)]="color" name="color">
+              <ion-option value="white">blanco</ion-option>
+              <ion-option value="red">Rojo</ion-option>
+            </ion-select>
+          </ion-item>
+        <button ion-button type="submit" block><ion-icon name="cloud-upload"></ion-icon> Guardar beacon</button>
+    </form>
+  </ion-list>
+</ion-content> -->
 
+
+<ion-content>
+  <ion-card [ngStyle]="{'background-color': color}">
+  <img src="assets/img/icon.png"/>
+  <ion-card-content>
+    <ion-card-title>
+        <ion-input maxlength="25" placeholder="📣 Título" [(ngModel)]="title" clearInput name="title" type="text" required></ion-input>
+      </ion-card-title>
+    <p>
+      <ion-textarea maxlength="140" rows="3" placeholder="📝 Descripción (máximo 140 caracteres)" [(ngModel)]="description" clearInput name="description" type="text" required></ion-textarea>
+    </p>
+  </ion-card-content>
+  <ion-item>
+    <ion-label>Color de fondo</ion-label>
+    <ion-select [(ngModel)]="color" name="color">
+      <ion-option value="white">blanco</ion-option>
+      <ion-option value="red">Rojo</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-card>
 </ion-content>
