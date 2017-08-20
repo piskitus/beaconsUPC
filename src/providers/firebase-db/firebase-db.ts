@@ -16,8 +16,16 @@ export class FirebaseDbProvider {
     }
      return this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+algo.id).set(algo)
   }
+
   guardaMarker(marker){
      return this.afDB.database.ref('markers/'+marker.title).set(marker)
+  }
+
+  guardaNoticia(noticia){
+    if(!noticia.id){
+      noticia.id = Date.now(); //Le creo un ID único
+    }
+    return this.afDB.database.ref('noticias/'+noticia.id).set(noticia)
   }
 
 
@@ -31,6 +39,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('markers');
   }
 
+  getNoticias(){
+    return this.afDB.list('noticias');
+  }
+
   getUserEmail(){
 
   }
@@ -40,6 +52,10 @@ export class FirebaseDbProvider {
   //DELETES
   borrarAlgo(id){
       this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+id).remove();
+  }
+
+  public borrarNoticia(id){
+        this.afDB.database.ref('noticias/'+id).remove();
   }
 
 

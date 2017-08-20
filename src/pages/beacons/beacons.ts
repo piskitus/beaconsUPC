@@ -99,11 +99,4 @@ export class BeaconsPage {
   loader.present();
 }
 
-//MODALES QUE SE ABREN AL HACER CLICK EN LOS BOTONES DEL FAB
-nuevoBeacon(){
-// aquí vamos a abrir el modal para añadir nuestro sitio.
- let modalBeacon = this.modalCtrl.create( 'ModalAddBeaconPage'/*,this.coords Aquí puede ir info*/);
- modalBeacon.present();
-}
-
 }

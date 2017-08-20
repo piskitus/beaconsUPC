@@ -40,30 +40,25 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'notices'">
-      <ion-item>
+      <ion-item-sliding #item *ngFor="let noticia of noticias">
+      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
         <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-1.jpg">
+          <img src="assets/img/icon.png">
         </ion-thumbnail>
-        <h2>Luna</h2>
+        <h2>{{ noticia.title }}</h2>
+        <p>{{ noticia.description }}</p>
       </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-3.jpg">
-        </ion-thumbnail>
-        <h2>Milo</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-4.jpg">
-        </ion-thumbnail>
-        <h2>Bandit</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-2.jpg">
-        </ion-thumbnail>
-        <h2>Nala</h2>
-      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraNoticia(noticia)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
 
     <ion-list *ngSwitchCase="'users'">
@@ -93,16 +88,29 @@
       </ion-item>
     </ion-list>
   </div>
+
+<!--Botón flotante-->
+  <ion-fab right top edge>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list>
+      <button ion-fab (tap)="nuevoBeacon()"><ion-icon name="logo-rss"></ion-icon></button>
+      <button ion-fab (tap)="nuevaNoticia()"><ion-icon name="document"></ion-icon></button>
+      <button ion-fab (tap)="nuevoUsuario()"><ion-icon name="person"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="segment">
+    <ion-segment [(ngModel)]="segment" color="primary">
       <ion-segment-button value="beacons">
         <ion-icon name="ios-radio-outline"></ion-icon> Beacons
       </ion-segment-button>
       <ion-segment-button value="notices">
-        <ion-icon name="book"></ion-icon> Noticias
+        <ion-icon name="bookmarks"></ion-icon> Noticias
       </ion-segment-button>
       <ion-segment-button value="users">
         <ion-icon name="contacts"></ion-icon> Usuarios
