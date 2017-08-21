@@ -9,56 +9,69 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 })
 export class ModalAddBeaconPage {
 
-  // title: string = '';
-  // description: string = '';
-  // color: any = 'white';//color por defecto
-
-  noticia: any;
+  beacon: any;
+  regions: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
-    this.noticia = this.navParams.data;
+    this.beacon = this.navParams.data;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalAddBeaconPage');
   }
 
+  ionViewDidEnter(){//Cada vez que entro a administración
+
+    this.dbFirebase.getRegions().subscribe(regions=>{
+      this.regions = regions;
+    })
+  }
+
   cerrarModal(){
     this.viewCtrl.dismiss();
   }
 
-  crearNoticia(){
-    let noticia = {
-      title: this.noticia.title,
-      description: this.noticia.description,
-      color: this.noticia.color
+  crearBeacon(){
+    let beacon = {
+      uuid: this.beacon.uuid,
+      major: this.beacon.major,
+      minor: this.beacon.minor,
+      //advInterval: this.beacon.advInterval,
+      //txPower: this.beacon.txPower,
+      title: this.beacon.title,
+      description: this.beacon.description,
+      newsID: null
     }
 
-    this.dbFirebase.guardaNoticia(noticia).then(res=>{
-            console.log('Noticia guardada en firebase:');
+    this.dbFirebase.saveBeacon(beacon).then(res=>{
+            console.log('beacon guardado en firebase:');
             this.cerrarModal();
         })
   }
 
-  guardarNoticia(){
-    let noticia = {
-      id: this.noticia.id,
-      title: this.noticia.title,
-      description: this.noticia.description,
-      color: this.noticia.color
+  guardarBeacon(){
+    let beacon = {
+      key: this.beacon.key,
+      uuid: this.beacon.uuid,
+      major: this.beacon.major,
+      minor: this.beacon.minor,
+      //advInterval: this.beacon.advInterval,
+      //txPower: this.beacon.txPower,
+      title: this.beacon.title,
+      description: this.beacon.description,
+      newsID: null
     }
-    this.dbFirebase.guardaNoticia(noticia).then(res=>{
-    console.log('Noticia modificada en firebase');
+    this.dbFirebase.saveBeacon(beacon).then(res=>{
+    console.log('beacon modificado en firebase');
     this.cerrarModal();
     })
-
   }
 
-  borrarNoticia(id){
+  borrarBeacon(key){
     let alert = this.alertCtrl.create({
       title: '¿Estás seguro?',
-      message: 'Una vez borrada ya no se podrá recuperar',
+      message: 'Una vez borrado ya no se podrá recuperar',
       buttons: [
         {
           text: 'No',
@@ -70,8 +83,9 @@ export class ModalAddBeaconPage {
         {
           text: 'Si',
           handler: () => {
-               // AquÍ borramos la noticia de la base de datos
-               this.dbFirebase.borrarNoticia(id);
+               // AquÍ borramos el beacon de la base de datos
+               this.dbFirebase.deleteBeacon(key);
+               this.cerrarModal();
 
            }
         }
@@ -80,6 +94,5 @@ export class ModalAddBeaconPage {
 
     alert.present();
   }
-
 
 }

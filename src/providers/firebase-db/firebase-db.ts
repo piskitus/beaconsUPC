@@ -17,15 +17,26 @@ export class FirebaseDbProvider {
      return this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+algo.id).set(algo)
   }
 
-  guardaMarker(marker){
+  saveMarker(marker){
      return this.afDB.database.ref('markers/'+marker.title).set(marker)
   }
 
-  guardaNoticia(noticia){
-    if(!noticia.id){
-      noticia.id = Date.now(); //Le creo un ID único
+  saveNews(news){
+    if(!news.id){
+      news.id = Date.now(); //Le creo un ID único
     }
-    return this.afDB.database.ref('noticias/'+noticia.id).set(noticia)
+    return this.afDB.database.ref('noticias/'+news.id).set(news)
+  }
+
+  saveBeacon(beacon){
+    if(!beacon.key){
+      beacon.key = beacon.uuid+":"+beacon.major+":"+beacon.minor;//Creo la clave única del beacon
+    }
+    return this.afDB.database.ref('beacons/'+beacon.key).set(beacon)
+  }
+
+  guardaNoticiaEnBeacon(beaconKey, newsID){
+    return this.afDB.database.ref('beacons/'+beaconKey+'/newsID').set(newsID)
   }
 
 
@@ -39,12 +50,20 @@ export class FirebaseDbProvider {
     return this.afDB.list('markers');
   }
 
-  getNoticias(){
+  getNews(){
     return this.afDB.list('noticias');
   }
 
   getUserEmail(){
 
+  }
+
+  getBeacons(){
+    return this.afDB.list('beacons');
+  }
+
+  getRegions(){
+    return this.afDB.list('regions');
   }
 
 
@@ -54,8 +73,12 @@ export class FirebaseDbProvider {
       this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+id).remove();
   }
 
-  public borrarNoticia(id){
+  public deleteNews(id){
         this.afDB.database.ref('noticias/'+id).remove();
+  }
+
+  public deleteBeacon(key){
+        this.afDB.database.ref('beacons/'+key).remove();
   }
 
 

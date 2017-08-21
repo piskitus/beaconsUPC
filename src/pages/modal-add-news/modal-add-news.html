@@ -1,0 +1,93 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-row>
+      <ion-col col-5>
+        <button block *ngIf="!noticia.id" ion-button color="primary" outline (click)="crearNoticia()">
+            Crear Noticia
+         </button>
+         <button block *ngIf="noticia.id" ion-button color="warning" outline (click)="guardarNoticia()">
+            Actualizar
+          </button>
+      </ion-col>
+      <ion-col col-5>
+        <button block *ngIf="noticia.id" ion-button color="danger" outline (click)="borrarNoticia(noticia.id)">
+          Eliminar
+         </button>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+         <ion-icon name="md-close"></ion-icon>
+       </button>
+      </ion-col>
+
+    </ion-row>
+    <!-- <ion-buttons start>
+      <button *ngIf="!noticia.id" ion-button color="primary" outline (click)="crearNoticia()">
+          Crear Noticia
+       </button>
+       <button *ngIf="noticia.id" ion-button color="warning" outline (click)="guardarNoticia()">
+          Actualizar
+        </button>
+        <button *ngIf="noticia.id" ion-button color="danger" outline (click)="eliminarNoticia()">
+          Eliminar
+         </button>
+      <button ion-button (click)="cerrarModal()">
+         <ion-icon name="md-close"></ion-icon>
+       </button>
+    </ion-buttons> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<!-- <ion-content padding>
+  <ion-list>
+    <form (ngSubmit)="guardarBeacon()">
+          <ion-item>
+            <ion-label color="primary" floating>Título</ion-label>
+            <ion-input [(ngModel)]="title" name="title" type="text" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" floating>Descripción</ion-label>
+            <ion-textarea [(ngModel)]="description" name="description" type="text" required></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label>Color de fondo</ion-label>
+            <ion-select [(ngModel)]="color" name="color">
+              <ion-option value="white">blanco</ion-option>
+              <ion-option value="red">Rojo</ion-option>
+            </ion-select>
+          </ion-item>
+        <button ion-button type="submit" block><ion-icon name="cloud-upload"></ion-icon> Guardar beacon</button>
+    </form>
+  </ion-list>
+</ion-content> -->
+
+
+<ion-content>
+  <ion-card [ngStyle]="{'background-color': noticia.color}">
+  <img src="assets/img/icon.png"/>
+  <ion-card-content>
+    <ion-card-title>
+        <ion-input text-center maxlength="25" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+      </ion-card-title>
+    <p>
+      <ion-textarea maxlength="140" rows="3" placeholder="📝 Descripción (máximo 140 caracteres)" [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
+    </p>
+  </ion-card-content>
+  <ion-item>
+    <ion-label>🏳️‍🌈 Color de fondo</ion-label>
+    <ion-select [(ngModel)]="noticia.color" name="color">
+      <ion-option value="white">⚪ Blanco</ion-option>
+      <ion-option value="salmon">❤️ Rojo</ion-option>
+      <ion-option value="yellow">💛 Amarillo</ion-option>
+      <ion-option value="lightgreen">💚 Verde</ion-option>
+      <ion-option value="lightblue">💙 Azul</ion-option>
+      <ion-option value="violet">💜 Violeta</ion-option>
+      <ion-option value="silver">🖤 Black</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-card>
+</ion-content>

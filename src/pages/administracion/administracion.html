@@ -13,30 +13,25 @@
 <ion-content>
   <div [ngSwitch]="segment">
     <ion-list *ngSwitchCase="'beacons'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-puppy-1.jpg">
-        </ion-thumbnail>
-        <h2>Ruby</h2>
+      <ion-item-sliding #item *ngFor="let beacon of beacons">
+      <ion-item (click)="muestraBeacon(beacon)">
+        <ion-avatar item-start>
+          <img src="{{beacon.img}}">
+        </ion-avatar>
+        <h2>{{ beacon.title }}</h2>
+        <p>{{ beacon.description }}</p>
       </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-puppy-2.jpg">
-        </ion-thumbnail>
-        <h2>Oscar</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-puppy-4.jpg">
-        </ion-thumbnail>
-        <h2>Zoey</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-puppy-3.jpg">
-        </ion-thumbnail>
-        <h2>Otto</h2>
-      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarBeacon(beacon.key)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraBeacon(beacon)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
 
     <ion-list *ngSwitchCase="'notices'">

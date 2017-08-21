@@ -31,7 +31,7 @@ export class ModalAddMarkerPage {
       lat: this.coords.lat,
       lng: this.coords.lng
     }
-    this.dbFirebase.guardaMarker(marker).then(res=>{
+    this.dbFirebase.saveMarker(marker).then(res=>{
         console.log('Marker guardado en firebase');
         this.cerrarModal();
     })
