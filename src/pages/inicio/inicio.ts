@@ -15,6 +15,12 @@ export class InicioPage {
   coords: any;
   nearBeaconMinor: number;
 
+  nearBeaconKey:any;
+  newsID:any;
+  news:any;
+
+
+
   nearBeacon: any = {
     minor: 0, //Plantilla que se muestra en la ventana principal
     title: 'hola',
@@ -75,6 +81,18 @@ export class InicioPage {
     platform.ready().then(() => {
       //Miro si la localización está activada
       this.isLocationEnabled();
+
+      setInterval(() => { //Para definir un intervalo
+        this.nearBeaconKey = this.beaconProvider.getNearBeaconKey();
+        console.log("NEAR BEACON KEY: ", this.nearBeaconKey);
+        this.dbFirebase.getNewsId(this.nearBeaconKey).then(result=>{
+          this.newsID = result;
+        })
+        console.log("NEWS ID: ", this.newsID)
+
+        //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
+        //this.playWithNearestBeacon(this.nearBeaconMinor);
+      }, 2500);//Cada 2,5 segundos
 
       setInterval(() => { //Para definir un intervalo
         this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();

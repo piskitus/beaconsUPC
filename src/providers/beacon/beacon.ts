@@ -11,6 +11,7 @@ export class BeaconProvider {
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
   nearBeaconMinor:number = 0;
+  nearBeaconKey:any;
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
 
@@ -79,6 +80,7 @@ export class BeaconProvider {
 
   saveBeacons(data) {
     let nearBeaconMinor
+    let nearBeaconKey
     let accuracy: number = 100.00;
         for (let beacon of data.beacons) {
           beacon.accuracy = this.calculateAccuracy(beacon.rssi, beacon.tx);
@@ -90,12 +92,13 @@ export class BeaconProvider {
           if (beacon.accuracy < accuracy){
             //console.log("Entro -> ", beacon.accuracy, " vs ", accuracy);
             nearBeaconMinor = beacon.minor;
+            nearBeaconKey = beacon.key;
             accuracy = beacon.accuracy;
           }
 
         }
         this.notifyBeaconStatusChanged();
-        this.beaconNearestHandle(nearBeaconMinor);
+        this.beaconNearestHandle(nearBeaconMinor, nearBeaconKey);
   }
 
   notifyBeaconStatusChanged(): any {
@@ -116,6 +119,10 @@ export class BeaconProvider {
 
   getNearBeaconMinor(): any{
     return this.nearBeaconMinor;
+  }
+
+  getNearBeaconKey(): any{
+    return this.nearBeaconKey;
   }
 
   regionChangeStatus(region:any, state:boolean){
@@ -142,9 +149,10 @@ export class BeaconProvider {
   }
 
 //Función para determinar el beacon más cercano y guardarlo para mostrar la info en la pantalla de inicio
-  beaconNearestHandle(nearBeaconMinor){
+  beaconNearestHandle(nearBeaconMinor, nearBeaconKey){
     if (this.BeaconMinorDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
       this.nearBeaconMinor = nearBeaconMinor;
+      this.nearBeaconKey = nearBeaconKey;
     }
 
     if(this.BeaconMinorDetected1 != null){//No entro con el primer beacon cercano detectado
@@ -154,7 +162,8 @@ export class BeaconProvider {
     this.BeaconMinorDetected1 = nearBeaconMinor;//Guardo el beacon detectado ahora
 
     if(this.BeaconMinorDetected1 == this.BeaconMinorDetected2){//Esta función añade robustez por si no se detecta el beacon cercano por error o se detecta otro más cerca por error
-      this.nearBeaconMinor = nearBeaconMinor;                  //Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
+      this.nearBeaconMinor = nearBeaconMinor;//Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
+      this.nearBeaconKey = nearBeaconKey;
     }                                                          // Tengo que detectar 2 veces seguidas un beacon como EL MÁS CERCANO para que lo elija como cercano
 
   }

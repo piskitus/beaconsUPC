@@ -66,6 +66,20 @@ export class FirebaseDbProvider {
     return this.afDB.list('regions');
   }
 
+  getNewsId(beaconKey){
+    // var starCountRef = this.afDB.database.ref('beacons/' + beaconKey + '/news');
+    //   starCountRef.on('value', function(snapshot) {
+    //     console.log("VALUE READ: ", snapshot.val())
+    //     return snapshot.val();
+    //     //updateStarCount(postElement, snapshot.val());
+    //   });
+
+    return this.afDB.database.ref('beacons/' + beaconKey + '/news').once('value').then(function(snapshot) {
+      //var username = snapshot.val().username;
+      // ...
+    });
+  }
+
 
 
   //DELETES

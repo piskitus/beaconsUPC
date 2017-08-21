@@ -30,7 +30,7 @@
   <ion-list>
     <ion-item>
       <ion-label>Región (UUID)</ion-label>
-      <ion-select [(ngModel)]="beacon.uuid" name="uuid">
+      <ion-select [(ngModel)]="beacon.uuid" name="uuid" requiered>
         <ion-option *ngFor="let region of regions" value="{{region.uuid}}">{{region.name}}: {{region.uuid}}</ion-option>
       </ion-select>
     </ion-item>
@@ -53,6 +53,14 @@
           <ion-item>
             <ion-label color="primary" floating>Descripción</ion-label>
             <ion-textarea [(ngModel)]="beacon.description" name="description" type="text" required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Noticia</ion-label>
+            <ion-select [(ngModel)]="beacon.news" name="uuid" required>
+              <ion-option value="null">Ninguna</ion-option>
+              <ion-option *ngFor="let new of news" value="{{new.id}}">{{new.title}}: {{new.description}}</ion-option>
+            </ion-select>
           </ion-item>
   </ion-list>
 </ion-content>
