@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Inicio</ion-title>
+    <ion-title>Inicio {{newsID}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -34,8 +34,8 @@
 
 <ion-content>
 
-  <!-- <ion-card [ngStyle]="{'background-color': news.color}">
-  <img src="{{news.image}}"/>
+  <ion-card [ngStyle]="{'background-color': news.color}">
+  <!-- <img src="{{news.image}}"/> -->
   <ion-card-content>
     <ion-card-title text-center>
       {{news.title}}
@@ -58,7 +58,7 @@
     </button>
   </ion-col>
 </ion-row>
-</ion-card> -->
+</ion-card>
 
 
   <ion-card [ngStyle]="{'background-color': nearBeacon.color}">

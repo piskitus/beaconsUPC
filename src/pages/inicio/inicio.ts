@@ -17,7 +17,11 @@ export class InicioPage {
 
   nearBeaconKey:any;
   newsID:any;
-  news:any;
+  news:any = {
+    title: 'hola',
+    description: '¿Que tal?',
+    color: 'white'  
+  };
 
 
 
@@ -84,14 +88,17 @@ export class InicioPage {
 
       setInterval(() => { //Para definir un intervalo
         this.nearBeaconKey = this.beaconProvider.getNearBeaconKey();
-        console.log("NEAR BEACON KEY: ", this.nearBeaconKey);
-        this.dbFirebase.getNewsId(this.nearBeaconKey).then(result=>{
-          this.newsID = result;
-        })
-        console.log("NEWS ID: ", this.newsID)
 
-        //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
-        //this.playWithNearestBeacon(this.nearBeaconMinor);
+        this.dbFirebase.getNewsId(this.nearBeaconKey).then((snapshot) => { //cojo de la base de datos el valor que hay en "news" para obtener el id de la noticia
+          this.newsID = snapshot.val().news
+        })
+
+        this.dbFirebase.getSpecificNews(this.newsID).then((snapshot)=>{
+          this.news.title = snapshot.val().title;
+          this.news.description = snapshot.val().description;
+          this.news.color = snapshot.val().color;
+        })
+
       }, 2500);//Cada 2,5 segundos
 
       setInterval(() => { //Para definir un intervalo
