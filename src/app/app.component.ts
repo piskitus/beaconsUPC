@@ -52,17 +52,28 @@ export class MyApp {
       beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
       });
 
+
       //TODO: que solo inicialice el geofence si NO detecta ninguno creado ya
       geofence.getWatched().then(
         (data) => {
+          var geofences = JSON.parse(data);//Leo las geofences que tiene activas el dispositivo
           //EN data veo los geofences que estoy viendo
+          console.log("DATA GEOFENCE: ",geofences)
+          if(geofences.length > 0){//REVIEW: Si detecto alguna geofence no hago nada xq quiere decir que ya están registradas
+            console.log("entro al if")
+            //Si ya tengo mi geofence activa no la vuelvo a inicializar
+          }
+          else{//Si no detecto ninguna geofence, las inicializo
+            console.log("Entro al else")
+            this.initializeGeofence();
+          }
         },
         (err) => {
 
         }
       )
 
-      this.initializeGeofence();
+
 
       // geofence.removeAll().then( //Borrar todas las Geofences
       //   () => {},
@@ -88,6 +99,7 @@ export class MyApp {
       });
   }
 
+
 //Inicializo Geofence
   initializeGeofence(){
     // initialize the plugin of geofence
@@ -102,19 +114,21 @@ export class MyApp {
   }
 
 //AÑADO LA ZONA A INTEGRAR EN GOOGLE SERVICES PARA QUE VAYA VIENDO SI ENTRO EN EL PERÍMETRO ESTABLECIDO
-  addGeofence() {
+  addGeofence() {//EN android se pueden añadir 100 en iOS 20
     //options describing
     let fence = {
       id: '69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb', //any unique ID
       latitude:       41.319147, //center of geofence radius
       longitude:      2.020015,
-      radius:         150, //radius to edge of geofence in meters
+      radius:         300, //radius to edge of geofence in meters
       transitionType: 1, //1: Enter, 2: Leave, 3: Both
       notification: { //notification settings
           id:             1, //any unique ID
           title:          '¿Estás llegando a casa?', //notification title
           text:           'Abre la app para tener una mejor experiencia!', //notification body
-          openAppOnClick: true //open app when notification is tapped
+          openAppOnClick: true, //open app when notification is tapped
+          // smallIcon: 'assets/img/icon.png',
+          // icon: 'assets/img/icon.png'
       }
     }
 
