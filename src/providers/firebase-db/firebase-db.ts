@@ -18,7 +18,10 @@ export class FirebaseDbProvider {
   }
 
   saveMarker(marker){
-     return this.afDB.database.ref('markers/'+marker.title).set(marker)
+    if(!marker.id){
+      marker.id = Date.now(); //ID único
+    }
+     return this.afDB.database.ref('markers/'+marker.id).set(marker)
   }
 
   saveNews(news){
@@ -35,9 +38,14 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('beacons/'+beacon.key).set(beacon)
   }
 
-  guardaNoticiaEnBeacon(beaconKey, newsID){
-    return this.afDB.database.ref('beacons/'+beaconKey+'/newsID').set(newsID)
-  }
+//EN principio no se utilizan
+  // saveNewsInBeacon(beaconKey, newsID){
+  //   return this.afDB.database.ref('beacons/'+beaconKey+'/newsID').set(newsID)
+  // }
+  //
+  // saveMarkerInBeacon(beaconKey, markerID){
+  //
+  // }
 
 
 
@@ -66,10 +74,12 @@ export class FirebaseDbProvider {
     return this.afDB.list('regions');
   }
 
+//Cojo el identificador de la noticia de un beacon concreto
   getNewsId(beaconKey){
     return this.afDB.database.ref('beacons/' + beaconKey).once('value');
   }
 
+//Cojo una noticia específica a partir de su identificador
   getSpecificNews(newsID){
     return this.afDB.database.ref('noticias/' + newsID).once('value');
   }
@@ -83,6 +93,10 @@ export class FirebaseDbProvider {
 
   public deleteNews(id){
         this.afDB.database.ref('noticias/'+id).remove();
+  }
+
+  public deleteMarker(id){
+        this.afDB.database.ref('markers/'+id).remove();
   }
 
   public deleteBeacon(key){

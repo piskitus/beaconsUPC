@@ -34,7 +34,7 @@
       </ion-item-sliding>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'notices'">
+    <ion-list *ngSwitchCase="'news'">
       <ion-item-sliding #item *ngFor="let noticia of noticias">
       <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
         <ion-thumbnail item-start>
@@ -50,6 +50,28 @@
       </ion-item-options>
       <ion-item-options side="left">
         <button ion-button  color="warning" (click)="muestraNoticia(noticia)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'markers'">
+      <ion-item-sliding #item *ngFor="let marker of markers">
+        <ion-item (click)="muestraMarcador(marker)">
+          <ion-avatar item-start>
+            <!-- <img src="{{beacon.img}}"> -->
+          </ion-avatar>
+          <h2>{{ marker.title }}</h2>
+          <p>Lat: {{ marker.lat }}, Long: {{marker.lng}}</p>
+        </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarMarcador(marker.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraMarcador(marker)"><ion-icon name="md-create"></ion-icon>
            Editar
         </button>
       </ion-item-options>
@@ -89,9 +111,10 @@
     <button ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>
-    <ion-fab-list>
+    <ion-fab-list color="black">
       <button ion-fab (tap)="nuevoBeacon()"><ion-icon name="logo-rss"></ion-icon></button>
       <button ion-fab (tap)="nuevaNoticia()"><ion-icon name="document"></ion-icon></button>
+      <button ion-fab (tap)="nuevoMarcador()"><ion-icon name="locate"></ion-icon></button>
       <button ion-fab (tap)="nuevoUsuario()"><ion-icon name="person"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
@@ -100,15 +123,18 @@
 
 <ion-footer>
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="segment" color="primary">
+    <ion-segment [(ngModel)]="segment" color="black">
       <ion-segment-button value="beacons">
-        <ion-icon name="ios-radio-outline"></ion-icon> Beacons
+        <ion-icon name="ios-radio-outline"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="notices">
-        <ion-icon name="bookmarks"></ion-icon> Noticias
+      <ion-segment-button value="news">
+        <ion-icon name="bookmarks"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="markers">
+        <ion-icon name="pin"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="users">
-        <ion-icon name="contacts"></ion-icon> Usuarios
+        <ion-icon name="contacts"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

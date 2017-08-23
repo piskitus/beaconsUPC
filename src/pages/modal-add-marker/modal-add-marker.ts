@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 
@@ -10,10 +10,11 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 })
 export class ModalAddMarkerPage {
 
-  coords:any = {lat: null,lng: null};
-  title: string = '';
+  marker:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider, ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
+              public alertCtrl : AlertController) {
+      this.marker = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -24,17 +25,58 @@ export class ModalAddMarkerPage {
     this.viewCtrl.dismiss();
   }
 
-  guardarMarker(){
+  crearMarcador(){
     //TODO: validación de que los campos estén rellenos antes de insertar nada a la base de datos
     let marker = {
-      title: this.title,
-      lat: this.coords.lat,
-      lng: this.coords.lng
+      title: this.marker.title,
+      lat: this.marker.lat,
+      lng: this.marker.lng
     }
     this.dbFirebase.saveMarker(marker).then(res=>{
         console.log('Marker guardado en firebase');
         this.cerrarModal();
     })
+  }
+
+  guardarMarcador(){
+    let marker = {
+      id: this.marker.id,
+      title: this.marker.title,
+      lat: this.marker.lat,
+      lng: this.marker.lng
+      //Añadir img para seleccionar un tipo de marcador
+    }
+    this.dbFirebase.saveMarker(marker).then(res=>{
+    console.log('Noticia modificada en firebase');
+    this.cerrarModal();
+    })
+  }
+
+  borrarMarcador(id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás seguro?',
+      message: 'Una vez borrado ya no se podrá recuperar',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+               // AquÍ borramos la noticia de la base de datos
+               this.dbFirebase.deleteMarker(id);
+               this.cerrarModal();
+
+           }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
 }

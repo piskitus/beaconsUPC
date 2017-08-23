@@ -68,6 +68,8 @@ export class MapaPage {
 
       let LatLng = new google.maps.LatLng(res.coords.latitude, res.coords.longitude);
 
+      console.log(LatLng)
+
       this.map.setCenter(LatLng)
 
       //this.firebaseSave(this.coords);
@@ -132,4 +134,8 @@ chargeMarkersIntoMap(){
   loader.present();
 }
 
+
+locateFABButton(){
+  this.obtenerPosicion();
+}
 }

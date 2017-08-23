@@ -1,12 +1,11 @@
 <ion-header>
-
   <ion-navbar>
     <ion-row>
       <ion-col col-5>
         <button block *ngIf="!beacon.key" ion-button color="primary" outline (click)="crearBeacon()">
             Crear Beacon
          </button>
-         <button block *ngIf="beacon.key" ion-button color="warning" outline (click)="guardarBeacon()">
+        <button block *ngIf="beacon.key" ion-button color="warning" outline (click)="guardarBeacon()">
             Actualizar
           </button>
       </ion-col>
@@ -16,15 +15,13 @@
          </button>
       </ion-col>
       <ion-col col-2>
-          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+        <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
          <ion-icon name="md-close"></ion-icon>
        </button>
       </ion-col>
     </ion-row>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-list>
@@ -34,33 +31,28 @@
         <ion-option *ngFor="let region of regions" value="{{region.uuid}}">{{region.name}}: {{region.uuid}}</ion-option>
       </ion-select>
     </ion-item>
-          <!-- <ion-item>
-            <ion-label color="primary" floating>UUID</ion-label>
-            <ion-input [(ngModel)]="beacon.uuid" name="uuid" type="text" required></ion-input>
-          </ion-item> -->
-          <ion-item>
-            <ion-label color="primary" floating>Major</ion-label>
-            <ion-input [(ngModel)]="beacon.major" name="major" type="number" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary" floating>Minor</ion-label>
-            <ion-input [(ngModel)]="beacon.minor" name="minor" type="number" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary" floating>Título</ion-label>
-            <ion-input [(ngModel)]="beacon.title" name="title" type="text" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary" floating>Descripción</ion-label>
-            <ion-textarea [(ngModel)]="beacon.description" name="description" type="text" required></ion-textarea>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Noticia</ion-label>
-            <ion-select [(ngModel)]="beacon.news" name="uuid" required>
-              <ion-option value="null">Ninguna</ion-option>
-              <ion-option *ngFor="let new of news" value="{{new.id}}">{{new.title}}: {{new.description}}</ion-option>
-            </ion-select>
-          </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Major</ion-label>
+      <ion-input [(ngModel)]="beacon.major" name="major" type="number" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Minor</ion-label>
+      <ion-input [(ngModel)]="beacon.minor" name="minor" type="number" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Título</ion-label>
+      <ion-input [(ngModel)]="beacon.title" name="title" type="text" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Descripción</ion-label>
+      <ion-textarea [(ngModel)]="beacon.description" name="description" type="text" required></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>Noticia</ion-label>
+      <ion-select [(ngModel)]="beacon.news" name="uuid" required>
+        <ion-option value="null">Ninguna</ion-option>
+        <ion-option *ngFor="let new of news" value="{{new.id}}">{{new.title}}: {{new.description}}</ion-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
 </ion-content>
