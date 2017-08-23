@@ -12,6 +12,7 @@ export class ModalAddBeaconPage {
   beacon: any;
   regions: any;
   news: any;
+  markers: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
@@ -31,6 +32,9 @@ export class ModalAddBeaconPage {
     this.dbFirebase.getNews().subscribe(news=>{
       this.news = news;
     })
+    this.dbFirebase.getMarkers().subscribe(markers=>{
+      this.markers = markers;
+    })
   }
 
   cerrarModal(){
@@ -47,7 +51,8 @@ export class ModalAddBeaconPage {
       title: this.beacon.title,
       description: this.beacon.description,
       news: this.beacon.news,
-      img: 'assets/img/ibks-105.png'
+      img: 'assets/img/ibks-105.png',
+      marker: this.beacon.marker
     }
 
     this.dbFirebase.saveBeacon(beacon).then(res=>{
@@ -67,7 +72,8 @@ export class ModalAddBeaconPage {
       title: this.beacon.title,
       description: this.beacon.description,
       news: this.beacon.news,
-      img: 'assets/img/ibks-105.png'
+      img: 'assets/img/ibks-105.png',
+      marker: this.beacon.marker
     }
     this.dbFirebase.saveBeacon(beacon).then(res=>{
     console.log('beacon modificado en firebase');
