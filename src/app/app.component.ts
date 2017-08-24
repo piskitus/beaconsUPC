@@ -53,24 +53,14 @@ export class MyApp {
       });
 
 
-      //TODO: que solo inicialice el geofence si NO detecta ninguno creado ya
-      geofence.getWatched().then(
-        (data) => {
-          var geofences = JSON.parse(data);//Leo las geofences que tiene activas el dispositivo
-          //EN data veo los geofences que estoy viendo
-          console.log("DATA GEOFENCE: ",geofences)
-          if(geofences.length > 0){//REVIEW: Si detecto alguna geofence no hago nada xq quiere decir que ya están registradas
-            console.log("entro al if")
-            //Si ya tengo mi geofence activa no la vuelvo a inicializar
-          }
-          else{//Si no detecto ninguna geofence, las inicializo
-            console.log("Entro al else")
-            this.initializeGeofence();
-          }
-        },
-        (err) => {
-
-        }
+      // initialize the plugin of geofence
+      this.geofence.initialize().then(
+      // resolved promise does not return a value
+      () => {
+        console.log('Geofence Plugin Ready')
+        this.whatchedGeofences(); //Miro las geofences que tengo añadidas
+      },
+      (err) => console.log(err)
       )
 
 
@@ -100,40 +90,67 @@ export class MyApp {
   }
 
 
-//Inicializo Geofence
-  initializeGeofence(){
-    // initialize the plugin of geofence
-    this.geofence.initialize().then(
-    // resolved promise does not return a value
-    () => {
-      console.log('Geofence Plugin Ready')
-      this.addGeofence(); //AÑADO LA ZONA para controlar la entrada
-    },
-    (err) => console.log(err)
-    )
+//Miro si ya tengo añadidas las geofences para no añadirlas 2 veces
+  whatchedGeofences(){
+      this.geofence.getWatched().then(
+        (data) => {
+          var geofences = JSON.parse(data);//Leo las geofences que tiene activas el dispositivo
+          //EN data veo los geofences que estoy viendo
+          console.log("DATA GEOFENCE: ",geofences)
+          if(geofences.length > 0){//REVIEW: Si detecto alguna geofence no hago nada xq quiere decir que ya están registradas
+            console.log("Detectadas Geofences, así q no hago nada")
+            //Si ya tengo mi geofence activa no la vuelvo a inicializar
+          }
+          else{//Si no detecto ninguna geofence, las inicializo
+            console.log("No se han detectado geogences, las añado")
+            this.addGeofence();
+          }
+        },
+        (err) => {
+
+        }
+      )
   }
+
+
 
 //AÑADO LA ZONA A INTEGRAR EN GOOGLE SERVICES PARA QUE VAYA VIENDO SI ENTRO EN EL PERÍMETRO ESTABLECIDO
   addGeofence() {//EN android se pueden añadir 100 en iOS 20
     //options describing
-    let fence = {
+    let geofence_casa_Marc = {
       id: '69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb', //any unique ID
       latitude:       41.319147, //center of geofence radius
       longitude:      2.020015,
       radius:         300, //radius to edge of geofence in meters
       transitionType: 1, //1: Enter, 2: Leave, 3: Both
       notification: { //notification settings
-          id:             1, //any unique ID
+          id:             1, //any unique ID (La notificación anula la anterior si tiene la misma id)
           title:          '¿Estás llegando a casa?', //notification title
           text:           'Abre la app para tener una mejor experiencia!', //notification body
           openAppOnClick: true, //open app when notification is tapped
           // smallIcon: 'assets/img/icon.png',
-          // icon: 'assets/img/icon.png'
+          //icon: 'assets/img/icon.png'
       }
     }
 
-    this.geofence.addOrUpdate(fence).then(
-       () => console.log('Geofence added'),
+    let geofence_EETAC = {
+      id: '6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a', //ID inventada
+      latitude:       41.275737, //center of geofence radius
+      longitude:      1.986996,
+      radius:         350, //radius to edge of geofence in meters
+      transitionType: 1, //1: Enter, 2: Leave, 3: Both
+      notification: { //notification settings
+          id:             2, //any unique ID
+          title:          'Bienvenida/o al campus UPC', //notification title
+          text:           'Abre la app para enterarte de todo', //notification body
+          openAppOnClick: true, //open app when notification is tapped
+          // smallIcon: 'assets/img/icon.png',
+          //icon: 'assets/img/icon.png'
+      }
+    }
+
+    this.geofence.addOrUpdate([geofence_casa_Marc, geofence_EETAC]).then(
+       () => console.log('Geofence  añadida correctamente'),
        (err) => console.log('Geofence failed to add')
      );
   }

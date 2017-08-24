@@ -59,7 +59,7 @@ export class LoginPage {
 
   resetPassword() {
     let prompt = this.alertCtrl.create({
-      title: 'Recuperar contraseña',
+      title: 'Restablecer contraseña',
       message: "Introduce la dirección de correo electronico de la que quieres restablecer la contraseña",
       inputs: [
         {
