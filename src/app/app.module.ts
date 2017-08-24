@@ -13,6 +13,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Geofence } from '@ionic-native/geofence';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
 import { MyApp } from './app.component';
@@ -75,7 +76,8 @@ const cloudSettings: CloudSettings = {
     Diagnostic,
     LocationAccuracy,
     FirebaseDbProvider,
-    Geofence
+    Geofence,
+    FirebaseAnalytics
   ]
 })
 export class AppModule {}

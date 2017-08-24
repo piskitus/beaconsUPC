@@ -83,6 +83,7 @@
     <plugin name="com.unarin.cordova.beacon" spec="~3.4.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
+    <plugin name="cordova-plugin-firebase-analytics" spec="^0.10.1" />
     <plugin name="cordova-plugin-geofence" spec="^0.7.0" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="La app necesita geolocalización" />
