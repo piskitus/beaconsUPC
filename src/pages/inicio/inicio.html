@@ -32,9 +32,9 @@
   {{beaconsInfo[0].title}}
 </ion-content> -->
 
-<ion-content>
+<ion-content (swipe)="swipeEvent($event)">
 
-  <ion-card [ngStyle]="{'background-color': news.color}">
+  <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
   <!-- <img src="{{news.image}}"/> -->
   <ion-card-content>
     <ion-card-title text-center>
@@ -61,7 +61,7 @@
 </ion-card>
 
 
-  <ion-card [ngStyle]="{'background-color': nearBeacon.color}">
+  <ion-card [ngStyle]="{'background-color': nearBeacon.color}" (swipe)="swipeEvent($event)">
   <img src="{{nearBeacon.image}}"/>
   <ion-card-content>
     <ion-card-title text-center>

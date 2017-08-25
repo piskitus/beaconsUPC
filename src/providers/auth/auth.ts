@@ -12,10 +12,11 @@ export class AuthProvider {
   }
 
   // Registro de usuario
-  registerUser(email:string, password:string){
+  registerUser(email:string, password:string, user:any){
   return this.afAuth.auth.createUserWithEmailAndPassword( email, password)
   .then((newUser)=>{// El usuario se ha creado correctamente. (guardo los datos en la base de datos)
-    firebase.database().ref('/userProfile').child(newUser.uid).set({ email: email });
+    //firebase.database().ref('/userProfile').child(newUser.uid).set({ email: email });
+    firebase.database().ref('users/'+user.uid).set(user)
   })
   .catch(err=>Promise.reject(err))
   }

@@ -38,6 +38,10 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('beacons/'+beacon.key).set(beacon)
   }
 
+  saveUserData(user){
+    return this.afDB.database.ref('users/'+user.uid).set(user)
+  }
+
 //EN principio no se utilizan
   // saveNewsInBeacon(beaconKey, newsID){
   //   return this.afDB.database.ref('beacons/'+beaconKey+'/newsID').set(newsID)

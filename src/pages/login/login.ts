@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, ToastController  } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
@@ -16,6 +16,8 @@ export class LoginPage {
     public navParams: NavParams,
     public auth : AuthProvider,
     public alertCtrl : AlertController,
+    public modalCtrl : ModalController,
+    public toastCtrl: ToastController
     ) {
   }
 
@@ -27,24 +29,31 @@ export class LoginPage {
 
   //FUNCIONES ASOCIADAS A UN BOTÓN DE LA VISTA
   signin(){
-    this.auth.registerUser(this.user.email, this.user.password)
-      .then((user) => {
-        // El usuario se ha creado correctamente
-      })
-      .catch(err => {
-        let alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: err.message,
-          buttons: ['Aceptar']
-        });
-        alert.present();
-      })
+
+    // this.auth.registerUser(this.user.email, this.user.password)
+    //   .then((user) => {
+    //     // El usuario se ha creado correctamente
+    //   })
+    //   .catch(err => {
+    //     let alert = this.alertCtrl.create({
+    //       title: 'Error',
+    //       subTitle: err.message,
+    //       buttons: ['Aceptar']
+    //     });
+    //     alert.present();
+    //   })
+
+    // aquí vamos a abrir el modal para añadir nuestro sitio.
+     let modal = this.modalCtrl.create( 'RegisterPage');
+     modal.present();
+
   }
 
   login(){
     this.auth.loginUser(this.user.email, this.user.password)
     .then((user) => {
     //OK
+    this.showToast('Usuario correcto. Iniciando sesión...', 2000)
     }
     )
       .catch(err => {
@@ -99,5 +108,15 @@ export class LoginPage {
     prompt.present();
   }
 
+
+
+  showToast(message:string, duration:number) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: duration,
+        position: 'top'
+      });
+      toast.present();
+    }
 
 }

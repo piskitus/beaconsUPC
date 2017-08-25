@@ -20,7 +20,7 @@ export class InicioPage {
   news:any = {
     title: 'hola',
     description: '¿Que tal?',
-    color: 'white'  
+    color: 'white'
   };
 
 
@@ -160,6 +160,16 @@ export class InicioPage {
 playWithNearestBeacon(minor){
   if(this.nearBeacon.minor != minor){
     this.nearBeacon = this.beaconsInfo[minor];
+  }
+}
+
+//Me muevo de vista al hacer swipe (se debe añadir en el html la siguiente función dentro de los componentes en los que quiero que funcione el swipe: (swipe)="swipeEvent($event)")
+swipeEvent(e) {
+  if(e.direction == '2'){//Direction left
+     this.navCtrl.parent.select(1);//Avisos
+  }
+  else if(e.direction == '4'){//direction right
+     this.navCtrl.parent.select(4);//Ajustes
   }
 }
 
