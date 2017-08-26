@@ -23,6 +23,7 @@ export class AvisosPage {
     // .catch((error: any) => console.error(error));
 
 
+
   }
 
 }

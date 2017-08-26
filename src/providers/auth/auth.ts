@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AlertController } from 'ionic-angular';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
 @Injectable()
 export class AuthProvider {
 
-  constructor(private afAuth :  AngularFireAuth, private alertCtrl: AlertController) {
+  constructor(private afAuth :  AngularFireAuth, private alertCtrl: AlertController, private firebaseAnalytics: FirebaseAnalytics) {
     console.log('Hello AuthProvider Provider');
   }
 
@@ -16,7 +17,12 @@ export class AuthProvider {
   return this.afAuth.auth.createUserWithEmailAndPassword( email, password)
   .then((newUser)=>{// El usuario se ha creado correctamente. (guardo los datos en la base de datos)
     //firebase.database().ref('/userProfile').child(newUser.uid).set({ email: email });
-    firebase.database().ref('users/'+user.uid).set(user)
+    firebase.database().ref('users/'+newUser.uid).set(user)
+
+    //Añado los perfiles de usuario a analytics
+    this.firebaseAnalytics.setUserProperty("perfil_usuario", user.profile);
+    this.firebaseAnalytics.setUserProperty("centro_docente", user.school);
+
   })
   .catch(err=>Promise.reject(err))
   }

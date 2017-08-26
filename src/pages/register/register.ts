@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
 @Component({
@@ -26,7 +25,6 @@ export class RegisterPage {
     public auth : AuthProvider,
     public alertCtrl : AlertController,
     private viewCtrl : ViewController,
-    public dbFirebase :FirebaseDbProvider
     ) {
   }
 
@@ -37,7 +35,7 @@ export class RegisterPage {
   register(){
 
     this.auth.registerUser(this.user.email, this.user.password, this.user)
-      .then((newUser) => {
+      .then((newUser) => {//Si todo es correcto cierro el modal xq se redirige automáticamente al inicio
         this.viewCtrl.dismiss();
       })
       .catch(err => {
