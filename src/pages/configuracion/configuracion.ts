@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Push, PushToken } from '@ionic/cloud-angular';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
@@ -16,7 +16,8 @@ export class ConfiguracionPage {
   email:any = "marcalarcon1994@gmail.com";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
-  private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController) {
+  private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController,
+  private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -59,6 +60,35 @@ export class ConfiguracionPage {
   // aquí vamos a abrir el modal para añadir nuestro sitio.
    let modalAdmin = this.modalCtrl.create( 'AdministracionPage'/*,this.coords Aquí puede ir info*/);
    modalAdmin.present();
+  }
+
+  deleteUser(){
+  let alert = this.alertCtrl.create({
+    title: '¿Estás segura/o?',
+    message: 'Vuelve a introducir la contraseña para continuar',
+    inputs: [
+      {
+        name: 'password',
+        placeholder: 'Contraseña',
+        type: 'password'
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: data => {
+        }
+      },
+      {
+        text: 'Eliminar',
+        handler: data => {
+          //Ejecuto la función para eliminar usuario
+          this.auth.deleteUser(data.password);
+        }
+      }
+    ]
+  });
+  alert.present();
   }
 
 }

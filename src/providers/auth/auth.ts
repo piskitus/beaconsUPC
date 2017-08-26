@@ -56,4 +56,25 @@ export class AuthProvider {
     })
   }
 
+
+  deleteUser(password:string){
+    var user = firebase.auth().currentUser;
+    var credentials = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    //primero lo reautentifico
+    user.reauthenticateWithCredential(credentials).then(function() {
+      //Si OK, lo elimino
+      user.delete().then(function() {
+        // User deleted.
+      }, function(error) {
+        // An error happened.
+      });
+    }, function(error) {
+    });
+
+  }
+
+
 }
