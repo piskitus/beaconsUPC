@@ -67,6 +67,8 @@ export class AuthProvider {
     user.reauthenticateWithCredential(credentials).then(function() {
       //Si OK, lo elimino
       user.delete().then(function() {
+        //Lo borro de la base de datos
+        firebase.database().ref('users/'+user.uid).remove()
         // User deleted.
       }, function(error) {
         // An error happened.
