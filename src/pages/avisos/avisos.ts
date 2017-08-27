@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage()
 @Component({
@@ -9,20 +8,11 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 })
 export class AvisosPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private firebaseAnalytics: FirebaseAnalytics ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AvisosPage');
-
-    // this.firebaseAnalytics.logEvent('page_view', {page: "dashboard"})
-    // .then((res: any) => {
-    //   console.log(res)
-    //   this.firebaseAnalytics.setUserProperty("prueba", "true");
-    // })
-    // .catch((error: any) => console.error(error));
-
-
 
   }
 

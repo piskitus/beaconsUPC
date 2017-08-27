@@ -4,6 +4,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { BeaconProvider } from '../../providers/beacon/beacon';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class InicioPage {
 
   coords: any;
   nearBeaconMinor: number;
+  // userProfile: any;
 
   nearBeaconKey:any;
   newsID:any;
@@ -80,39 +82,45 @@ export class InicioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
     public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,
-    public beaconProvider: BeaconProvider,) {
+    public beaconProvider: BeaconProvider, private auth: AuthProvider) {
 
     platform.ready().then(() => {
       //Miro si la localización está activada
       this.isLocationEnabled();
 
-      setInterval(() => { //Para definir un intervalo
-        this.nearBeaconKey = this.beaconProvider.getNearBeaconKey();
+      // setInterval(() => { //Para definir un intervalo
+      //   this.nearBeaconKey = this.beaconProvider.getNearBeaconKey();
+      //
+      //   this.dbFirebase.getNewsId(this.nearBeaconKey).then((snapshot) => { //cojo de la base de datos el valor que hay en "news" para obtener el id de la noticia
+      //     this.newsID = snapshot.val().news
+      //   })
+      //
+      //   this.dbFirebase.getSpecificNews(this.newsID).then((snapshot)=>{
+      //     this.news.title = snapshot.val().title;
+      //     this.news.description = snapshot.val().description;
+      //     this.news.color = snapshot.val().color;
+      //   })
+      //
+      // }, 2500);//Cada 2,5 segundos
 
-        this.dbFirebase.getNewsId(this.nearBeaconKey).then((snapshot) => { //cojo de la base de datos el valor que hay en "news" para obtener el id de la noticia
-          this.newsID = snapshot.val().news
-        })
-
-        this.dbFirebase.getSpecificNews(this.newsID).then((snapshot)=>{
-          this.news.title = snapshot.val().title;
-          this.news.description = snapshot.val().description;
-          this.news.color = snapshot.val().color;
-        })
-
-      }, 2500);//Cada 2,5 segundos
-
-      setInterval(() => { //Para definir un intervalo
-        this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();
-        //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
-        this.playWithNearestBeacon(this.nearBeaconMinor);
-      }, 2500);//Cada 2,5 segundos
+      // setInterval(() => { //Para definir un intervalo
+      //   this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();
+      //   //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
+      //   this.playWithNearestBeacon(this.nearBeaconMinor);
+      // }, 2500);//Cada 2,5 segundos
 
     });
 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InicioPage');
+    console.log('➡️ InicioPage');
+
+    // this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
+    //   //this.user = user;
+    //   this.userProfile = user.val().profile;
+    //
+    // })
 
   }
 

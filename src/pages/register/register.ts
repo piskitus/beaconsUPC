@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import * as firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -34,9 +35,13 @@ export class RegisterPage {
 
   register(){
 
-    this.auth.registerUser(this.user.email, this.user.password, this.user)
-      .then((newUser) => {//Si todo es correcto cierro el modal xq se redirige automáticamente al inicio
+    this.auth.registerUser(this.user.email, this.user.password)
+      .then((user) => {
+        //Guardo los datos del usuario en la base de datos de firebase
+        firebase.database().ref('users/'+this.auth.getUser()).set(this.user)
+        //Cierro la vista para que me redirija a la pagina principal
         this.viewCtrl.dismiss();
+        console.log("Usuario registrado OK")
       })
       .catch(err => {
         let alert = this.alertCtrl.create({

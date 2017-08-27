@@ -15,9 +15,12 @@ export class BeaconProvider {
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
 
-  constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {  }
+  constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {
+    console.log('➡️ Beacon provider🔆');
+  }
 
   start(identifier, uuid): any {
+    console.log("🔆 start beacon provider")
     this.delegate = this.iBeacon.Delegate();// create a new delegate and register it with the native layer
 
     this.region = this.iBeacon.BeaconRegion(identifier, uuid);//Defino mi región (los parámetros vienen del app.component)
@@ -62,8 +65,18 @@ export class BeaconProvider {
   }
 
 
+  stopBeaconMonitoring(): any {
+    this.iBeacon.stopMonitoringForRegion(this.region);
+  }
+
+  stopBeaconRanging():any{
+    this.iBeacon.stopRangingBeaconsInRegion(this.region);
+  }
+
+
 
   startRangingBeacons(region){
+    console.log("🔆 startRangingBeacons")
     this.iBeacon.startRangingBeaconsInRegion(region).then(
       () => console.log('Native layer recieved the request to ranging: ', region),
       error => console.error('Failed to begin monitoring: ', error)
@@ -72,6 +85,7 @@ export class BeaconProvider {
 
 
   startMonitoringBeacons(region){
+    console.log("🔆 startMonitoringBeacons")
     this.iBeacon.startMonitoringForRegion(region).then(
       () => console.log('Native layer recieved the request to monitoring: ', region),
       error => console.error('Native layer failed to begin monitoring: ', error)
@@ -79,6 +93,7 @@ export class BeaconProvider {
   }
 
   saveBeacons(data) {
+    console.log("🔆 saveBeacons")
     let nearBeaconMinor
     let nearBeaconKey
     let accuracy: number = 100.00;
@@ -102,6 +117,7 @@ export class BeaconProvider {
   }
 
   notifyBeaconStatusChanged(): any {
+    console.log("🔆 notifyBeaconStatusChanged")
     //Para cada
     for (let beaconStatusChangedHandler of this.beaconStatusChangedHandlers) {
       beaconStatusChangedHandler(this.beacons);
@@ -110,10 +126,12 @@ export class BeaconProvider {
 
   //Pongo el detector de cambios en el array
   addBeaconStatusChangedHandler(beaconStatusChangedHandler): any {
+    console.log("🔆 addBeaconStatusChangedHandler")
     this.beaconStatusChangedHandlers.push(beaconStatusChangedHandler);
   };
 
   getBeacons(): any {
+    console.log("🔆 getBeacons")
     return this.beacons;
   };
 
@@ -122,10 +140,12 @@ export class BeaconProvider {
   }
 
   getNearBeaconKey(): any{
+    console.log("🔆 getNearBeaconKey")
     return this.nearBeaconKey;
   }
 
   regionChangeStatus(region:any, state:boolean){
+    console.log("🔆 regionChangeStatus")
 
     if (state == true){//He detectado la región
       console.log("ENTRO------>", region+" "+state);
@@ -137,10 +157,12 @@ export class BeaconProvider {
   }
 
   getRegionStatus(): any{
+    console.log("🔆 getRegionStatus")
     return this.regionStatusInfo[0];
   }
 
   setLocalNotification(region){
+    console.log("🔆 setLocalNotification")
     this.localNotifications.schedule({
       id: 1,
       title: ('Bienvenido a '+region),
@@ -150,6 +172,7 @@ export class BeaconProvider {
 
 //Función para determinar el beacon más cercano y guardarlo para mostrar la info en la pantalla de inicio
   beaconNearestHandle(nearBeaconMinor, nearBeaconKey){
+    console.log("🔆 beaconNearestHandle")
     if (this.BeaconMinorDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
       this.nearBeaconMinor = nearBeaconMinor;
       this.nearBeaconKey = nearBeaconKey;

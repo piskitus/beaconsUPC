@@ -4,6 +4,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { Push, PushToken } from '@ionic/cloud-angular';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import { BeaconProvider } from '../../providers/beacon/beacon';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage()
 @Component({
@@ -13,11 +15,10 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 export class ConfiguracionPage {
 
   locationPermission:boolean = false;
-  email:any = "marcalarcon1994@gmail.com";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
   private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController,
-  private alertCtrl: AlertController) {
+  private alertCtrl: AlertController, public beaconProvider: BeaconProvider, private firebaseAnalytics: FirebaseAnalytics) {
   }
 
   ionViewDidLoad() {
@@ -27,11 +28,17 @@ export class ConfiguracionPage {
 
   cerrarSesion(){
       this.auth.logout();
+      this.push.unregister(); //Deshabilito las notificaciones push xq ha cerrado sesión
+      this.firebaseAnalytics.setUserProperty("perfil_usuario", null);
+      this.firebaseAnalytics.setUserProperty("centro_docente", null);
+      //Dejo de buscar beacons
+      //this.beaconProvider.stopBeaconMonitoring();
+      //this.beaconProvider.stopBeaconRanging();
   }
 
-  disablePushNotifications(){
-      this.push.unregister();
-  }
+  // disablePushNotifications(){
+  //     this.push.unregister();
+  // }
 
   activarUbicacion(){ //Función para solicitar la activación de la ubicación
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
@@ -83,7 +90,8 @@ export class ConfiguracionPage {
         text: 'Eliminar',
         handler: data => {
           //Ejecuto la función para eliminar usuario
-          this.auth.deleteUser(data.password);
+          let correct = this.auth.deleteUser(data.password);
+
         }
       }
     ]

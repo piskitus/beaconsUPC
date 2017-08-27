@@ -7,6 +7,8 @@ import { IBeacon } from '@ionic-native/ibeacon';
 import { BeaconProvider } from '../providers/beacon/beacon';
 import { Push, PushToken } from '@ionic/cloud-angular';
 import { Geofence } from '@ionic-native/geofence';
+import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
 @Component({
@@ -24,32 +26,38 @@ export class MyApp {
     private ibeacon: IBeacon,
     private beaconProvider: BeaconProvider,
     private push: Push,
-    private geofence: Geofence) {
+    private geofence: Geofence,
+    public dbFirebase :FirebaseDbProvider,
+    private firebaseAnalytics: FirebaseAnalytics) {
+
+      console.log('➡️ app component');
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
+
+
+
+
       this.auth.Session.subscribe(session=>{
         if(session){
+          console.log('➡️ redirect MisTabsPage');
             this.rootPage = 'MisTabsPage';
-            this.registerAppInServer();
+            //this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
+            this.registerAppInServer();//Registro las notificaciones push
+            this.setUserAnalytics();//Obtengo los datos de usuario y cargo las Analytics
 
         }
           else{
+            console.log('➡️ redirect LoginPage');
             this.rootPage = 'LoginPage';
           }
       });
 
       statusBar.styleDefault();
       splashScreen.hide();
-      //Enciendo bluetooth al abrir la aplicación
-      this.ibeacon.enableBluetooth();
 
-      //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
-      //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
-      //beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
-      beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
       });
 
 
@@ -74,8 +82,21 @@ export class MyApp {
 
     }
 
+//Inicio la búsqueda de beacons
+    startBeaconProvider(){
+      //Enciendo bluetooth al abrir la aplicación
+      this.ibeacon.enableBluetooth();
+
+      //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
+      //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
+
+      //this.beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
+      this.beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
+    }
+
 //For push notifications
   registerAppInServer(){
+    console.log('➡️ registerAppInServer');
     this.push.register().then((t: PushToken) => {
       return this.push.saveToken(t);
     }).then((t: PushToken) => {
@@ -154,4 +175,20 @@ export class MyApp {
        (err) => console.log('Geofence failed to add')
      );
   }
+
+  setUserAnalytics(){
+
+    console.log('➡️➡️➡️➡️➡️➡️ setUserAnalytics');
+    this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
+
+      console.log("➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️userAnalytics",user.val().profile, user.val().school)
+      //Añado los perfiles de usuario a analytics
+      this.firebaseAnalytics.setUserProperty("perfil_usuario", user.val().profile);
+      this.firebaseAnalytics.setUserProperty("centro_docente", user.val().school);
+
+      // this.firebaseAnalytics.setUserProperty("perfil_usuario", "docente");
+      // this.firebaseAnalytics.setUserProperty("centro_docente", "EETAC");
+
+    })
+    }
 }

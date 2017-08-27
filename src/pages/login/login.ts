@@ -19,6 +19,7 @@ export class LoginPage {
     public modalCtrl : ModalController,
     public toastCtrl: ToastController
     ) {
+      console.log('➡️ LoginPage');
   }
 
   ionViewDidLoad() {

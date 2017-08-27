@@ -6,7 +6,7 @@ import { AuthProvider } from '../auth/auth';
 export class FirebaseDbProvider {
 
   constructor(public afDB: AngularFireDatabase, public auth: AuthProvider) {
-    console.log('Hello FirebaseDbProvider Provider');
+    console.log('➡️ Firebase Provider📊');
   }
 
   //SETS
@@ -87,6 +87,12 @@ export class FirebaseDbProvider {
   getSpecificNews(newsID){
     return this.afDB.database.ref('noticias/' + newsID).once('value');
   }
+
+//Cojo los datos guardados de un usuario
+  getUserData(userKey){
+    return this.afDB.database.ref('users/'+userKey).once('value');
+  }
+
 
 
 
