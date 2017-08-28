@@ -62,20 +62,27 @@
       <ion-row>
         <ion-col col-12>
           <ion-item>
-            <ion-label floating>📧 Email</ion-label>
-            <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" max="100" required></ion-input>
+            <ion-label>Email:</ion-label>
+            <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" max="100" placeholder="nombre@upc.edu" required></ion-input>
+            <ion-icon name='mail' item-start color="dark"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
           <ion-item>
-            <ion-label floating>🔑 Contraseña</ion-label>
-            <ion-input [(ngModel)]="user.password" name="password" type="password" max="30" required></ion-input>
+            <ion-label >Contraseña:</ion-label>
+            <ion-input [(ngModel)]="user.password" name="password" type="password" max="30" placeholder="******" required></ion-input>
+            <ion-icon name='key' item-start color="dark"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
     </form>
+    <!-- <ion-row text-center>
+      <ion-col>
+        <img width="250" height="250" src="assets/img/logo_beaconsUPC.png"/>
+      </ion-col>
+    </ion-row> -->
 </ion-content>
 
 <ion-footer>

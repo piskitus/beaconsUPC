@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-row>
+      <ion-col col-5>
+        <button block *ngIf="!reminder.id" ion-button color="primary" outline (click)="crearRecordatorio()">
+            Crear Recorda...
+         </button>
+         <button block *ngIf="reminder.id" ion-button color="warning" outline (click)="guardarRecordatorio()">
+            Actualizar
+          </button>
+      </ion-col>
+      <ion-col col-5>
+        <button block *ngIf="reminder.id" ion-button color="danger" outline (click)="borrarRecordatorio(reminder.id)">
+          Eliminar
+         </button>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+         <ion-icon name="md-close"></ion-icon>
+       </button>
+      </ion-col>
+
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label floating>Título</ion-label>
+        <ion-input [(ngModel)]="reminder.title" name="title" type="text"  maxlength="30" required></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label floating>Descripción</ion-label>
+        <ion-textarea maxlength="100" rows="2" [(ngModel)]="reminder.description" name="description" type="text"  required></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label>¿Cuándo?</ion-label>
+        <ion-select [(ngModel)]="reminder.when" name="when" required>
+          <ion-option value="entrar">Entrar a la EETAC</ion-option>
+          <ion-option value="salir">Salir de la EETAC</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-content>

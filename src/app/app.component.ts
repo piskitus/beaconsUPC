@@ -36,14 +36,13 @@ export class MyApp {
     public toastCtrl: ToastController,
     ) {
 
+
+
       console.log('➡️ app component');
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-
-
-
 
 
       this.auth.Session.subscribe(session=>{
@@ -67,16 +66,10 @@ export class MyApp {
 
       });
 
+      this.whatchedGeofences();
 
-      // initialize the plugin of geofence
-      this.geofence.initialize().then(
-      // resolved promise does not return a value
-      () => {
-        console.log('Geofence Plugin Ready')
-        this.whatchedGeofences(); //Miro las geofences que tengo añadidas
-      },
-      (err) => console.log(err)
-      )
+
+
 
 
 
@@ -117,6 +110,24 @@ export class MyApp {
       });
   }
 
+  initializeGeofence(){
+    // initialize the plugin of geofence
+    this.geofence.initialize().then(
+    // resolved promise does not return a value
+    () => {
+      this.geofence.onNotificationClicked().subscribe(res => {
+                console.log("🔵🔵🔵🔵App opened from Geo Notification!");
+              },
+            (err)=> console.log("🔴error"),
+            ()=> console.log("🔴DONE"));
+
+      console.log('Geofence Plugin Ready')
+      this.addGeofence();
+    },
+    (err) => console.log(err)
+    )
+  }
+
 
 //Miro si ya tengo añadidas las geofences para no añadirlas 2 veces
   whatchedGeofences(){
@@ -131,7 +142,8 @@ export class MyApp {
           }
           else{//Si no detecto ninguna geofence, las inicializo
             console.log("No se han detectado geogences, las añado")
-            this.addGeofence();
+            this.initializeGeofence();
+
           }
         },
         (err) => {

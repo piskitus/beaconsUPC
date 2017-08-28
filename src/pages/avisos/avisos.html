@@ -1,12 +1,129 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Avisos</ion-title>
+    <ion-segment [(ngModel)]="segment" color="primary">
+      <ion-segment-button value="reminders">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="subjects">
+        <ion-icon name="school"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="news">
+        <ion-icon name="bookmarks"></ion-icon>
+      </ion-segment-button>
+      <!-- <ion-segment-button value="users">
+        <ion-icon name="contacts"></ion-icon>
+      </ion-segment-button> -->
+    </ion-segment>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <div [ngSwitch]="segment">
+    <ion-list *ngSwitchCase="'reminders'">
+      <ion-item-sliding #item *ngFor="let reminder of reminders">
+      <ion-item (click)="muestraRecordatorio(reminder)">
+        <h2>{{ reminder.title }} al {{reminder.when}}</h2>
+        <p>{{ reminder.description }}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarRecordatorio(reminder.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraRecordatorio(reminder)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'subjects'">
+      <!-- <ion-item-sliding #item *ngFor="let noticia of noticias">
+      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
+        <ion-thumbnail item-start>
+          <img src="assets/img/icon.png">
+        </ion-thumbnail>
+        <h2>{{ noticia.title }}</h2>
+        <p>{{ noticia.description }}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraNoticia(noticia)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding> -->
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'news'">
+      <!-- <ion-item-sliding #item *ngFor="let marker of markers">
+        <ion-item (click)="muestraMarcador(marker)">
+          <h2>{{ marker.title }}</h2>
+          <p>Lat: {{ marker.lat }}, Long: {{marker.lng}}</p>
+        </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarMarcador(marker.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraMarcador(marker)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding> -->
+    </ion-list>
+
+    <!-- <ion-list *ngSwitchCase="'users'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-duckling-1.jpg">
+        </ion-thumbnail>
+        <h2>Daffy</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-duckling-2.jpg">
+        </ion-thumbnail>
+        <h2>Huey</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-duckling-3.jpg">
+        </ion-thumbnail>
+        <h2>Dewey</h2>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-duckling-4.jpg">
+        </ion-thumbnail>
+        <h2>Louie</h2>
+      </ion-item>
+    </ion-list> -->
+  </div>
+
+<!--Botón flotante-->
+  <ion-fab right top edge>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list color="black">
+      <button ion-fab (tap)="nuevaNotificacion()"><ion-icon name="notifications"></ion-icon></button>
+      <!-- <button ion-fab (tap)="nuevaNoticia()"><ion-icon name="document"></ion-icon></button>
+      <button ion-fab (tap)="nuevoMarcador()"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab (tap)="nuevoUsuario()"><ion-icon name="person"></ion-icon></button> -->
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
+
+<!-- <ion-footer>
+  <ion-toolbar no-border-top>
+  </ion-toolbar>
+</ion-footer> -->

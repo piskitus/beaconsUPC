@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @Injectable()
 export class BeaconProvider {
@@ -15,7 +16,11 @@ export class BeaconProvider {
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
 
-  constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications) {
+
+  //Bases de datos
+  reminders:any;
+
+  constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications,public dbFirebase :FirebaseDbProvider) {
     console.log('➡️ Beacon provider🔆');
   }
 
@@ -49,7 +54,8 @@ export class BeaconProvider {
       this.delegate.didEnterRegion().subscribe(
         data => {
           console.log("🔵didEnterRegion: ", data.region.identifier);
-          this.setLocalNotification(data.region.identifier)
+          //this.setLocalNotification(data.region.identifier)
+          this.enterRegionDisplayNotifications();
           //this.regionChangeStatus(data.region.identifier, true);
         }
       );
@@ -162,12 +168,13 @@ export class BeaconProvider {
     return this.regionStatusInfo[0];
   }
 
-  setLocalNotification(region){
+  setLocalNotification(id, title, text){
     console.log("🔆 setLocalNotification")
     this.localNotifications.schedule({
-      id: 1,
-      title: ('Bienvenido a '+region),
-      text: 'Que pases un buen día!'
+      id: id,
+      title: title,
+      text: text,
+      icon: 'res://icon'
     });
   }
 
@@ -212,5 +219,32 @@ export class BeaconProvider {
       accuracy = Math.round(accuracy);
     }
     return accuracy;
+  }
+
+
+
+  enterRegionDisplayNotifications(){
+    //Cargo los datos de la BBDD
+    this.dbFirebase.getUserReminders().subscribe(reminders=>{
+      for (let id in reminders) {
+        let reminder = reminders[id];
+        if(reminder.when == 'entrar'){
+          console.log("entro en el if")
+          this.setLocalNotification(reminder.id, reminder.title, reminder.description);
+          reminder.title = 'cambiado';
+          this.dbFirebase.updateReminder(reminder);
+        }
+        console.log("reminder: ", reminder.when)
+
+      }
+      // let beacon = beacons[key];
+      // let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
+      // let age = (currentTimestamp - beacon.timestamp);
+      // let isWithinAgeLimit = age <= maxAge;
+      // if (isWithinRange && isWithinAgeLimit) {
+      //   displayableBeacons.push(beacon);
+      // }
+    })
+
   }
 }

@@ -38,6 +38,18 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('beacons/'+beacon.key).set(beacon)
   }
 
+  saveReminder(reminder){
+    if(!reminder.id){
+      reminder.id = Date.now(); //Le creo un ID único
+    }
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/reminders/'+reminder.id).set(reminder)
+  }
+
+  updateReminder(reminder){
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/reminders/'+reminder.id).update(reminder)
+
+  }
+
   // saveUserData(user){
   //   return this.afDB.database.ref('users/'+user.uid).set(user)
   // }
@@ -78,6 +90,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('regions');
   }
 
+  getUserReminders(){
+    return this.afDB.list('users/'+this.auth.getUser()+'/reminders')
+  }
+
 //Cojo el identificador de la noticia de un beacon concreto
   getNewsId(beaconKey){
     return this.afDB.database.ref('beacons/' + beaconKey).once('value');
@@ -91,6 +107,10 @@ export class FirebaseDbProvider {
 //Cojo los datos guardados de un usuario
   getUserData(userKey){
     return this.afDB.database.ref('users/'+userKey).once('value');
+  }
+
+  getUserReminder(reminderID){
+
   }
 
 
@@ -112,6 +132,11 @@ export class FirebaseDbProvider {
   public deleteBeacon(key){
         this.afDB.database.ref('beacons/'+key).remove();
   }
+
+  public deleteReminder(id){
+        this.afDB.database.ref('users/'+this.auth.getUser()+'/reminders/'+id).remove();
+  }
+
 
 
 
