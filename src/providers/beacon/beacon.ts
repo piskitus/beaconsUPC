@@ -48,19 +48,20 @@ export class BeaconProvider {
 
       this.delegate.didEnterRegion().subscribe(
         data => {
-          console.log("didEnterRegion: ", data.region.identifier);
-          //this.setLocalNotification(data.region.identifier)
+          console.log("🔵didEnterRegion: ", data.region.identifier);
+          this.setLocalNotification(data.region.identifier)
           //this.regionChangeStatus(data.region.identifier, true);
         }
       );
       this.delegate.didExitRegion().subscribe(
         data => {
-          console.log("didExitRegion: ", data.region.identifier);
+          console.log("🔴didExitRegion: ", data.region.identifier);
           //this.regionChangeStatus(data.region.identifier, false);
         }
       );
+
       //Inicio el monitoreo y el ranging
-      this.startRangingBeacons(this.region);
+      //🔴this.startRangingBeacons(this.region);
       this.startMonitoringBeacons(this.region);
   }
 

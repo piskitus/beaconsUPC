@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AlertController} from 'ionic-angular';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
 @Injectable()
 export class AuthProvider {
 
-  constructor(private afAuth :  AngularFireAuth, private alertCtrl: AlertController, private firebaseAnalytics: FirebaseAnalytics) {
+  constructor(private afAuth :  AngularFireAuth, private alertCtrl: AlertController) {
     console.log('➡️ AuthProvider🔑');
   }
 

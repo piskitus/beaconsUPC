@@ -28,9 +28,7 @@ export class ConfiguracionPage {
 
   cerrarSesion(){
       this.auth.logout();
-      this.push.unregister(); //Deshabilito las notificaciones push xq ha cerrado sesión
-      this.firebaseAnalytics.setUserProperty("perfil_usuario", null);
-      this.firebaseAnalytics.setUserProperty("centro_docente", null);
+
       //Dejo de buscar beacons
       //this.beaconProvider.stopBeaconMonitoring();
       //this.beaconProvider.stopBeaconRanging();
@@ -97,6 +95,11 @@ export class ConfiguracionPage {
     ]
   });
   alert.present();
+  }
+
+
+  disablePushNotifications(){
+    this.push.unregister();
   }
 
 }

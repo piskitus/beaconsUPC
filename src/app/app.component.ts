@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
@@ -11,12 +11,16 @@ import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   //rootPage:any = HomePage; //Se escribe sin comillas si viene de un import
   rootPage:any = 'LoginPage';//si ponemos comillas no necesitamos importarlo, se carga utilizando lazy loaded
+  user:any = {
+
+  };
 
   constructor(
     platform: Platform,
@@ -28,7 +32,9 @@ export class MyApp {
     private push: Push,
     private geofence: Geofence,
     public dbFirebase :FirebaseDbProvider,
-    private firebaseAnalytics: FirebaseAnalytics) {
+    private firebaseAnalytics: FirebaseAnalytics,
+    public toastCtrl: ToastController,
+    ) {
 
       console.log('➡️ app component');
 
@@ -43,10 +49,11 @@ export class MyApp {
       this.auth.Session.subscribe(session=>{
         if(session){
           console.log('➡️ redirect MisTabsPage');
+            this.toastSalutation();
             this.rootPage = 'MisTabsPage';
-            //this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
+            this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
             this.registerAppInServer();//Registro las notificaciones push
-            this.setUserAnalytics();//Obtengo los datos de usuario y cargo las Analytics
+
 
         }
           else{
@@ -89,9 +96,8 @@ export class MyApp {
 
       //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
-
-      //this.beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
-      this.beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
+      this.beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
+      //this.beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
     }
 
 //For push notifications
@@ -100,6 +106,7 @@ export class MyApp {
     this.push.register().then((t: PushToken) => {
       return this.push.saveToken(t);
     }).then((t: PushToken) => {
+      this.getUserAnalytics();//Cargo los datos de usuario
       console.log('Token saved:', t.token);
     });
 
@@ -176,19 +183,40 @@ export class MyApp {
      );
   }
 
-  setUserAnalytics(){
+  getUserAnalytics(){
+    let profile:string;
+    let school:string;
 
-    console.log('➡️➡️➡️➡️➡️➡️ setUserAnalytics');
     this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
-
-      console.log("➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️userAnalytics",user.val().profile, user.val().school)
-      //Añado los perfiles de usuario a analytics
-      this.firebaseAnalytics.setUserProperty("perfil_usuario", user.val().profile);
-      this.firebaseAnalytics.setUserProperty("centro_docente", user.val().school);
-
-      // this.firebaseAnalytics.setUserProperty("perfil_usuario", "docente");
-      // this.firebaseAnalytics.setUserProperty("centro_docente", "EETAC");
-
+      profile = user.val().profile;
+      school = user.val().school;
+      this.setUserAnalytics(profile, school);
     })
+  }
+
+    setUserAnalytics(profile, school){
+        //Añado los perfiles de usuario a analytics
+        this.firebaseAnalytics.setUserProperty("perfil_usuario", profile);
+        this.firebaseAnalytics.setUserProperty("centro_docente", school);
     }
+
+    toastSalutation(){
+      console.log("toastSalutation")
+      this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
+        this.user.name = user.val().name;
+        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 4000)
+      })
+    }
+
+    showToast(message:string, duration:number) {
+        let toast = this.toastCtrl.create({
+          message: message,
+          duration: duration,
+          position: 'top',
+        });
+        toast.present();
+      }
+
+
+
 }

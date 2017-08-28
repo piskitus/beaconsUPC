@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, ToastController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController  } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
@@ -17,7 +17,6 @@ export class LoginPage {
     public auth : AuthProvider,
     public alertCtrl : AlertController,
     public modalCtrl : ModalController,
-    public toastCtrl: ToastController
     ) {
       console.log('➡️ LoginPage');
   }
@@ -54,7 +53,6 @@ export class LoginPage {
     this.auth.loginUser(this.user.email, this.user.password)
     .then((user) => {
     //OK
-    this.showToast('Usuario correcto. Iniciando sesión...', 2000)
     }
     )
       .catch(err => {
@@ -108,16 +106,5 @@ export class LoginPage {
     });
     prompt.present();
   }
-
-
-
-  showToast(message:string, duration:number) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        duration: duration,
-        position: 'top'
-      });
-      toast.present();
-    }
 
 }
