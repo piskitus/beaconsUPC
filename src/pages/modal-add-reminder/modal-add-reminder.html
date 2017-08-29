@@ -2,16 +2,18 @@
 
   <ion-navbar>
     <ion-row>
-      <ion-col col-5>
-        <button block *ngIf="!reminder.id" ion-button color="primary" outline (click)="crearRecordatorio()">
-            Crear Recorda...
+      <ion-col col-10 *ngIf="!reminder.id">
+        <button block  ion-button color="primary" outline (click)="crearRecordatorio()">
+            Crear Recordatorio
          </button>
-         <button block *ngIf="reminder.id" ion-button color="warning" outline (click)="guardarRecordatorio()">
-            Actualizar
-          </button>
       </ion-col>
-      <ion-col col-5>
-        <button block *ngIf="reminder.id" ion-button color="danger" outline (click)="borrarRecordatorio(reminder.id)">
+      <ion-col col-5 *ngIf="reminder.id" >
+        <button block ion-button color="warning" outline (click)="guardarRecordatorio()">
+          Actualizar
+         </button>
+      </ion-col>
+      <ion-col col-5 *ngIf="reminder.id">
+        <button block  ion-button color="danger" outline (click)="borrarRecordatorio(reminder.id)">
           Eliminar
          </button>
       </ion-col>
@@ -53,5 +55,28 @@
         </ion-select>
       </ion-item>
     </ion-col>
+    <ion-col col-12>
+      <ion-item>
+        <ion-label>Periodo</ion-label>
+        <ion-select [(ngModel)]="reminder.period" name="period" required>
+          <ion-option value="once">Una única vez</ion-option>
+          <ion-option value="always">Cada día</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
   </ion-row>
+  <ion-card *ngIf="cardInfoShow && reminder.period == 'once'">
+  <ion-card-content>
+    <ion-row>
+      <ion-col col-10>
+      <p style="text-align: justify"> ℹ️ Con este periodo configurado el aviso se borrará de tu lista una vez se haya ejecutado la notificación. </p>
+      </ion-col>
+      <ion-col col-2 align-self-center>
+        <button ion-button large clear  icon-only (click)="closeCardInfo()">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
 </ion-content>

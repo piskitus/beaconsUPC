@@ -10,6 +10,7 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 export class ModalAddReminderPage {
 
   reminder: any;
+  cardInfoShow:boolean=true; //card de información
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
@@ -28,7 +29,9 @@ export class ModalAddReminderPage {
     let reminder = {
       title: this.reminder.title,
       description: this.reminder.description,
-      when: this.reminder.when
+      when: this.reminder.when,
+      period: this.reminder.period,
+      time: Date.now() - 28800000 //Le creo un time (milisegundos) y le resto 8horas para que ya pueda empezar a funcionar pasando el filtro del controller
     }
 
     this.dbFirebase.saveReminder(reminder).then(res=>{
@@ -42,7 +45,8 @@ export class ModalAddReminderPage {
       id: this.reminder.id,
       title: this.reminder.title,
       description: this.reminder.description,
-      when: this.reminder.when
+      when: this.reminder.when,
+      period: this.reminder.period
     }
     this.dbFirebase.updateReminder(reminder).then(res=>{
     console.log('Recordatorio modificada en firebase');
@@ -76,6 +80,10 @@ export class ModalAddReminderPage {
     });
 
     alert.present();
+  }
+
+  closeCardInfo(){
+    this.cardInfoShow = false;
   }
 
 }

@@ -16,6 +16,10 @@ export class BeaconProvider {
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
 
+  //Date.now() en el que entro o salgo de la región
+  enterRegionTime:number;
+  exitRegionTime:number;
+
 
   //Bases de datos
   reminders:any;
@@ -55,6 +59,7 @@ export class BeaconProvider {
         data => {
           console.log("🔵didEnterRegion: ", data.region.identifier);
           //this.setLocalNotification(data.region.identifier)
+          this.enterRegionTime = Date.now();
           this.enterRegionDisplayNotifications();
           //this.regionChangeStatus(data.region.identifier, true);
         }
@@ -224,26 +229,34 @@ export class BeaconProvider {
 
 
   enterRegionDisplayNotifications(){
+    console.log("Enter to display notifications");
     //Cargo los datos de la BBDD
     this.dbFirebase.getUserReminders().subscribe(reminders=>{
-      for (let id in reminders) {
-        let reminder = reminders[id];
-        if(reminder.when == 'entrar'){
-          console.log("entro en el if")
-          this.setLocalNotification(reminder.id, reminder.title, reminder.description);
-          reminder.title = 'cambiado';
-          this.dbFirebase.updateReminder(reminder);
+      let dateUpdate = Date.now()-10000;//le quito 10 segundos para entrar cuando se inicia la app
+      if(dateUpdate < this.enterRegionTime){
+        for (let id in reminders) {
+          let reminder = reminders[id];
+          if(reminder.when == 'entrar'){
+            if (reminder.period == 'once'){
+              this.setLocalNotification(reminder.id, reminder.title, reminder.description);
+              this.dbFirebase.deleteReminder(reminder.id); //Borro el recordatorio de la base de datos
+            }
+            else{//period == always
+              if((reminder.time + 28800000) < Date.now() ){//Si la última notificación +8h no supera el date now de ahora entro a notificar xq quiere decir que han pasado mínimo 8h desde la última notificación
+                this.setLocalNotification(reminder.id, reminder.title, reminder.description);
+                reminder.time = Date.now(); //Reinicializo el time para que no pueda volver a entrar hasta de aquí 8h como mínimo
+                this.dbFirebase.updateReminder(reminder);//Guardo en la Base de datos
+              }
+              else{
+                //Como no han pasado aún 8h no hago nada
+              }
+            }
+          }
         }
-        console.log("reminder: ", reminder.when)
-
       }
-      // let beacon = beacons[key];
-      // let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
-      // let age = (currentTimestamp - beacon.timestamp);
-      // let isWithinAgeLimit = age <= maxAge;
-      // if (isWithinRange && isWithinAgeLimit) {
-      //   displayableBeacons.push(beacon);
-      // }
+      else{
+        console.log("TIEMPO INCORRECTO")
+      }
     })
 
   }

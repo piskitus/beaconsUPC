@@ -47,7 +47,7 @@ export class FirebaseDbProvider {
 
   saveReminder(reminder){
     if(!reminder.id){
-      reminder.id = Date.now(); //Le creo un ID único
+      reminder.id = Date.now();
     }
     return this.afDB.database.ref('users/'+this.auth.getUser()+'/reminders/'+reminder.id).set(reminder)
   }
