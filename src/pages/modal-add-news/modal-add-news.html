@@ -53,13 +53,13 @@
 
 <ion-content>
   <ion-card [ngStyle]="{'background-color': noticia.color}">
-  <img src="assets/img/icon.png"/>
+  <img src="assets/img/logo_beaconsUPC.png"/>
   <ion-card-content>
     <ion-card-title>
-        <ion-input text-center maxlength="25" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+        <ion-input style="text-align: justify" maxlength="25" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
       </ion-card-title>
     <p>
-      <ion-textarea maxlength="140" rows="3" placeholder="📝 Descripción (máximo 140 caracteres)" [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
+      <ion-textarea style="text-align: justify" maxlength="140" rows="3" placeholder="📝 Descripción (máximo 140 caracteres)" [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
     </p>
   </ion-card-content>
   <ion-item>

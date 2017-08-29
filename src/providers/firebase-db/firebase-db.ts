@@ -9,19 +9,17 @@ export class FirebaseDbProvider {
     console.log('➡️ Firebase Provider📊');
   }
 
-  //SETS
-  guardaAlgo(algo){
-    if(!algo.id){
-      algo.id  = Date.now();//Nos devuelve los milisegundos transcurridos desde el 1 de enero de 1970 para que el ID nunca sea igual
-    }
-     return this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+algo.id).set(algo)
-  }
+  //SETS TO SAVE AND UPDATE
 
   saveMarker(marker){
     if(!marker.id){
       marker.id = Date.now(); //ID único
     }
      return this.afDB.database.ref('markers/'+marker.id).set(marker)
+  }
+
+  updateMarker(marker){
+    return this.afDB.database.ref('markers/'+marker.id).update(marker)
   }
 
   saveNews(news){
@@ -31,11 +29,20 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('noticias/'+news.id).set(news)
   }
 
+  updateNews(news){
+    return this.afDB.database.ref('noticias/'+news.id).update(news)
+  }
+
   saveBeacon(beacon){
     if(!beacon.key){
       beacon.key = beacon.uuid+":"+beacon.major+":"+beacon.minor;//Creo la clave única del beacon
     }
     return this.afDB.database.ref('beacons/'+beacon.key).set(beacon)
+  }
+
+  updateBeacon(beacon){
+    return this.afDB.database.ref('beacons/'+beacon.key).update(beacon)
+
   }
 
   saveReminder(reminder){
@@ -66,9 +73,6 @@ export class FirebaseDbProvider {
 
 
   //GETS
-  getAlgos(){
-    return this.afDB.list('algo/'+this.auth.getUser());
-  }
 
   getMarkers(){
     return this.afDB.list('markers');
@@ -105,8 +109,8 @@ export class FirebaseDbProvider {
   }
 
 //Cojo los datos guardados de un usuario
-  getUserData(userKey){
-    return this.afDB.database.ref('users/'+userKey).once('value');
+  getUserData(){
+    return this.afDB.database.ref('users/'+this.auth.getUser()).once('value');
   }
 
   getUserReminder(reminderID){
@@ -117,9 +121,6 @@ export class FirebaseDbProvider {
 
 
   //DELETES
-  borrarAlgo(id){
-      this.afDB.database.ref('algo/'+this.auth.getUser()+'/'+id).remove();
-  }
 
   public deleteNews(id){
         this.afDB.database.ref('noticias/'+id).remove();

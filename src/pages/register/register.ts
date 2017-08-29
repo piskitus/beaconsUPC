@@ -17,7 +17,8 @@ export class RegisterPage {
     profile: 'visitante',
     school: '',
     email: '',
-    password: ''
+    password: '',
+    admin: false //Para poder dar permisos diferentes a los que serán administradores
   };
 
   constructor(
@@ -38,6 +39,7 @@ export class RegisterPage {
     this.auth.registerUser(this.user.email, this.user.password)
       .then((user) => {
         //Guardo los datos del usuario en la base de datos de firebase
+        this.user.password = this.auth.getUser(); //Guardo en password la key que genera firebase para proteger los datos de usuario
         firebase.database().ref('users/'+this.auth.getUser()).set(this.user)
         //Cierro la vista para que me redirija a la pagina principal
         this.viewCtrl.dismiss();

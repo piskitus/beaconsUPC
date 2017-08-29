@@ -85,10 +85,10 @@ export class MapaPage {
 
   //Guardar en firebase
   firebaseSave(algo){
-    this.dbFirebase.guardaAlgo(algo).then(res=>{
-          console.log('Algo guardado en firebase:');
-          //this.cerrarModal();
-      });
+    // this.dbFirebase.guardaAlgo(algo).then(res=>{
+    //       console.log('Algo guardado en firebase:');
+    //       //this.cerrarModal();
+    //   });
   }
 
 

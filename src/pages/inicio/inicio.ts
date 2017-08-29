@@ -15,13 +15,14 @@ export class InicioPage {
 
   coords: any;
   nearBeaconMinor: number;
+  cardInfoShow:boolean = true;//Card de información principal visible al entrar
   // userProfile: any;
 
   nearBeaconKey:any;
   newsID:any;
   news:any = {
-    title: 'hola',
-    description: '¿Que tal?',
+    title: 'Bienvenido a BeaconsUPC',
+    description: 'Si quieres puedes minimizarme, yo seguiré trabajando en secreto 😜 ',
     color: 'white'
   };
 
@@ -32,7 +33,7 @@ export class InicioPage {
     title: 'hola',
     color: 'yellow',
     description: 'La magia está apunto de empezar',
-    image: 'assets/img/ibeacon_icon.png'
+    image: 'assets/img/logo_beaconsUPC.png'
   }
 
   beaconsInfo = [
@@ -41,42 +42,42 @@ export class InicioPage {
     title: 'hola',
     color: 'yellow',
     description: 'La magia está apunto de empezar',
-    image: 'assets/img/icon.png'
+    image: 'assets/img/logo_beaconsUPC.png'
   },
   {
     minor: 1,
     title: "Lorem ipsum dolor sit amet, co",
     color: "orange",
     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
-    image: "assets/img/icon.png",
+    image: "assets/img/logo_beaconsUPC.png",
   },
   {
     minor: 2,
     title: "Habitación de Nerea",
     color: "yellow",
     description: "Has entrado a la habitación de Nerea, holi!",
-    image: "assets/img/icon.png",
+    image: "assets/img/logo_beaconsUPC.png",
   },
   {
     minor: 3,
     title: "Habitación de Marc",
     color: "blue",
     description: "FUERA DE AQUÍ, esta es una zona restringida!",
-    image: "assets/img/icon.png",
+    image: "assets/img/logo_beaconsUPC.png",
   },
   {
     minor: 4,
     title: "Comedor",
     color: "green",
     description: "Has entrado al comedor, bienvenido!",
-    image: "assets/img/icon.png",
+    image: "assets/img/logo_beaconsUPC.png",
   },
   {
     minor: 5,
     title: "Cocina",
     color: "red",
     description: "Has entrado a la cocina, bienvenido!",
-    image: "assets/img/icon.png",
+    image: "assets/img/logo_beaconsUPC.png",
   }
 ];
 
@@ -179,6 +180,10 @@ swipeEvent(e) {
   else if(e.direction == '4'){//direction right
      this.navCtrl.parent.select(4);//Ajustes
   }
+}
+
+closeCardInfo(){
+  this.cardInfoShow = false;
 }
 
 }

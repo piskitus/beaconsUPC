@@ -17,10 +17,8 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 })
 export class MyApp {
   //rootPage:any = HomePage; //Se escribe sin comillas si viene de un import
-  rootPage:any = 'LoginPage';//si ponemos comillas no necesitamos importarlo, se carga utilizando lazy loaded
-  user:any = {
-
-  };
+  rootPage:any = 'LoginPage';//si ponemos comillas no necesitamos importarlo, se carga utilizando lazy loaded (hay que quitar LoginPage y poner LoadingPage cuando la cree)
+  user:any = {};
 
   constructor(
     platform: Platform,
@@ -52,6 +50,7 @@ export class MyApp {
             this.rootPage = 'MisTabsPage';
             this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
             this.registerAppInServer();//Registro las notificaciones push
+
 
 
         }
@@ -199,7 +198,7 @@ export class MyApp {
     let profile:string;
     let school:string;
 
-    this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
+    this.dbFirebase.getUserData().then((user)=>{
       profile = user.val().profile;
       school = user.val().school;
       this.setUserAnalytics(profile, school);
@@ -214,9 +213,9 @@ export class MyApp {
 
     toastSalutation(){
       console.log("toastSalutation")
-      this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
+      this.dbFirebase.getUserData().then((user)=>{
         this.user.name = user.val().name;
-        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 4000)
+        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 3000)
       })
     }
 

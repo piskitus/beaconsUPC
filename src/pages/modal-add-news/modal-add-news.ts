@@ -48,7 +48,7 @@ export class ModalAddNewsPage {
       description: this.noticia.description,
       color: this.noticia.color
     }
-    this.dbFirebase.saveNews(noticia).then(res=>{
+    this.dbFirebase.updateNews(noticia).then(res=>{
     console.log('Noticia modificada en firebase');
     this.cerrarModal();
     })

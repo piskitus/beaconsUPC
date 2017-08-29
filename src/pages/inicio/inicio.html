@@ -1,16 +1,11 @@
-<!--
-  Generated template for the InicioPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar>
     <ion-title>Inicio</ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <!-- <ion-content padding>
@@ -34,27 +29,42 @@
 
 <ion-content (swipe)="swipeEvent($event)">
 
-  <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
-  <!-- <img src="{{news.image}}"/> -->
+  <ion-card *ngIf="cardInfoShow">
   <ion-card-content>
-    <ion-card-title text-center>
-      {{news.title}}
+    <ion-row>
+      <ion-col col-10>
+      <p style="text-align: justify"> ℹ️ Si cierras la aplicación no podremos avisarte de todo lo que hayas programado en la pestaña de avisos. </p>
+      </ion-col>
+      <ion-col col-2 align-self-center>
+        <button ion-button large clear  icon-only (click)="closeCardInfo()">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
+
+  <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
+  <img src="assets/img/logo_beaconsUPC.png"/> <!--<img src="{{news.image}}"/>-->
+  <ion-card-content>
+    <ion-card-title> <!-- <ion-card-title text-center> -->
+      <span  style="text-align: justify">{{news.title}}</span>
       </ion-card-title>
-    <p>
+    <p  style="text-align: justify">
       {{news.description}}
     </p>
   </ion-card-content>
   <ion-row no-padding>
   <ion-col>
-    <button ion-button clear small color="danger" icon-start>
+    <button ion-button block color="dark" icon-start>
       <ion-icon name='star'></ion-icon>
-      Favorite
+      Guardar
     </button>
   </ion-col>
   <ion-col text-center>
-    <button ion-button clear small color="danger" icon-start>
-      <ion-icon name='musical-notes'></ion-icon>
-      Listen
+    <button ion-button block color="dark" icon-start>
+      <ion-icon name='information-circle'></ion-icon>
+      Ver más
     </button>
   </ion-col>
 </ion-row>

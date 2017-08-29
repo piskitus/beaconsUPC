@@ -49,16 +49,16 @@
     </ion-item>
     <ion-item>
       <ion-label>Noticia</ion-label>
-      <ion-select [(ngModel)]="beacon.news" name="news" required>
+      <ion-select [(ngModel)]="beacon.news" name="news">
         <ion-option value="null">Ninguna</ion-option>
-        <ion-option *ngFor="let new of news" value="{{new.id}}">{{new.title}}: {{new.description}}</ion-option>
+        <ion-option *ngFor="let new of news" value="{{new.id}}" required>{{new.title}}: {{new.description}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Marcador</ion-label>
-      <ion-select [(ngModel)]="beacon.marker" name="marker" required>
+      <ion-select [(ngModel)]="beacon.marker" name="marker">
         <ion-option value="null">Ninguno</ion-option>
-        <ion-option *ngFor="let marker of markers" value="{{marker.id}}">{{marker.title}}</ion-option>
+        <ion-option *ngFor="let marker of markers" value="{{marker.id}}" required>{{marker.title}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>

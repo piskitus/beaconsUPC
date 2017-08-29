@@ -51,7 +51,7 @@ export class ModalAddBeaconPage {
       title: this.beacon.title,
       description: this.beacon.description,
       news: this.beacon.news,
-      img: 'assets/img/ibks-105.png',
+      //img: 'assets/img/ibks-105.png',
       marker: this.beacon.marker
     }
 
@@ -72,10 +72,10 @@ export class ModalAddBeaconPage {
       title: this.beacon.title,
       description: this.beacon.description,
       news: this.beacon.news,
-      img: 'assets/img/ibks-105.png',
+      //img: 'assets/img/ibks-105.png',
       marker: this.beacon.marker
     }
-    this.dbFirebase.saveBeacon(beacon).then(res=>{
+    this.dbFirebase.updateBeacon(beacon).then(res=>{
     console.log('beacon modificado en firebase');
     this.cerrarModal();
     })

@@ -46,7 +46,7 @@ export class ModalAddMarkerPage {
       lng: this.marker.lng
       //Añadir img para seleccionar un tipo de marcador
     }
-    this.dbFirebase.saveMarker(marker).then(res=>{
+    this.dbFirebase.updateMarker(marker).then(res=>{
     console.log('Noticia modificada en firebase');
     this.cerrarModal();
     })

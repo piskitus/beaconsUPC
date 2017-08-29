@@ -15,6 +15,7 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 export class ConfiguracionPage {
 
   locationPermission:boolean = false;
+  adminPermission:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
   private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController,
@@ -23,6 +24,12 @@ export class ConfiguracionPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfiguracionPage');
+
+    //Cargo los permisos de administración del usuario para mostrarle o no el botón para acceder al panel de administración
+    this.dbFirebase.getUserData().then((user)=>{
+      this.adminPermission = user.val().admin;
+      console.log("Permisos de administrador: ", this.adminPermission)
+    })
 
   }
 
