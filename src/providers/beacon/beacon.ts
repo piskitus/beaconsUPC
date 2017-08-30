@@ -11,10 +11,15 @@ export class BeaconProvider {
   beacons = {};
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
+
+
   nearBeaconMinor:number = 0;
-  nearBeaconKey:any;
   BeaconMinorDetected1:number = null;//to do resilency
   BeaconMinorDetected2:number = null;
+
+  nearBeaconKey:any = null;
+  beaconKeyDetected1:number = null;
+  beaconKeyDetected2:number = null;
 
   //Date.now() en el que entro o salgo de la región
   enterRegionTime:number;
@@ -28,12 +33,10 @@ export class BeaconProvider {
     console.log('➡️ Beacon provider🔆');
   }
 
-  start(identifier, uuid): any {
+  start(identifier, uuid): any {//Inicializo los procesos de búsqueda de beacons
     console.log("🔆 start beacon provider")
     this.delegate = this.iBeacon.Delegate();// create a new delegate and register it with the native layer
-
     this.region = this.iBeacon.BeaconRegion(identifier, uuid);//Defino mi región (los parámetros vienen del app.component)
-
 
     // Subscribe to some of the delegate’s event handlers (detect beacons)
     this.delegate.didRangeBeaconsInRegion().subscribe(
@@ -57,6 +60,8 @@ export class BeaconProvider {
 
       this.delegate.didEnterRegion().subscribe(
         data => {
+          this.startRangingBeacons(this.region);//SI ENTRO EN LA REGIÓN EMPIEZO A BUSCAR BEACONS
+
           console.log("🔵didEnterRegion: ", data.region.identifier);
           //this.setLocalNotification(data.region.identifier)
           this.enterRegionTime = Date.now();
@@ -66,6 +71,7 @@ export class BeaconProvider {
       );
       this.delegate.didExitRegion().subscribe(
         data => {
+          this.stopBeaconRanging();//SI SALGO DE LA REGION DEJO DE BUSCAR BEACONS PARA NO SATURAR
           console.log("🔴didExitRegion: ", data.region.identifier);
           this.exitRegionTime = Date.now();
           this.enterRegionDisplayNotifications(false);
@@ -73,8 +79,7 @@ export class BeaconProvider {
         }
       );
 
-      //Inicio el monitoreo y el ranging
-      //🔴this.startRangingBeacons(this.region);
+      //Inicio el monitoreo (EL RANGING SE INICIA O SE PARA EN FUNCIÓN DEL MONITOREO: si entro en la región se inicia, si salgo se para)
       this.startMonitoringBeacons(this.region);
   }
 
@@ -107,9 +112,8 @@ export class BeaconProvider {
   }
 
   saveBeacons(data) {
-    console.log("🔆 saveBeacons")
-    let nearBeaconMinor
-    let nearBeaconKey
+    //console.log("🔆 saveBeacons")
+    let nearBeaconKey//Beacon más cercano
     let accuracy: number = 100.00;
         for (let beacon of data.beacons) {
           beacon.accuracy = this.calculateAccuracy(beacon.rssi, beacon.tx);
@@ -118,20 +122,19 @@ export class BeaconProvider {
           this.beacons[beacon.key] = beacon;
           //console.log("Beacon accuracy -> ", beacon.accuracy);
 
-          if (beacon.accuracy < accuracy){
+          if (beacon.accuracy < accuracy){//Función para detectar el beacon más cercano
             //console.log("Entro -> ", beacon.accuracy, " vs ", accuracy);
-            nearBeaconMinor = beacon.minor;
             nearBeaconKey = beacon.key;
             accuracy = beacon.accuracy;
           }
 
         }
         this.notifyBeaconStatusChanged();
-        this.beaconNearestHandle(nearBeaconMinor, nearBeaconKey);
+        this.beaconNearestHandle(nearBeaconKey);
   }
 
   notifyBeaconStatusChanged(): any {
-    console.log("🔆 notifyBeaconStatusChanged")
+    //console.log("🔆 notifyBeaconStatusChanged")
     //Para cada
     for (let beaconStatusChangedHandler of this.beaconStatusChangedHandlers) {
       beaconStatusChangedHandler(this.beacons);
@@ -154,7 +157,7 @@ export class BeaconProvider {
   }
 
   getNearBeaconKey(): any{
-    console.log("🔆 getNearBeaconKey")
+    console.log("🔆 getNearBeaconKey", this.nearBeaconKey)
     return this.nearBeaconKey;
   }
 
@@ -186,24 +189,22 @@ export class BeaconProvider {
   }
 
 //Función para determinar el beacon más cercano y guardarlo para mostrar la info en la pantalla de inicio
-  beaconNearestHandle(nearBeaconMinor, nearBeaconKey){
-    console.log("🔆 beaconNearestHandle")
-    if (this.BeaconMinorDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
-      this.nearBeaconMinor = nearBeaconMinor;
+  beaconNearestHandle(nearBeaconKey){
+    //console.log("🔆 beaconNearestHandle")
+    if (this.beaconKeyDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
       this.nearBeaconKey = nearBeaconKey;
     }
 
-    if(this.BeaconMinorDetected1 != null){//No entro con el primer beacon cercano detectado
-      this.BeaconMinorDetected2 = this.BeaconMinorDetected1; //Guardo el beacon cercano encontrado anteriormente
+    if(this.beaconKeyDetected1 != null){//No entro con el primer beacon cercano detectado
+      this.beaconKeyDetected2 = this.beaconKeyDetected1; //Guardo el beacon cercano encontrado anteriormente
     }
 
-    this.BeaconMinorDetected1 = nearBeaconMinor;//Guardo el beacon detectado ahora
+    this.beaconKeyDetected1 = nearBeaconKey;//Guardo el beacon detectado ahora
 
-    if(this.BeaconMinorDetected1 == this.BeaconMinorDetected2){//Esta función añade robustez por si no se detecta el beacon cercano por error o se detecta otro más cerca por error
-      this.nearBeaconMinor = nearBeaconMinor;//Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
-      this.nearBeaconKey = nearBeaconKey;
-    }                                                          // Tengo que detectar 2 veces seguidas un beacon como EL MÁS CERCANO para que lo elija como cercano
-
+    if(this.beaconKeyDetected1 == this.beaconKeyDetected2){//Esta función añade robustez por si no se detecta el beacon cercano por error o se detecta otro más cerca por error
+      this.nearBeaconKey = nearBeaconKey;                   //Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
+    }                                                        // Tengo que detectar 2 veces seguidas un beacon como EL MÁS CERCANO para que lo elija como cercano
+    console.log("🔴🔴NEARBEACONKEY: ",this.nearBeaconKey)
   }
 
   //Calculadora de proximidad

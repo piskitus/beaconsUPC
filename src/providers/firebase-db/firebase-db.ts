@@ -100,6 +100,7 @@ export class FirebaseDbProvider {
 
 //Cojo el identificador de la noticia de un beacon concreto
   getNewsId(beaconKey){
+    console.log("BEACON KEY QUE ME LLEGA: ",beaconKey)
     return this.afDB.database.ref('beacons/' + beaconKey).once('value');
   }
 

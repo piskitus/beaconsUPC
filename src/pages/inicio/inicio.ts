@@ -13,73 +13,20 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class InicioPage {
 
-  coords: any;
-  nearBeaconMinor: number;
+  //coords: any;
+  //nearBeaconMinor: number;
   cardInfoShow:boolean = true;//Card de información principal visible al entrar
   // userProfile: any;
 
-  nearBeaconKey:any;
-  newsID:any;
-  news:any = {
+  nearBeaconKey:any = null;
+  newsID:any = null;
+
+  news:any = { //Vista por defecto
     title: 'Bienvenido a BeaconsUPC',
-    description: 'Si quieres puedes minimizarme, yo seguiré trabajando en secreto 😜 ',
+    description: 'En esta vista irán apareciendo las noticias asociadas al beacon más cercano en el que te encuentres 😜 ',
     color: 'white'
   };
 
-
-
-  nearBeacon: any = {
-    minor: 0, //Plantilla que se muestra en la ventana principal
-    title: 'hola',
-    color: 'yellow',
-    description: 'La magia está apunto de empezar',
-    image: 'assets/img/logo_beaconsUPC.png'
-  }
-
-  beaconsInfo = [
-  {
-    minor: 0,
-    title: 'hola',
-    color: 'yellow',
-    description: 'La magia está apunto de empezar',
-    image: 'assets/img/logo_beaconsUPC.png'
-  },
-  {
-    minor: 1,
-    title: "Lorem ipsum dolor sit amet, co",
-    color: "orange",
-    description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
-    image: "assets/img/logo_beaconsUPC.png",
-  },
-  {
-    minor: 2,
-    title: "Habitación de Nerea",
-    color: "yellow",
-    description: "Has entrado a la habitación de Nerea, holi!",
-    image: "assets/img/logo_beaconsUPC.png",
-  },
-  {
-    minor: 3,
-    title: "Habitación de Marc",
-    color: "blue",
-    description: "FUERA DE AQUÍ, esta es una zona restringida!",
-    image: "assets/img/logo_beaconsUPC.png",
-  },
-  {
-    minor: 4,
-    title: "Comedor",
-    color: "green",
-    description: "Has entrado al comedor, bienvenido!",
-    image: "assets/img/logo_beaconsUPC.png",
-  },
-  {
-    minor: 5,
-    title: "Cocina",
-    color: "red",
-    description: "Has entrado a la cocina, bienvenido!",
-    image: "assets/img/logo_beaconsUPC.png",
-  }
-];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
     public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,
@@ -89,28 +36,38 @@ export class InicioPage {
       //Miro si la localización está activada
       this.isLocationEnabled();
 
-      // setInterval(() => { //Para definir un intervalo
-      //   this.nearBeaconKey = this.beaconProvider.getNearBeaconKey();
-      //
-      //   this.dbFirebase.getNewsId(this.nearBeaconKey).then((snapshot) => { //cojo de la base de datos el valor que hay en "news" para obtener el id de la noticia
-      //     this.newsID = snapshot.val().news
-      //   })
-      //
-      //   this.dbFirebase.getSpecificNews(this.newsID).then((snapshot)=>{
-      //     this.news.title = snapshot.val().title;
-      //     this.news.description = snapshot.val().description;
-      //     this.news.color = snapshot.val().color;
-      //   })
-      //
-      // }, 2500);//Cada 2,5 segundos
+      //TODO: que si salgo de la región me vuelva a mostrar la card principal
 
-      // setInterval(() => { //Para definir un intervalo
-      //   this.nearBeaconMinor = this.beaconProvider.getNearBeaconMinor();
-      //   //console.log("NEAR BEACON MINOR", this.nearBeaconMinor);
-      //   this.playWithNearestBeacon(this.nearBeaconMinor);
-      // }, 2500);//Cada 2,5 segundos
+      setInterval(() => { //Para definir un intervalo
+        let nearBeaconKey = this.beaconProvider.getNearBeaconKey();
 
-    });
+        if(nearBeaconKey != null && (nearBeaconKey != this.nearBeaconKey)){//Compruebo que no sean iguales para entrar (xq si son el mismo no necesito actualizar la noticia)
+          console.log("💚LOS BEACONSKEY SON DIFERENTES")
+          this.nearBeaconKey = nearBeaconKey;
+
+          if(this.nearBeaconKey != null){//Busco la noticia asociada al beacon
+            console.log("💚Entro al bucle xq detecto nearBeaconKey", this.nearBeaconKey)
+            this.dbFirebase.getNewsId(this.nearBeaconKey).then((snapshot) => { //cojo de la base de datos el valor que hay en "news" para obtener el id de la noticia
+              //console.log("news snapshot", snapshot.val().news)
+              let newsID = snapshot.val().news
+              //console.log("this.newsID", this.newsID)
+
+              if(newsID != null && (newsID != this.newsID)){//Cojo la noticia de la base de datos y le actualizo los campos (compruebo que la noticia sea diferente xq puede ser que muchos beacons tengan la misma y así me ahorro un acceso a la bbdd)
+                this.newsID = newsID;
+                console.log("💚Entro a newsID", this.newsID)
+                this.dbFirebase.getSpecificNews(this.newsID).then((snapshot)=>{
+                  this.news.title = snapshot.val().title;
+                  this.news.description = snapshot.val().description;
+                  this.news.color = snapshot.val().color;
+                  //console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.color)
+                })
+              }
+            })
+          }
+        }
+      }, 1000);//Cada 2 segundos
+
+    });//Cierro platformReady
 
   }
 
@@ -127,12 +84,11 @@ export class InicioPage {
 
 
   isLocationEnabled(){
-
     let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable);
-                                            if (!isAvailable){//Si no lo tiene activado le pido que lo active
-                                              this.activarUbicacion();
-                                            }
-                                              };
+                                              if (!isAvailable){//Si no lo tiene activado le pido que lo active
+                                                this.activarUbicacion();
+                                              }
+                                            };
     let errorCallback = (e) => console.error(e);
 
     this.diagnostic.isLocationAvailable().then(successCallback).catch(errorCallback);
@@ -146,7 +102,6 @@ export class InicioPage {
           () => {//El usuario acepta
             console.log('Request successful')
             //El usuario acepta
-
           },
           error => {//El usuario no acepta
             console.log('Error requesting location permissions', error)
@@ -154,23 +109,13 @@ export class InicioPage {
           }
         );
       }
-
     });
   }
 
   ionViewDidEnter(){
 
-    // this.dbFirebase.getAlgos().subscribe(algo=>{
-    //   this.coords = algo;
-    //   console.log("ALGO---> ", JSON.stringify(this.coords));
-    // })
-}
-
-playWithNearestBeacon(minor){
-  if(this.nearBeacon.minor != minor){
-    this.nearBeacon = this.beaconsInfo[minor];
   }
-}
+
 
 //Me muevo de vista al hacer swipe (se debe añadir en el html la siguiente función dentro de los componentes en los que quiero que funcione el swipe: (swipe)="swipeEvent($event)")
 swipeEvent(e) {
@@ -182,6 +127,7 @@ swipeEvent(e) {
   }
 }
 
+//Cierro la card informativa
 closeCardInfo(){
   this.cardInfoShow = false;
 }

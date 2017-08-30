@@ -62,6 +62,7 @@ export class MyApp {
 
       statusBar.styleDefault();
       splashScreen.hide();
+      statusBar.hide();//para ocultar la barra de notificaciones superior que aparece en android
 
       });
 
@@ -88,7 +89,7 @@ export class MyApp {
 
       //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
-      this.beaconProvider.start('Estimote','B9407F30-F5F8-466E-AFF9-25556B57FE6D');
+      this.beaconProvider.start('Estimote','b9407f30-f5f8-466e-aff9-25556b57fe6d');
       //this.beaconProvider.start('CASA','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
     }
 

@@ -1,4 +1,3 @@
-
 <!-- <ion-header>
 
   <ion-navbar>
@@ -8,92 +7,49 @@
 </ion-header> -->
 
 
-<!-- <ion-content padding>
-  <ion-list *ngFor="let c of coords">
-    {{c.lat}}
-    {{c.lng}}
-  </ion-list>
-
-</ion-content> -->
-
-<!-- <ion-content padding>
-  <ion-list *ngFor="let b of beaconsInfo">
-    {{b.title}}
-
-  </ion-list>
-</ion-content> -->
-
-<!-- <ion-content>
-  {{beaconsInfo[0].title}}
-</ion-content> -->
-
 <ion-content (swipe)="swipeEvent($event)">
 
   <ion-card *ngIf="cardInfoShow">
-  <ion-card-content>
-    <ion-row>
-      <ion-col col-10>
-      <p style="text-align: justify"> ℹ️ Si cierras la aplicación no podremos avisarte de todo lo que hayas programado en la pestaña de avisos. </p>
-      </ion-col>
-      <ion-col col-2 align-self-center>
-        <button ion-button large clear  icon-only (click)="closeCardInfo()">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-10>
+          <p style="text-align: justify"> ℹ️ Si cierras la aplicación no podremos avisarte de todo lo que hayas programado en la pestaña de avisos. </p>
+        </ion-col>
+        <ion-col col-2 align-self-center>
+          <button ion-button large clear icon-only (click)="closeCardInfo()">
           <ion-icon name="close-circle"></ion-icon>
         </button>
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
-</ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 
   <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
-  <img src="assets/img/logo_beaconsUPC.png"/> <!--<img src="{{news.image}}"/>-->
-  <ion-card-content>
-    <ion-card-title> <!-- <ion-card-title text-center> -->
-      <span  style="text-align: justify">{{news.title}}</span>
+    <img src="assets/img/logo_beaconsUPC.png" />
+    <!--<img src="{{news.image}}"/>-->
+    <ion-card-content>
+      <ion-card-title text-center>
+        <!-- <ion-card-title text-center> -->
+        <span style="text-align: justify">{{news.title}}</span>
       </ion-card-title>
-    <p  style="text-align: justify">
-      {{news.description}}
-    </p>
-  </ion-card-content>
-  <ion-row no-padding>
-  <ion-col>
-    <button ion-button block color="dark" icon-start>
+      <p style="text-align: justify">
+        {{news.description}}
+      </p>
+    </ion-card-content>
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button block color="dark" icon-start>
       <ion-icon name='star'></ion-icon>
       Guardar
     </button>
-  </ion-col>
-  <ion-col text-center>
-    <button ion-button block color="dark" icon-start>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button block color="dark" icon-start>
       <ion-icon name='information-circle'></ion-icon>
       Ver más
     </button>
-  </ion-col>
-</ion-row>
-</ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
-
-  <ion-card [ngStyle]="{'background-color': nearBeacon.color}" (swipe)="swipeEvent($event)">
-  <img src="{{nearBeacon.image}}"/>
-  <ion-card-content>
-    <ion-card-title text-center>
-      {{nearBeacon.title}}
-      </ion-card-title>
-    <p>
-      {{nearBeacon.description}}
-    </p>
-  </ion-card-content>
-  <ion-row no-padding>
-  <ion-col>
-    <button ion-button clear small color="danger" icon-start>
-      <ion-icon name='star'></ion-icon>
-      Favorite
-    </button>
-  </ion-col>
-  <ion-col text-center>
-    <button ion-button clear small color="danger" icon-start>
-      <ion-icon name='musical-notes'></ion-icon>
-      Listen
-    </button>
-  </ion-col>
-</ion-row>
-</ion-card>
 </ion-content>
