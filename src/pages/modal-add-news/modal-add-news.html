@@ -74,6 +74,14 @@
       <ion-option value="violet">💜 Violeta</ion-option>
     </ion-select>
   </ion-item>
+  <ion-item>
+  <ion-label>📅 Inicio de la noticia</ion-label>
+  <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMM YYYY HH mm" [(ngModel)]="noticia.startNews"></ion-datetime>
+</ion-item>
+  <ion-item>
+  <ion-label color="primary" floating>ℹ️ URL para más información</ion-label>
+  <ion-input [(ngModel)]="noticia.url"></ion-input>
+</ion-item>
 
 </ion-card>
 </ion-content>

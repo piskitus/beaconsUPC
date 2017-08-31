@@ -132,8 +132,15 @@ export class AdministracionPage {
 
   //MODALES QUE SE ABREN AL HACER CLICK EN LOS BOTONES DEL FAB
   nuevaNoticia(){
-   let modalNoticia = this.modalCtrl.create( 'ModalAddNewsPage'/*,this.coords Aquí puede ir info*/);
-   modalNoticia.present();
+  let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+
+  let newsDefault:any = {
+    color:'white',
+    startNews:(new Date(Date.now() - tzoffset)).toISOString().slice(0,-1),//Hora por defecto la actual
+    url: null
+    }
+    let modalNoticia = this.modalCtrl.create( 'ModalAddNewsPage', newsDefault);
+    modalNoticia.present();
   }
 
   nuevoBeacon(){

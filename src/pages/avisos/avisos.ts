@@ -12,6 +12,8 @@ export class AvisosPage {
   segment:string = "reminders";//Segmento por defecto
 
   reminders:any;
+  news:any;
+  //subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController,
               public dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController, public alertCtrl : AlertController) {
@@ -27,11 +29,11 @@ export class AvisosPage {
     this.dbFirebase.getUserReminders().subscribe(reminders=>{
       this.reminders = reminders;
     })
-    // this.dbFirebase.getBeacons().subscribe(beacons=>{
-    //   this.beacons = beacons;
-    // })
-    // this.dbFirebase.getMarkers().subscribe(markers=>{
-    //   this.markers = markers;
+    this.dbFirebase.getUserNews().subscribe(news=>{
+      this.news = news;
+    })
+    // this.dbFirebase.getSubjects().subscribe(subjects=>{
+    //   this.subjects = subjects;
     // })
 
   }
@@ -63,7 +65,31 @@ export class AvisosPage {
           text: 'Si',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
-               this.dbFirebase.deleteReminder(id);
+               this.dbFirebase.deleteUserReminder(id);
+           }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  borrarNoticia(id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás seguro?',
+      message: 'Una vez borrada ya no se podrá recuperar hasta que la vuelvas a detectar',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+               // AquÍ borramos la noticia de la base de datos
+               this.dbFirebase.deleteUserNews(id);
            }
         }
       ]

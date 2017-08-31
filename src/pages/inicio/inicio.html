@@ -32,21 +32,22 @@
         <!-- <ion-card-title text-center> -->
         <span style="text-align: justify">{{news.title}}</span>
       </ion-card-title>
-      <p style="text-align: justify">
-        {{news.description}}
-      </p>
+      <h3 style="text-align: justify">{{news.description}}</h3>
+      <ion-item *ngIf="news.startNews" no-lines text-center>
+        ▶️ Empieza el {{news.startNews | date:'dd/MM/yyyy - HH:mm'}}h
+      </ion-item>
     </ion-card-content>
-    <ion-row no-padding>
+    <ion-row no-padding *ngIf="news.id || news.url">
       <ion-col>
-        <button ion-button block color="dark" icon-start>
+        <button *ngIf="news.id" ion-button block color="dark" icon-start (click)=saveUserNews()>
       <ion-icon name='star'></ion-icon>
       Guardar
     </button>
       </ion-col>
       <ion-col text-center>
-        <button ion-button block color="dark" icon-start>
+        <button *ngIf="news.url" ion-button block color="dark" icon-start>
       <ion-icon name='information-circle'></ion-icon>
-      Ver más
+      Más info
     </button>
       </ion-col>
     </ion-row>

@@ -24,13 +24,17 @@ export class FirebaseDbProvider {
 
   saveNews(news){
     if(!news.id){
-      news.id = Date.now(); //Le creo un ID único
+      news.id = Date.now(); //Le creo un ID único que será la fecha de creación de esa notica
     }
-    return this.afDB.database.ref('noticias/'+news.id).set(news)
+    return this.afDB.database.ref('news/'+news.id).set(news)
+  }
+
+  saveUserNews(news){
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/news/'+news.id).set(news)
   }
 
   updateNews(news){
-    return this.afDB.database.ref('noticias/'+news.id).update(news)
+    return this.afDB.database.ref('news/'+news.id).update(news)
   }
 
   saveBeacon(beacon){
@@ -79,7 +83,7 @@ export class FirebaseDbProvider {
   }
 
   getNews(){
-    return this.afDB.list('noticias');
+    return this.afDB.list('news');
   }
 
   getUserEmail(){
@@ -98,6 +102,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('users/'+this.auth.getUser()+'/reminders')
   }
 
+  getUserNews(){
+    return this.afDB.list('users/'+this.auth.getUser()+'/news')
+  }
+
 //Cojo el identificador de la noticia de un beacon concreto
   getNewsId(beaconKey){
     console.log("BEACON KEY QUE ME LLEGA: ",beaconKey)
@@ -106,7 +114,7 @@ export class FirebaseDbProvider {
 
 //Cojo una noticia específica a partir de su identificador
   getSpecificNews(newsID){
-    return this.afDB.database.ref('noticias/' + newsID).once('value');
+    return this.afDB.database.ref('news/' + newsID).once('value');
   }
 
 //Cojo los datos guardados de un usuario
@@ -124,7 +132,7 @@ export class FirebaseDbProvider {
   //DELETES
 
   public deleteNews(id){
-        this.afDB.database.ref('noticias/'+id).remove();
+        this.afDB.database.ref('news/'+id).remove();
   }
 
   public deleteMarker(id){
@@ -135,8 +143,12 @@ export class FirebaseDbProvider {
         this.afDB.database.ref('beacons/'+key).remove();
   }
 
-  public deleteReminder(id){
+  public deleteUserReminder(id){
         this.afDB.database.ref('users/'+this.auth.getUser()+'/reminders/'+id).remove();
+  }
+
+  public deleteUserNews(id){
+        this.afDB.database.ref('users/'+this.auth.getUser()+'/news/'+id).remove();
   }
 
 

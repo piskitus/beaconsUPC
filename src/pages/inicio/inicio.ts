@@ -24,7 +24,8 @@ export class InicioPage {
   news:any = { //Vista por defecto
     title: 'Bienvenido a BeaconsUPC',
     description: 'En esta vista irán apareciendo las noticias asociadas al beacon más cercano en el que te encuentres 😜 ',
-    color: 'white'
+    color: 'white',
+    //url: 'https://github.com/piskitus/beaconsUPC/blob/master/README.md'
   };
 
 
@@ -59,6 +60,10 @@ export class InicioPage {
                   this.news.title = snapshot.val().title;
                   this.news.description = snapshot.val().description;
                   this.news.color = snapshot.val().color;
+                  this.news.id = snapshot.val().id;
+                  this.news.url = snapshot.val().url;
+                  this.news.startNews = snapshot.val().startNews;
+                  this.news.saveTime = Date.now(); //timestamp del momento en el que el usuario guardó la noticia para luego poder ordenarla en la vista
                   //console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.color)
                 })
               }
@@ -130,6 +135,14 @@ swipeEvent(e) {
 //Cierro la card informativa
 closeCardInfo(){
   this.cardInfoShow = false;
+}
+
+saveUserNews(){
+  this.dbFirebase.saveUserNews(this.news).then(res=>{
+          console.log('💛💛Noticia guardada correctamente en la pestaña de avisos');
+      })
+
+
 }
 
 }

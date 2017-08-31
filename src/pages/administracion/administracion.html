@@ -40,8 +40,11 @@
         <ion-thumbnail item-start>
           <img src="assets/img/logo_beaconsUPC.png">
         </ion-thumbnail>
-        <h2>{{ noticia.title }}</h2>
-        <p>{{ noticia.description }}</p>
+        <h1>{{ noticia.title }}</h1>
+        <h3>{{ noticia.description }}</h3>
+        <h5 *ngIf="!noticia.updateTime" style="float: left; background-color: #FFFFFF;">🆕 {{noticia.id | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
+        <h5 *ngIf="noticia.updateTime" style="float: left; background-color: #FFFFFF;">🔁 {{noticia.updateTime | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
+        <h5 style="float: left; background-color: #FFFFFF;">▶️ {{noticia.startNews | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>

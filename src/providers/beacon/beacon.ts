@@ -241,7 +241,7 @@ enterRegionDisplayNotifications(action:boolean){
       if (reminder.when == 'entrar' && action == true && (dateUpdate < this.enterRegionTime)) {//Si entro en la region
         if (reminder.period == 'once') {
           this.setLocalNotification(reminder.id, reminder.title, reminder.description);
-          this.dbFirebase.deleteReminder(reminder.id); //Borro el recordatorio de la base de datos
+          this.dbFirebase.deleteUserReminder(reminder.id); //Borro el recordatorio de la base de datos
         }
         else {//period == always
           if ((reminder.time + 28800000) < Date.now()) {//Si la última notificación +8h no supera el date now de ahora entro a notificar xq quiere decir que han pasado mínimo 8h desde la última notificación
@@ -254,7 +254,7 @@ enterRegionDisplayNotifications(action:boolean){
       else if(reminder.when == 'salir' && action == false && (dateUpdate < this.exitRegionTime)){
         if (reminder.period == 'once') {
           this.setLocalNotification(reminder.id, reminder.title, reminder.description);
-          this.dbFirebase.deleteReminder(reminder.id); //Borro el recordatorio de la base de datos
+          this.dbFirebase.deleteUserReminder(reminder.id); //Borro el recordatorio de la base de datos
         }
         else {//period == always
           if ((reminder.time + 28800000) < Date.now()) {//Si la última notificación +8h no supera el date now de ahora entro a notificar xq quiere decir que han pasado mínimo 8h desde la última notificación

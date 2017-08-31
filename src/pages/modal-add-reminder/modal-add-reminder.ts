@@ -71,7 +71,7 @@ export class ModalAddReminderPage {
           text: 'Si',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
-               this.dbFirebase.deleteReminder(id);
+               this.dbFirebase.deleteUserReminder(id);
                this.cerrarModal();
 
            }

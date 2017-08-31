@@ -39,14 +39,15 @@
       </ion-item-sliding>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'subjects'">
-      <!-- <ion-item-sliding #item *ngFor="let noticia of noticias">
+    <ion-list *ngSwitchCase="'news'">
+      <ion-item-sliding #item *ngFor="let noticia of news">
       <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
         <ion-thumbnail item-start>
           <img src="assets/img/icon.png">
         </ion-thumbnail>
-        <h2>{{ noticia.title }}</h2>
-        <p>{{ noticia.description }}</p>
+        <h1>{{ noticia.title }}</h1>
+        <h3>{{ noticia.description }}</h3>
+        <h5 style="float: left; background-color: #FFFFFF;">▶️ {{noticia.saveTime | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>
@@ -58,10 +59,10 @@
            Editar
         </button>
       </ion-item-options>
-      </ion-item-sliding> -->
+      </ion-item-sliding>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'news'">
+    <ion-list *ngSwitchCase="'subjects'">
       <!-- <ion-item-sliding #item *ngFor="let marker of markers">
         <ion-item (click)="muestraMarcador(marker)">
           <h2>{{ marker.title }}</h2>

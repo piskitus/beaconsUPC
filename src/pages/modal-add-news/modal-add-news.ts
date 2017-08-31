@@ -32,7 +32,9 @@ export class ModalAddNewsPage {
     let noticia = {
       title: this.noticia.title,
       description: this.noticia.description,
-      color: this.noticia.color
+      color: this.noticia.color,
+      url: this.noticia.url,
+      startNews: this.noticia.startNews
     }
 
     this.dbFirebase.saveNews(noticia).then(res=>{
@@ -46,7 +48,10 @@ export class ModalAddNewsPage {
       id: this.noticia.id,
       title: this.noticia.title,
       description: this.noticia.description,
-      color: this.noticia.color
+      color: this.noticia.color,
+      url: this.noticia.url,
+      startNews: this.noticia.startNews,
+      updateTime: Date.now()//Guardo la fecha de la última modificación de esta noticia
     }
     this.dbFirebase.updateNews(noticia).then(res=>{
     console.log('Noticia modificada en firebase');
