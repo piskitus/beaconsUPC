@@ -25,6 +25,7 @@ export class InicioPage {
     title: 'Bienvenido a BeaconsUPC',
     description: 'En esta vista irán apareciendo las noticias asociadas al beacon más cercano en el que te encuentres 😜 ',
     color: 'white',
+    marker: 'null'
     //url: 'https://github.com/piskitus/beaconsUPC/blob/master/README.md'
   };
 
@@ -63,6 +64,7 @@ export class InicioPage {
                   this.news.id = snapshot.val().id;
                   this.news.url = snapshot.val().url;
                   this.news.startNews = snapshot.val().startNews;
+                  this.news.marker = snapshot.val().marker;
                   this.news.saveTime = Date.now(); //timestamp del momento en el que el usuario guardó la noticia para luego poder ordenarla en la vista
                   //console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.color)
                 })

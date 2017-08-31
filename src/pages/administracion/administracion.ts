@@ -135,9 +135,10 @@ export class AdministracionPage {
   let tzoffset = (new Date()).getTimezoneOffset() * 60000;
 
   let newsDefault:any = {
-    color:'white',
+    color:'whitesmoke',
     startNews:(new Date(Date.now() - tzoffset)).toISOString().slice(0,-1),//Hora por defecto la actual
-    url: null
+    url: null,
+    marker: 'null'
     }
     let modalNoticia = this.modalCtrl.create( 'ModalAddNewsPage', newsDefault);
     modalNoticia.present();

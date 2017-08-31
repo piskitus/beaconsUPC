@@ -2,16 +2,18 @@
 
   <ion-navbar>
     <ion-row>
-      <ion-col col-5>
-        <button block *ngIf="!noticia.id" ion-button color="primary" outline (click)="crearNoticia()">
-            Crear Noticia
+      <ion-col col-10 *ngIf="!noticia.id">
+        <button block  ion-button color="primary" outline (click)="crearNoticia()">
+            Crear noticia o evento
          </button>
-         <button block *ngIf="noticia.id" ion-button color="warning" outline (click)="guardarNoticia()">
-            Actualizar
-          </button>
       </ion-col>
-      <ion-col col-5>
-        <button block *ngIf="noticia.id" ion-button color="danger" outline (click)="borrarNoticia(noticia.id)">
+      <ion-col col-5 *ngIf="noticia.id">
+        <button block  ion-button color="warning" outline (click)="guardarNoticia()">
+           Actualizar
+         </button>
+      </ion-col>
+      <ion-col col-5 *ngIf="noticia.id">
+        <button block  ion-button color="danger" outline (click)="borrarNoticia(noticia.id)">
           Eliminar
          </button>
       </ion-col>
@@ -56,17 +58,19 @@
   <img src="assets/img/logo_beaconsUPC.png"/>
   <ion-card-content>
     <ion-card-title text-center>
-        <ion-input style="text-align: justify" maxlength="25" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+        <ion-input maxlength="40" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
       </ion-card-title>
     <p>
-      <ion-textarea style="text-align: justify" maxlength="140" rows="3" placeholder="📝 Descripción (máximo 140 caracteres)" [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
+      <ion-textarea style="text-align: justify" maxlength="200" rows="4"
+    placeholder="📝 Descripción de la noticia o evento. Si no defines ubicación no mostraremos la fecha de inicio en la noticia porque supondremos que no es un evento"
+      [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
     </p>
   </ion-card-content>
   <ion-item>
     <ion-label>🏳️‍🌈 Color de fondo</ion-label>
     <ion-select [(ngModel)]="noticia.color" name="color">
-      <ion-option value="white">⚪ Blanco</ion-option>
-      <ion-option value="silver">⚫ Negro</ion-option>
+      <ion-option value="whitesmoke">⚪ Claro</ion-option>
+      <ion-option value="silver">⚫ Oscuro</ion-option>
       <ion-option value="salmon">❤️ Rojo</ion-option>
       <ion-option value="yellow">💛 Amarillo</ion-option>
       <ion-option value="lightgreen">💚 Verde</ion-option>
@@ -75,8 +79,15 @@
     </ion-select>
   </ion-item>
   <ion-item>
-  <ion-label>📅 Inicio de la noticia</ion-label>
+  <ion-label>📅 Inicio</ion-label>
   <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMM YYYY HH mm" [(ngModel)]="noticia.startNews"></ion-datetime>
+</ion-item>
+<ion-item>
+  <ion-label>📍 Ubicación</ion-label>
+  <ion-select [(ngModel)]="noticia.marker" name="marker">
+    <ion-option value="null">No definido</ion-option>
+    <ion-option *ngFor="let marker of markers" value="{{marker.id}}" required>{{marker.title}}</ion-option>
+  </ion-select>
 </ion-item>
   <ion-item>
   <ion-label color="primary" floating>ℹ️ URL para más información</ion-label>

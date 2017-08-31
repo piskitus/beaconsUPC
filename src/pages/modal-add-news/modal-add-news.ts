@@ -14,6 +14,7 @@ export class ModalAddNewsPage {
   // color: any = 'white';//color por defecto
 
   noticia: any;
+  markers: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
@@ -22,6 +23,13 @@ export class ModalAddNewsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalAddBeaconPage');
+  }
+  ionViewDidEnter(){//Cada vez que entro a administración
+    //Cargo los datos de la BBDD
+    this.dbFirebase.getMarkers().subscribe(markers=>{
+      this.markers = markers;
+    })
+
   }
 
   cerrarModal(){
@@ -34,7 +42,8 @@ export class ModalAddNewsPage {
       description: this.noticia.description,
       color: this.noticia.color,
       url: this.noticia.url,
-      startNews: this.noticia.startNews
+      startNews: this.noticia.startNews,
+      marker: this.noticia.marker
     }
 
     this.dbFirebase.saveNews(noticia).then(res=>{
@@ -51,6 +60,7 @@ export class ModalAddNewsPage {
       color: this.noticia.color,
       url: this.noticia.url,
       startNews: this.noticia.startNews,
+      marker: this.noticia.marker,
       updateTime: Date.now()//Guardo la fecha de la última modificación de esta noticia
     }
     this.dbFirebase.updateNews(noticia).then(res=>{
