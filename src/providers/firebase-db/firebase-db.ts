@@ -117,6 +117,10 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('news/' + newsID).once('value');
   }
 
+  getSpecificMarker(markerID){
+    return this.afDB.database.ref('markers/'+markerID).once('value');
+  }
+
 //Cojo los datos guardados de un usuario
   getUserData(){
     return this.afDB.database.ref('users/'+this.auth.getUser()).once('value');

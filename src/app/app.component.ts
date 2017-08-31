@@ -216,7 +216,7 @@ export class MyApp {
       console.log("toastSalutation")
       this.dbFirebase.getUserData().then((user)=>{
         this.user.name = user.val().name;
-        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 3000)
+        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 2000)
       })
     }
 

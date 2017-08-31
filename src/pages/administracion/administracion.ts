@@ -137,7 +137,7 @@ export class AdministracionPage {
   let newsDefault:any = {
     color:'whitesmoke',
     startNews:(new Date(Date.now() - tzoffset)).toISOString().slice(0,-1),//Hora por defecto la actual
-    url: null,
+    url: '',
     marker: 'null'
     }
     let modalNoticia = this.modalCtrl.create( 'ModalAddNewsPage', newsDefault);

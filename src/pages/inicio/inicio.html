@@ -33,7 +33,7 @@
         <h3 style="text-align: justify">{{news.description}}</h3>
       </ion-card-title>
 
-      <button *ngIf="news.marker != 'null'" text-center ion-button clear round icon-end large color="danger" style="background-color: white">
+      <button (click)=openNewsMarkerInMapButton(news.marker) *ngIf="news.marker != 'null'" text-center ion-button clear round icon-end large color="danger" style="background-color: white">
         <h1 style="color: black">{{news.startNews | date:'dd/MM/yyyy - HH:mm'}}h</h1>
         <ion-icon name='pin' is-active="false"></ion-icon>
       </button>
@@ -41,17 +41,17 @@
     </ion-card-content>
 
     <ion-row no-padding *ngIf="news.id || news.url">
+      <ion-col col-12 *ngIf="news.id && !news.url">
+        <button ion-button block color="dark" icon-start (click)=saveUserNews()>
+          <ion-icon name='star'></ion-icon>
+          Guardar
+        </button>
+      </ion-col>
       <ion-col col-6 *ngIf="news.id && news.url" >
         <button  ion-button block color="dark" icon-start (click)=saveUserNews()>
-      <ion-icon name='star'></ion-icon>
-      Guardar
-    </button>
-      </ion-col>
-      <ion-col col-12 *ngIf="!news.url">
-        <button *ngIf="news.id" ion-button block color="dark" icon-start (click)=saveUserNews()>
-      <ion-icon name='star'></ion-icon>
-      Guardar
-    </button>
+          <ion-icon name='star'></ion-icon>
+          Guardar
+        </button>
       </ion-col>
       <ion-col col-6 *ngIf="news.url">
         <button ion-button block color="dark" icon-start>

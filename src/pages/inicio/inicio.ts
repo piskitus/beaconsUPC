@@ -15,7 +15,7 @@ export class InicioPage {
 
   //coords: any;
   //nearBeaconMinor: number;
-  cardInfoShow:boolean = true;//Card de información principal visible al entrar
+  cardInfoShow:boolean = false;//Card de información principal visible al entrar
   // userProfile: any;
 
   nearBeaconKey:any = null;
@@ -72,7 +72,7 @@ export class InicioPage {
             })
           }
         }
-      }, 1000);//Cada 2 segundos
+      }, 1000);//Cada segundo
 
     });//Cierro platformReady
 
@@ -143,7 +143,14 @@ saveUserNews(){
   this.dbFirebase.saveUserNews(this.news).then(res=>{
           console.log('💛💛Noticia guardada correctamente en la pestaña de avisos');
       })
+}
 
+openNewsMarkerInMapButton(marker){
+
+  this.navCtrl.push('MapaPage', {
+      id: "123",
+      name: "Carl"
+    });
 
 }
 
