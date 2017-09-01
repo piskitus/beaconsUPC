@@ -98,6 +98,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('regions');
   }
 
+  getUsers(){
+    return this.afDB.list('users');
+  }
+
   getUserReminders(){
     return this.afDB.list('users/'+this.auth.getUser()+'/reminders')
   }
@@ -145,6 +149,10 @@ export class FirebaseDbProvider {
 
   public deleteBeacon(key){
         this.afDB.database.ref('beacons/'+key).remove();
+  }
+
+  public deleteUser(key){ // la key está guardada en el parámetro 'password' en la bbdd
+        this.afDB.database.ref('users/'+key).remove();
   }
 
   public deleteUserReminder(id){

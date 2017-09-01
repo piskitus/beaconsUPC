@@ -76,14 +76,14 @@ export class ModalAddNewsPage {
       message: 'Una vez borrada ya no se podrá recuperar',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteNews(id);

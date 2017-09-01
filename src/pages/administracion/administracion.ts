@@ -13,6 +13,7 @@ export class AdministracionPage {
   noticias:any;
   beacons:any;
   markers:any;
+  users:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController,
               public dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController, public alertCtrl : AlertController) {
@@ -32,6 +33,9 @@ export class AdministracionPage {
     })
     this.dbFirebase.getMarkers().subscribe(markers=>{
       this.markers = markers;
+    })
+    this.dbFirebase.getUsers().subscribe(users=>{
+      this.users = users;
     })
 
   }
@@ -88,14 +92,14 @@ export class AdministracionPage {
       message: 'Una vez borrado ya no se podrá recuperar',
       buttons: [
         {
-          text: 'No',
+          text: 'Aceptar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Cancelar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteBeacon(key);
@@ -112,14 +116,14 @@ export class AdministracionPage {
       message: 'Una vez borrado ya no se podrá recuperar',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteMarker(id);
@@ -129,6 +133,35 @@ export class AdministracionPage {
     });
     alert.present();
   }
+
+
+  borrarUsuarioBBDD(key){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás seguro?',
+      message: 'Solo se borrará el usuario de la base de datos. Para borrar el usuario del sistema contacta con el administrador principal',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+               // AquÍ borramos la noticia de la base de datos
+               this.dbFirebase.deleteUser(key);
+           }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
+
+
 
   //MODALES QUE SE ABREN AL HACER CLICK EN LOS BOTONES DEL FAB
   nuevaNoticia(){
