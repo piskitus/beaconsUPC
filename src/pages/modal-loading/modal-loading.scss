@@ -1,0 +1,52 @@
+page-modal-loading {
+
+  ion-spinner * {
+  stroke: #444;
+  fill: #222;
+}
+
+.centered-spinner-small {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -60px;
+}
+.centered-spinner-medium {
+    width: 164px;
+    height: 164px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -82px;
+    margin-left: -82px;
+}
+.centered-spinner-large {
+    width: 220px;
+    height: 220px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -110px;
+    margin-left: -110px;
+}
+
+.centered-img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+
+// img{
+//   margin: auto !important;
+//   display: block !important;
+//   align-items: center;
+//   vertical-align: middle;
+// }
+}

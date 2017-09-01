@@ -17,7 +17,7 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 })
 export class MyApp {
   //rootPage:any = HomePage; //Se escribe sin comillas si viene de un import
-  rootPage:any = 'LoginPage';//si ponemos comillas no necesitamos importarlo, se carga utilizando lazy loaded (hay que quitar LoginPage y poner LoadingPage cuando la cree)
+  rootPage:any = 'ModalLoadingPage';//si ponemos comillas no necesitamos importarlo, se carga utilizando lazy loaded (hay que quitar LoginPage y poner LoadingPage cuando la cree)
   user:any = {};
 
   constructor(
@@ -42,12 +42,20 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
+      statusBar.styleDefault();
+      splashScreen.hide();
+      statusBar.hide();//para ocultar la barra de notificaciones superior que aparece en android
+
 
       this.auth.Session.subscribe(session=>{
         if(session){
+
+          setTimeout(() => {
+            this.rootPage = 'MisTabsPage';
+          }, 3000);
+
           console.log('➡️ redirect MisTabsPage');
             this.toastSalutation();
-            this.rootPage = 'MisTabsPage';
             this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
             this.registerAppInServer();//Registro las notificaciones push
 
@@ -56,13 +64,12 @@ export class MyApp {
         }
           else{
             console.log('➡️ redirect LoginPage');
-            this.rootPage = 'LoginPage';
+            setTimeout(() => {
+              this.rootPage = 'LoginPage';
+            }, 3000);
+
           }
       });
-
-      statusBar.styleDefault();
-      splashScreen.hide();
-      statusBar.hide();//para ocultar la barra de notificaciones superior que aparece en android
 
       });
 
@@ -216,7 +223,7 @@ export class MyApp {
       console.log("toastSalutation")
       this.dbFirebase.getUserData().then((user)=>{
         this.user.name = user.val().name;
-        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 2000)
+        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 3000)
       })
     }
 
@@ -225,6 +232,7 @@ export class MyApp {
           message: message,
           duration: duration,
           position: 'top',
+          dismissOnPageChange: true
         });
         toast.present();
       }
