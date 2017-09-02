@@ -110,22 +110,22 @@ export class MapaPage {
 //
 // }
 
-chargeMarkersIntoMap(){
-  console.log("ENTRO A CARGAR MARKERS", this.markers[0].lat);
-  for(let i = 0; i < this.markers.length; i++){
-    console.log("ENTRO EN EL FOR")
-    let coords = new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng);
-    let marker = new google.maps.Marker({
-              icon : 'assets/img/markers/pin_icon.png',
-              //map: this.map,
-              position: coords,
-              title: this.markers[i].title
-          });
-
-      marker.setMap(this.map);
-      }
-
-  }
+// chargeMarkersIntoMap(){
+//   console.log("ENTRO A CARGAR MARKERS", this.markers[0].lat);
+//   for(let i = 0; i < this.markers.length; i++){
+//     console.log("ENTRO EN EL FOR")
+//     let coords = new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng);
+//     let marker = new google.maps.Marker({
+//               icon : 'assets/img/markers/pin_icon.png',
+//               //map: this.map,
+//               position: coords,
+//               title: this.markers[i].title
+//           });
+//
+//       marker.setMap(this.map);
+//       }
+//
+//   }
 
 
 
@@ -139,7 +139,7 @@ getBeaconsMarkers(){
           let title = snapshot.val().title;
           let lat = snapshot.val().lat;
           let lng = snapshot.val().lng;
-          this.chargeMarkerIntoMap(title,lat,lng, 'assets/img/markers/ibks.png'); //Le paso el icono de beacon
+          this.chargeMarkerIntoMap(title,lat,lng, 'assets/img/markers/marker_negro_ibks.png'); //Le paso el icono de beacon
         })
       }
       else{}
@@ -163,7 +163,7 @@ markerUserInterval(){
  //this.chargeMarkerIntoMap('userMarker', this.coords.lat, this.coords.lng, 'assets/img/markers/logo_location_user.png')
  let LatLng = new google.maps.LatLng(this.coords.lng, this.coords.lng);
   this.userMarker = new google.maps.Marker({
-    icon: 'assets/img/markers/logo_location_user.png',
+    icon: 'assets/img/markers/marker_azul_ibks.png',
     position: LatLng,
     title: 'userMarker'
   });

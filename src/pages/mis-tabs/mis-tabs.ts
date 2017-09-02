@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-/**
- * Generated class for the MyTabsPage tabs.
- *
- * See https://angular.io/docs/ts/latest/guide/dependency-injection.html for
- * more info on providers and Angular DI.
- */
 
 @IonicPage()
 @Component({
@@ -22,6 +16,8 @@ export class MisTabsPage {
   configuracionRoot = 'ConfiguracionPage'
 
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {
+
+  }
 
 }

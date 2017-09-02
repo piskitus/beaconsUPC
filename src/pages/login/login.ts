@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController  } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
 @Component({
@@ -17,8 +18,10 @@ export class LoginPage {
     public auth : AuthProvider,
     public alertCtrl : AlertController,
     public modalCtrl : ModalController,
+    statusBar: StatusBar
     ) {
       console.log('➡️ LoginPage');
+      statusBar.backgroundColorByName("lightGray");
   }
 
   ionViewDidLoad() {

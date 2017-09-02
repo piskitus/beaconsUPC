@@ -42,22 +42,25 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
-      statusBar.styleDefault();
-      splashScreen.hide();
-      statusBar.hide();//para ocultar la barra de notificaciones superior que aparece en android
+      // pongo el color del toast para que se vea bien cuando aparezca
+      statusBar.backgroundColorByHexString("#323232");
+
+      //statusBar.hide(); // para ocultar la barra de notificaciones superior que aparece en android
 
 
       this.auth.Session.subscribe(session=>{
         if(session){
 
           setTimeout(() => {
+            splashScreen.hide();
             this.rootPage = 'MisTabsPage';
+
           }, 3000);
 
           console.log('➡️ redirect MisTabsPage');
-            this.toastSalutation();
-            this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
-            this.registerAppInServer();//Registro las notificaciones push
+          this.toastSalutation();
+          this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
+          this.registerAppInServer();//Registro las notificaciones push
 
 
 
@@ -65,6 +68,7 @@ export class MyApp {
           else{
             console.log('➡️ redirect LoginPage');
             setTimeout(() => {
+              splashScreen.hide();
               this.rootPage = 'LoginPage';
             }, 3000);
 
