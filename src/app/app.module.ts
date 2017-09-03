@@ -14,6 +14,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Geofence } from '@ionic-native/geofence';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 import { MyApp } from './app.component';
@@ -82,7 +83,8 @@ const cloudSettings: CloudSettings = {
     LocationAccuracy,
     FirebaseDbProvider,
     Geofence,
-    FirebaseAnalytics
+    FirebaseAnalytics,
+    InAppBrowser
   ]
 })
 export class AppModule {}

@@ -26,6 +26,7 @@
         "@ionic-native/geofence": "^4.1.0",
         "@ionic-native/geolocation": "^4.1.0",
         "@ionic-native/ibeacon": "^4.1.0",
+        "@ionic-native/in-app-browser": "^4.2.1",
         "@ionic-native/local-notifications": "^4.1.0",
         "@ionic-native/location-accuracy": "^4.1.0",
         "@ionic-native/splash-screen": "3.12.1",
@@ -45,6 +46,7 @@
         "cordova-plugin-geofence": "^0.7.0",
         "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-ibeacon": "^3.4.0",
+        "cordova-plugin-inappbrowser": "^1.7.1",
         "cordova-plugin-request-location-accuracy": "^2.2.1",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
@@ -89,7 +91,8 @@
             "cordova.plugins.diagnostic": {},
             "cordova-plugin-request-location-accuracy": {},
             "cordova-plugin-geofence": {},
-            "cordova-plugin-firebase-analytics": {}
+            "cordova-plugin-firebase-analytics": {},
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
             "android"

@@ -5,7 +5,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { BeaconProvider } from '../../providers/beacon/beacon';
 import { AuthProvider } from '../../providers/auth/auth';
-import { StatusBar } from '@ionic-native/status-bar';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 @IonicPage()
 @Component({
@@ -33,15 +34,11 @@ export class InicioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
     public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,
-    public beaconProvider: BeaconProvider, private auth: AuthProvider, statusBar: StatusBar) {
+    public beaconProvider: BeaconProvider, private auth: AuthProvider, private iab: InAppBrowser) {
 
 
 
     platform.ready().then(() => {
-
-      setTimeout(() => {
-        statusBar.backgroundColorByName("lightGray");
-      }, 500);
 
 
       //Miro si la localización está activada
@@ -155,11 +152,15 @@ saveUserNews(){
 }
 
 openNewsMarkerInMapButton(marker){
-
   this.navCtrl.push('MapaPage', {
       id: "123",
       name: "Carl"
     });
+}
+
+openURL(newsURL){
+
+  const browser = this.iab.create(newsURL, '_self','location=no,zoom=no' );
 
 }
 

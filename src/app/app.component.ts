@@ -43,7 +43,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
       // pongo el color del toast para que se vea bien cuando aparezca
-      statusBar.backgroundColorByHexString("#323232");
+      statusBar.backgroundColorByHexString("#333");
 
       //statusBar.hide(); // para ocultar la barra de notificaciones superior que aparece en android
 
@@ -61,9 +61,6 @@ export class MyApp {
           this.toastSalutation();
           this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
           this.registerAppInServer();//Registro las notificaciones push
-
-
-
         }
           else{
             console.log('➡️ redirect LoginPage');
@@ -71,6 +68,8 @@ export class MyApp {
               splashScreen.hide();
               this.rootPage = 'LoginPage';
             }, 3000);
+
+            this.showToast(' Bienvenid@  a  beaconsUPC  👋😀', 2000)
 
           }
       });
@@ -227,15 +226,15 @@ export class MyApp {
       console.log("toastSalutation")
       this.dbFirebase.getUserData().then((user)=>{
         this.user.name = user.val().name;
-        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 3000)
+        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 2000)
       })
     }
 
     showToast(message:string, duration:number) {
         let toast = this.toastCtrl.create({
           message: message,
-          duration: duration,
           position: 'top',
+          duration: duration,
           dismissOnPageChange: true
         });
         toast.present();

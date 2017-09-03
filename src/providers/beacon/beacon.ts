@@ -12,11 +12,6 @@ export class BeaconProvider {
   beaconStatusChangedHandlers = [];
   regionStatusInfo = {};
 
-
-  nearBeaconMinor:number = 0;
-  BeaconMinorDetected1:number = null;//to do resilency
-  BeaconMinorDetected2:number = null;
-
   nearBeaconKey:any = null;
   beaconKeyDetected1:number = null;
   beaconKeyDetected2:number = null;
@@ -152,10 +147,6 @@ export class BeaconProvider {
     return this.beacons;
   };
 
-  getNearBeaconMinor(): any{
-    return this.nearBeaconMinor;
-  }
-
   getNearBeaconKey(): any{
     console.log("🔆 getNearBeaconKey", this.nearBeaconKey)
     return this.nearBeaconKey;
@@ -190,21 +181,23 @@ export class BeaconProvider {
 
 //Función para determinar el beacon más cercano y guardarlo para mostrar la info en la pantalla de inicio
   beaconNearestHandle(nearBeaconKey){
-    //console.log("🔆 beaconNearestHandle")
-    if (this.beaconKeyDetected2 == null){ //Entro sólo cuando detecto el primer beacon porque a partir del segundo ya este valor no será null y tendrá que pasar el filtro
+    // función para añadir los beacons de resilencia.
+    if (this.beaconKeyDetected2 == null && this.beaconKeyDetected1 == null){ // mientras los dos sean null solo guardo el detectado en el 1 (hasta q el 1 no sea != null no se hace nada)
+      this.beaconKeyDetected1 = nearBeaconKey;
+    }
+    else{// entro cuando el 1 ya no es null y guardo 1 y 2
+      this.beaconKeyDetected2 = this.beaconKeyDetected1; //Guardo el beacon cercano encontrado anteriormente en 2
+      this.beaconKeyDetected1 = nearBeaconKey;//Guardo el beacon detectado ahora en 1
+    }
+
+    // función para guardar el beacon cercano (solo si el 1 y el 2 son iguales y diferentes a 2)
+    if(this.beaconKeyDetected1 == this.beaconKeyDetected2 && this.beaconKeyDetected1 != null && this.beaconKeyDetected2 != null){
       this.nearBeaconKey = nearBeaconKey;
     }
-
-    if(this.beaconKeyDetected1 != null){//No entro con el primer beacon cercano detectado
-      this.beaconKeyDetected2 = this.beaconKeyDetected1; //Guardo el beacon cercano encontrado anteriormente
+    else{
+      // 1 y 2 no son iguales o alguno de los dos vale null
     }
 
-    this.beaconKeyDetected1 = nearBeaconKey;//Guardo el beacon detectado ahora
-
-    if(this.beaconKeyDetected1 == this.beaconKeyDetected2){//Esta función añade robustez por si no se detecta el beacon cercano por error o se detecta otro más cerca por error
-      this.nearBeaconKey = nearBeaconKey;                   //Si el beacon cercano de antes no es el mismo que el de ahora, no guardo el beacon cercano como verdadero
-    }                                                        // Tengo que detectar 2 veces seguidas un beacon como EL MÁS CERCANO para que lo elija como cercano
-    console.log("🔴🔴NEARBEACONKEY: ",this.nearBeaconKey)
   }
 
   //Calculadora de proximidad
