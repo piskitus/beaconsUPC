@@ -83,6 +83,28 @@
       </ion-item-sliding>
     </ion-list>
 
+    <ion-list *ngSwitchCase="'chats'">
+      <ion-item-sliding #item *ngFor="let chat of chats">
+        <ion-item (click)="muestraChat(chat)">
+          <ion-avatar item-start>
+            <!-- <img src="{{beacon.img}}"> -->
+          </ion-avatar>
+          <h2>{{ chat.title }}</h2>
+          <p>{{chat.description}}</p>
+        </ion-item>
+      <ion-item-options side="right">
+        <button ion-button  color="danger" (click)="borrarChat(chat.id)"><ion-icon name="trash"></ion-icon>
+           Borrar
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button  color="warning" (click)="muestraChat(chat)"><ion-icon name="md-create"></ion-icon>
+           Editar
+        </button>
+      </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
     <ion-list *ngSwitchCase="'users'">
       <ion-item-sliding #item *ngFor="let user of users">
         <ion-item [ngClass]="{'itemColor' : (user.admin == true)}" > <!-- [ngClass]="itemColor: user.admin == true"-->
@@ -120,7 +142,7 @@
       <button ion-fab (tap)="nuevoBeacon()"><ion-icon name="logo-rss"></ion-icon></button>
       <button ion-fab (tap)="nuevaNoticia()"><ion-icon name="document"></ion-icon></button>
       <button ion-fab (tap)="nuevoMarcador()"><ion-icon name="locate"></ion-icon></button>
-      <button ion-fab (tap)="nuevoUsuario()"><ion-icon name="person"></ion-icon></button>
+      <button ion-fab (tap)="nuevoChat()"><ion-icon name="ios-chatbubbles"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 
@@ -130,16 +152,19 @@
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="segment" color="dark">
       <ion-segment-button value="beacons">
-        <ion-icon name="ios-radio-outline"></ion-icon>
+        <ion-icon name="md-wifi"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="news">
-        <ion-icon name="bookmarks"></ion-icon>
+        <ion-icon name="md-bookmarks"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="markers">
-        <ion-icon name="pin"></ion-icon>
+        <ion-icon name="md-pin"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="chats">
+        <ion-icon name="ios-chatbubbles"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="users">
-        <ion-icon name="contacts"></ion-icon>
+        <ion-icon name="md-people"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

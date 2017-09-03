@@ -13,6 +13,7 @@ export class AdministracionPage {
   noticias:any;
   beacons:any;
   markers:any;
+  chats:any;
   users:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController,
@@ -33,6 +34,9 @@ export class AdministracionPage {
     })
     this.dbFirebase.getMarkers().subscribe(markers=>{
       this.markers = markers;
+    })
+    this.dbFirebase.getChats().subscribe(chats=>{
+      this.chats = chats;
     })
     this.dbFirebase.getUsers().subscribe(users=>{
       this.users = users;
@@ -56,9 +60,13 @@ export class AdministracionPage {
   }
 
   muestraMarcador(marker){
-  // aquí vamos a abrir el modal para añadir nuestro sitio.
    let modalMarker = this.modalCtrl.create( 'ModalAddMarkerPage', marker);
    modalMarker.present();
+  }
+
+  muestraChat(chat){
+   let modal = this.modalCtrl.create( 'ModalAddChatPage', chat);
+   modal.present();
   }
 
 
@@ -68,14 +76,14 @@ export class AdministracionPage {
       message: 'Una vez borrada ya no se podrá recuperar',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteNews(id);
@@ -159,6 +167,30 @@ export class AdministracionPage {
     alert.present();
   }
 
+  borrarChat(id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás seguro?',
+      message: 'Se perderán todos los mensajes del chat',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+               // AquÍ borramos la noticia de la base de datos
+               this.dbFirebase.deleteNews(id);
+           }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
 
 
@@ -178,13 +210,18 @@ export class AdministracionPage {
   }
 
   nuevoBeacon(){
-   let modalBeacon = this.modalCtrl.create( 'ModalAddBeaconPage'/*,this.coords Aquí puede ir info*/);
+   let modalBeacon = this.modalCtrl.create( 'ModalAddBeaconPage'/*, Aquí puede ir info*/);
    modalBeacon.present();
   }
 
   nuevoMarcador(){
-   let modalMarcador = this.modalCtrl.create( 'ModalAddMarkerPage'/*,this.coords Aquí puede ir info*/);
+   let modalMarcador = this.modalCtrl.create( 'ModalAddMarkerPage'/*, Aquí puede ir info*/);
    modalMarcador.present();
+  }
+
+  nuevoChat(){
+   let modal = this.modalCtrl.create( 'ModalAddChatPage'/*, Aquí puede ir info*/);
+   modal.present();
   }
 
 }

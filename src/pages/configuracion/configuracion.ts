@@ -109,4 +109,12 @@ export class ConfiguracionPage {
     this.push.unregister();
   }
 
+
+// se borrará en breve, solo es una demo
+  demoChat(){
+    let modal = this.modalCtrl.create( 'ChatViewPage'/*, datos*/);
+    modal.present();
+
+  }
+
 }

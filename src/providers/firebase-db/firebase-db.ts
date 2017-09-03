@@ -61,6 +61,8 @@ export class FirebaseDbProvider {
 
   }
 
+
+
   // saveUserData(user){
   //   return this.afDB.database.ref('users/'+user.uid).set(user)
   // }
@@ -109,6 +111,7 @@ export class FirebaseDbProvider {
   getUserNews(){
     return this.afDB.list('users/'+this.auth.getUser()+'/news')
   }
+
 
 //Cojo el identificador de la noticia de un beacon concreto
   getNewsId(beaconKey){
@@ -162,6 +165,56 @@ export class FirebaseDbProvider {
   public deleteUserNews(id){
         this.afDB.database.ref('users/'+this.auth.getUser()+'/news/'+id).remove();
   }
+
+
+
+
+
+  ////////////////////////////////////////////////
+  ////////////        CHATS         //////////////
+  ////////////////////////////////////////////////
+
+  createChat(chat){
+    if(!chat.id){
+      chat.id = Date.now();
+    }
+    return this.afDB.database.ref('chats/'+chat.id).set(chat)
+  }
+
+  updateChat(chat){
+    return this.afDB.database.ref('chats/'+chat.id).update(chat)
+  }
+
+  getChats(){
+    return this.afDB.list('chats/')
+  }
+
+  getSpecificChat(chatID){
+    return this.afDB.database.ref('chats/'+chatID).once('value');
+  }
+
+  public deleteChat(id){
+        this.afDB.database.ref('chats/'+id).remove();
+  }
+
+
+  ////////////////////////////////////////////////
+  ////////////     CHAT MESSAGES    //////////////
+  ////////////////////////////////////////////////
+
+  createChatMessage(chatID, message){
+    if(!message.id){
+      message.id = Date.now();
+    }
+    return this.afDB.database.ref('chats/'+chatID+'/messages/'+message.id).set(message)    
+  }
+
+  getMessagesFromChat(chatID){
+    return this.afDB.list('chats/'+chatID+'/messages')
+  }
+
+
+
 
 
 

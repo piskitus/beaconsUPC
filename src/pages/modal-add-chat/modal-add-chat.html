@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-row>
+      <ion-col col-5>
+        <button block *ngIf="!chat.id" ion-button color="primary" outline (click)="crearChat()">
+            Crear chat
+         </button>
+         <button block *ngIf="chat.id" ion-button color="warning" outline (click)="guardarChat()">
+            Actualizar
+          </button>
+      </ion-col>
+      <ion-col col-5>
+        <button block *ngIf="chat.id" ion-button color="danger" outline (click)="borrarChat(chat.id)">
+          Eliminar
+         </button>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+         <ion-icon name="md-close"></ion-icon>
+       </button>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item no-lines>
+            <ion-label color="primary" floating>Título</ion-label>
+            <ion-input [(ngModel)]="chat.title" name="title" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item no-lines>
+            <ion-label color="primary" floating>Descripcion</ion-label>
+            <ion-textarea rows="4" [(ngModel)]="chat.description" clearInput name="description" type="text" required></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Título del chat</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cerrarChat()">
+     <ion-icon name="md-close"></ion-icon>
+   </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngFor="let message of messages"> <!-- [ngStyle]="{'background-color': beacon.color}"-->
+          <ion-card-header>
+            <h1>{{message.userName}}</h1>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{message.msg}}</p>
+          </ion-card-content>
+        </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-input placeholder="Escribe aquí..." [(ngModel)]="message.msg" clearInput></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button icon-only clear (click)="enviarMensaje()">
+            <ion-icon name="md-send"></ion-icon>
+          </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
