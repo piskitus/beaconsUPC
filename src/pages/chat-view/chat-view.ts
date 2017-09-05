@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { Component, ViewChild  } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, Content } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
@@ -8,6 +8,14 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
   templateUrl: 'chat-view.html',
 })
 export class ChatViewPage {
+
+  @ViewChild(Content) content: Content;
+
+  scrollToBottom() {
+    console.log("EJECUTO SCROLL TO BOTTOM")
+    this.content.scrollToBottom(1000);
+  }
+
 
   chat:any;
   user:any = {
@@ -27,12 +35,21 @@ export class ChatViewPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatViewPage');
+
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1000);
+
   }
 
   ionViewDidEnter(){//Cada vez que entro a administración
+
+
+
     //Cargo los datos de la BBDD
     this.dbFirebase.getMessagesFromChat('1504469397735').subscribe(messages=>{
       this.messages = messages;
+      this.scrollToBottom();
     })
 
     this.dbFirebase.getUserData().then((user)=>{

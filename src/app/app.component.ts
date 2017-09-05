@@ -79,10 +79,6 @@ export class MyApp {
       this.whatchedGeofences();
 
 
-
-
-
-
       // geofence.removeAll().then( //Borrar todas las Geofences
       //   () => {},
       //   (err) => {}
@@ -163,7 +159,7 @@ export class MyApp {
   }
 
 
-
+// TODO: se puede automatizar la creación de geofencias integrando una funcion que conecte con la bbdd (desestimado para el TFG)
 //AÑADO LA ZONA A INTEGRAR EN GOOGLE SERVICES PARA QUE VAYA VIENDO SI ENTRO EN EL PERÍMETRO ESTABLECIDO
   addGeofence() {//EN android se pueden añadir 100 en iOS 20
     //options describing
@@ -199,7 +195,23 @@ export class MyApp {
       }
     }
 
-    this.geofence.addOrUpdate([geofence_casa_Marc, geofence_EETAC]).then(
+    let geofence_NAMASTECH = {
+      id: '6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609b', //ID inventada
+      latitude:       41.279658, //center of geofence radius
+      longitude:      1.976536,
+      radius:         250, //radius to edge of geofence in meters
+      transitionType: 1, //1: Enter, 2: Leave, 3: Both
+      notification: { //notification settings
+          id:             2, //any unique ID
+          title:          'Bienvenida/o a Namastech', //notification title
+          text:           'Los mejores servicios informáticos', //notification body
+          openAppOnClick: true, //open app when notification is tapped
+          // smallIcon: 'assets/img/icon.png',
+          //icon: 'assets/img/icon.png'
+      }
+    }
+
+    this.geofence.addOrUpdate([geofence_casa_Marc, geofence_EETAC, geofence_NAMASTECH]).then(
        () => console.log('Geofence  añadida correctamente'),
        (err) => console.log('Geofence failed to add')
      );

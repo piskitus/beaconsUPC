@@ -11,12 +11,7 @@
 
 <ion-content>
 
-
-
-
-
-
-  <div class="speech-wrapper" *ngFor="let message of messages">
+  <div class="speech-wrapper" *ngFor="let message of messages" style="position: initial !important">
     <div class="bubble" *ngIf="message.userKey != user.key">
       <div class="txt">
         <p class="name">{{message.userName}} <span class="timestamp">{{message.id | date:'H:mm'}}</span></p>
@@ -34,31 +29,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-  <!-- <ion-row *ngFor="let message of messages"> -->
-    <!-- [ngStyle]="{'background-color': beacon.color}"-->
-
-      <!-- <div class="speech-bubble">
-        <h3>{{message.userName}}</h3>
-        <div class="arrow bottom right"></div>
-        {{message.msg}}
-      </div> -->
-      <!-- <p>{{message.msg}}</p> -->
-  <!-- </ion-row> -->
-
-    <!-- <ion-card *ngFor="let message of messages">
-          <ion-card-header>
-            <h1>{{message.userName}}</h1>
-          </ion-card-header>
-          <ion-card-content>
-            <p>{{message.msg}}</p>
-          </ion-card-content>
-        </ion-card> -->
 </ion-content>
 
 <ion-footer>
