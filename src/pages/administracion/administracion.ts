@@ -183,12 +183,28 @@ export class AdministracionPage {
           text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
-               this.dbFirebase.deleteNews(id);
+               this.dbFirebase.deleteChat(id);
            }
         }
       ]
     });
     alert.present();
+  }
+
+  hacerUsuarioAdministrador(userKey){
+    let user:any= {
+      password: userKey,
+      admin: true
+    }
+    this.dbFirebase.updateUser(user);
+  }
+
+  eliminarUsuarioAdministrador(userKey){
+    let user:any= {
+      password: userKey,
+      admin: false
+    }
+    this.dbFirebase.updateUser(user);
   }
 
 
@@ -220,7 +236,10 @@ export class AdministracionPage {
   }
 
   nuevoChat(){
-   let modal = this.modalCtrl.create( 'ModalAddChatPage'/*, Aquí puede ir info*/);
+    let chat:any = {
+      active: true
+    }
+   let modal = this.modalCtrl.create( 'ModalAddChatPage', chat);
    modal.present();
   }
 

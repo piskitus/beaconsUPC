@@ -28,7 +28,8 @@ export class ModalAddChatPage {
   crearChat(){
     let chat = {
       title: this.chat.title,
-      description: this.chat.description
+      description: this.chat.description,
+      active: this.chat.active
     }
     this.dbFirebase.createChat(chat).then(res=>{
         console.log('Chat creado en firebase');
@@ -40,7 +41,8 @@ export class ModalAddChatPage {
     let chat = {
       id: this.chat.id,
       title: this.chat.title,
-      description: this.chat.description
+      description: this.chat.description,
+      active: this.chat.active
     }
     this.dbFirebase.updateChat(chat).then(res=>{
     console.log('Chat modificado en firebase');

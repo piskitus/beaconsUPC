@@ -61,7 +61,9 @@ export class FirebaseDbProvider {
 
   }
 
-
+  updateUser(user){
+    return this.afDB.database.ref('users/'+user.password).update(user)
+  }
 
   // saveUserData(user){
   //   return this.afDB.database.ref('users/'+user.uid).set(user)
