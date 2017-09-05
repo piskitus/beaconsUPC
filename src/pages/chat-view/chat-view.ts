@@ -10,6 +10,11 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 export class ChatViewPage {
 
   chat:any;
+  user:any = {
+    name: null,
+    surname: null,
+    key: null
+  };
   messages:any;// mensajes descargados
   message:any = {
     msg: null
@@ -30,6 +35,13 @@ export class ChatViewPage {
       this.messages = messages;
     })
 
+    this.dbFirebase.getUserData().then((user)=>{
+      this.user.name = user.val().name;
+      this.user.surname = user.val().surname;
+      this.user.key = user.val().password;
+      //this.user.admin = user.val().admin // por si quiero destacar de alguna manera a los que son admin en el chat
+    })
+
   }
 
   cerrarChat(){
@@ -39,7 +51,8 @@ export class ChatViewPage {
   enviarMensaje(){
     let message = {
       msg: this.message.msg,
-      userName: 'Marc Cabezas manual'
+      userName: this.user.name +' '+ this.user.surname,
+      userKey: this.user.key
     }
     this.dbFirebase.createChatMessage('1504469397735', message).then(res=>{
         console.log('mesaje creado');

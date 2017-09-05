@@ -10,26 +10,67 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let message of messages"> <!-- [ngStyle]="{'background-color': beacon.color}"-->
+
+
+
+
+
+
+  <div class="speech-wrapper" *ngFor="let message of messages">
+    <div class="bubble" *ngIf="message.userKey != user.key">
+      <div class="txt">
+        <p class="name">{{message.userName}} <span class="timestamp">{{message.id | date:'H:mm'}}</span></p>
+        <p class="message">{{message.msg}}</p>
+      </div>
+      <div class="bubble-arrow"></div>
+    </div>
+    <!--  Speech Bubble alternative -->
+    <div class="bubble alt" *ngIf="message.userKey == user.key">
+      <div class="txt">
+        <p class="name alt">{{message.userName}}<span class="timestamp">{{message.id | date:'H:mm'}}</span></p>
+        <p class="message">{{message.msg}}</p>
+      </div>
+      <div class="bubble-arrow alt"></div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <!-- <ion-row *ngFor="let message of messages"> -->
+    <!-- [ngStyle]="{'background-color': beacon.color}"-->
+
+      <!-- <div class="speech-bubble">
+        <h3>{{message.userName}}</h3>
+        <div class="arrow bottom right"></div>
+        {{message.msg}}
+      </div> -->
+      <!-- <p>{{message.msg}}</p> -->
+  <!-- </ion-row> -->
+
+    <!-- <ion-card *ngFor="let message of messages">
           <ion-card-header>
             <h1>{{message.userName}}</h1>
           </ion-card-header>
           <ion-card-content>
             <p>{{message.msg}}</p>
           </ion-card-content>
-        </ion-card>
+        </ion-card> -->
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar style="padding: 0 !important">
     <ion-row>
       <ion-col col-10>
         <ion-item>
           <ion-input placeholder="Escribe aquí..." [(ngModel)]="message.msg" clearInput></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-2>
-          <button ion-button icon-only clear (click)="enviarMensaje()">
+      <ion-col col-2 style="padding: 0 !important">
+          <button color="dark" ion-button icon-only clear large style="margin: 0 !important" (click)="enviarMensaje()">
             <ion-icon name="md-send"></ion-icon>
           </button>
       </ion-col>

@@ -206,7 +206,7 @@ export class FirebaseDbProvider {
     if(!message.id){
       message.id = Date.now();
     }
-    return this.afDB.database.ref('chats/'+chatID+'/messages/'+message.id).set(message)    
+    return this.afDB.database.ref('chats/'+chatID+'/messages/'+message.id).set(message)
   }
 
   getMessagesFromChat(chatID){

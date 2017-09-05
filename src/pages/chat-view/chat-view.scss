@@ -1,3 +1,84 @@
 page-chat-view {
 
+  body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    //background: url('http://forums.crackberry.com/attachments/blackberry-10-wallpapers-f308/137432d1361639896t-z10-wallpaper-set-z10-music.jpg');
+  }
+  .speech-wrapper{
+    padding: 0px 20px; //padin que se aplica a la burbuja en si
+    .bubble{
+      width: 90%; // ancho que ocupa la burbuja
+
+      height: auto;
+      display: block;
+      background: #D6EAF8; // color de fondo de la burbuja
+      border-radius: 15px; // radio de las curvas de la burbuja
+      box-shadow: 3px 3px 5px #999; // sombra de la burbuja (derecha, abajo, difuminado, color)
+      position: relative;
+      margin: 5px 0 10px; // distancia entre una burbuja de chat y la siguiente
+      &.alt{
+        margin: 5px 0 10px 35px; // top, right, bottom, left
+        background: #D5F5E3; // verde clarito
+        box-shadow: -3px 3px 5px #999; // sombra de la burbuja
+      }
+      .txt{
+        padding: 8px 14px 8px 14px;
+        .name{
+          font-weight: 600;
+          font-size: 12px;
+          margin: 0 0 4px;
+          color: #3498db;
+          span{
+            font-weight: normal;
+            color: #b3b3b3;
+          }
+          &.alt{
+            color: #2ecc71;
+          }
+        }
+        .message{
+          font-size: 12px;
+          margin: 0;
+          color: #2b2b2b;
+          text-align: justify;
+        }
+        .timestamp{
+          font-size: 11px;
+          position: absolute;
+          text-align: right;
+          top: 8px;
+          right: 10px;
+          text-transform: uppercase; color: #999
+        }
+      }
+      .bubble-arrow {
+        position: absolute;
+        width: 0;
+        bottom:42px;
+        left: -16px;
+        height: 0;
+        &.alt{
+          right: -2px;
+          bottom: 40px;
+          left: auto;
+        }
+      }
+      .bubble-arrow:after {
+        content: "";
+        position: absolute;
+        border: 0 solid transparent;
+        border-top: 9px solid #D6EAF8;
+        border-radius: 0 20px 0;
+        width: 15px;
+        height: 30px;
+        transform: rotate(145deg);
+      }
+      .bubble-arrow.alt:after {
+        border-top: 9px solid #D5F5E3;
+        transform: rotate(45deg) scaleY(-1);
+      }
+    }
+  }
+
 }
