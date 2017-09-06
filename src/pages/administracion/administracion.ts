@@ -191,6 +191,30 @@ export class AdministracionPage {
     alert.present();
   }
 
+  borrarMensajesChat(id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás seguro?',
+      message: 'Se borrarán todos los mensajes del chat y no se podrán recuperar',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+               // AquÍ borramos la noticia de la base de datos
+               this.dbFirebase.deleteChatMessages(id);
+           }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   hacerUsuarioAdministrador(userKey){
     let user:any= {
       password: userKey,
@@ -205,6 +229,22 @@ export class AdministracionPage {
       admin: false
     }
     this.dbFirebase.updateUser(user);
+  }
+
+  ponerChatActivo(id){
+    let chat:any= {
+      id: id,
+      active: true
+    }
+    this.dbFirebase.updateChat(chat);
+  }
+
+  ponerChatInactivo(id){
+    let chat:any= {
+      id: id,
+      active: false
+    }
+    this.dbFirebase.updateChat(chat);
   }
 
 

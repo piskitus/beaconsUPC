@@ -85,21 +85,30 @@
 
     <ion-list *ngSwitchCase="'chats'">
       <ion-item-sliding #item *ngFor="let chat of chats">
-        <ion-item (click)="muestraChat(chat)" [ngClass]="{'itemColorChatActive' : (chat.active == true), 'itemColorChatDisabled' : (chat.active == false)}">
-          <ion-avatar item-start>
-            <!-- <img src="{{beacon.img}}"> -->
+        <ion-item (click)="muestraChat(chat)">
+          <ion-avatar item-start [ngClass]="{'itemColorChatActive' : (chat.active == true), 'itemColorChatDisabled' : (chat.active == false)}">
+            <img src="assets/img/logo_beaconsUPC.png"/>
           </ion-avatar>
           <h2>{{ chat.title }}</h2>
           <p>{{chat.description}}</p>
         </ion-item>
       <ion-item-options side="right">
+        <button ion-button  color="warning" (click)="borrarMensajesChat(chat.id)"><ion-icon name="trash"></ion-icon>
+          Mensajes
+        </button>
         <button ion-button  color="danger" (click)="borrarChat(chat.id)"><ion-icon name="trash"></ion-icon>
-           Borrar
+          Chat
         </button>
       </ion-item-options>
       <ion-item-options side="left">
         <button ion-button  color="warning" (click)="muestraChat(chat)"><ion-icon name="md-create"></ion-icon>
            Editar
+        </button>
+        <button *ngIf="chat.active == false" ion-button  color="secondary" (click)="ponerChatActivo(chat.id)"><ion-icon name="ios-chatbubbles"></ion-icon>
+           Activar
+        </button>
+        <button *ngIf="chat.active == true" ion-button  color="danger" (click)="ponerChatInactivo(chat.id)"><ion-icon name="ios-chatbubbles"></ion-icon>
+           Desactivar
         </button>
       </ion-item-options>
       </ion-item-sliding>

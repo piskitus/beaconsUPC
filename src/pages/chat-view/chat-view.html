@@ -29,6 +29,21 @@
     </div>
   </div>
 
+  <ion-card *ngIf="chat.active == false"><!-- se muestra cuando el chat está inactivo para informar al usuario de porqué no puede escribir-->
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-10>
+          <p style="text-align: justify"> ℹ️ Este chat se encuentra actualmente deshabilitado. Estará operativo en cuanto un administrador lo active. </p>
+        </ion-col>
+        <ion-col col-2 align-self-center>
+          <button ion-button large clear icon-only (click)="closeCardInfo()">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 <ion-footer>

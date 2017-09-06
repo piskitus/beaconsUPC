@@ -16,9 +16,9 @@ page-chat-view {
       border-radius: 15px; // radio de las curvas de la burbuja
       box-shadow: 3px 3px 5px #999; // sombra de la burbuja (derecha, abajo, difuminado, color)
       position: relative;
-      margin: 5px 0 10px; // distancia entre una burbuja de chat y la siguiente
+      margin: 7px 0 8px; // distancia entre una burbuja de chat y la siguiente
       &.alt{
-        margin: 5px 0 10px 35px; // top, right, bottom, left
+        margin: 7px 0 8px 35px; // top, right, bottom, left
         background: #D5F5E3; // verde clarito
         box-shadow: -3px 3px 5px #999; // sombra de la burbuja
       }

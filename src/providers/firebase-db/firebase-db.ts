@@ -215,6 +215,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('chats/'+chatID+'/messages')
   }
 
+  public deleteChatMessages(id){
+        this.afDB.database.ref('chats/'+id+'/messages').remove();
+  }
+
 
 
 

@@ -61,5 +61,12 @@
         <ion-option *ngFor="let marker of markers" value="{{marker.id}}" required>{{marker.title}}</ion-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label>Chat</ion-label>
+      <ion-select [(ngModel)]="beacon.chat" name="chat">
+        <ion-option value="null">Ninguno</ion-option>
+        <ion-option *ngFor="let chat of chats" value="{{chat.id}}" required>{{chat.title}}</ion-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
 </ion-content>
