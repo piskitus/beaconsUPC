@@ -69,6 +69,11 @@ export class AdministracionPage {
    modal.present();
   }
 
+  muestraChatView(chatID){
+    let modal = this.modalCtrl.create( 'ChatViewPage', {id: chatID});
+    modal.present();
+  }
+
 
   borrarNoticia(id){
     let alert = this.alertCtrl.create({

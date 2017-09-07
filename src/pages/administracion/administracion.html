@@ -85,7 +85,7 @@
 
     <ion-list *ngSwitchCase="'chats'">
       <ion-item-sliding #item *ngFor="let chat of chats">
-        <ion-item (click)="muestraChat(chat)">
+        <ion-item (click)="muestraChatView(chat.id)">
           <ion-avatar item-start [ngClass]="{'itemColorChatActive' : (chat.active == true), 'itemColorChatDisabled' : (chat.active == false)}">
             <img src="assets/img/logo_beaconsUPC.png"/>
           </ion-avatar>

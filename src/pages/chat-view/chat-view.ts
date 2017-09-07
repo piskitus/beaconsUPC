@@ -13,11 +13,17 @@ export class ChatViewPage {
 
   scrollToBottom() {
     console.log("EJECUTO SCROLL TO BOTTOM")
-    this.content.scrollToBottom(1000);
+    setTimeout(() => {
+      this.content.scrollToBottom(300);
+    }, 500);
+
   }
 
 
-  chat:any;
+  chat:any = {
+    active: true
+  };
+  chatID:any;
   user:any = {
     name: null,
     surname: null,
@@ -30,25 +36,35 @@ export class ChatViewPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
-      this.chat = this.navParams.data;
+      //console.log("this.chatID", this.navParams.data)
+      //this.chat = this.navParams.data;
+      this.chatID = this.navParams.get('id');
+      console.log("this.chat", this.chatID)
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatViewPage');
 
-    setTimeout(() => {
       this.scrollToBottom();
-    }, 1000);
 
   }
 
   ionViewDidEnter(){//Cada vez que entro a administración
 
+    var chat = this.dbFirebase.getSpecificChat2(this.chatID);
+    chat.on('value', snapshot => {
+      console.log("QUE RECIBO CON EL ON: ", snapshot.val());
+      this.chat = snapshot.val();
+      //this.updateChat(snapshot.val());
+      //updateStarCount(postElement, snapshot.val());
+      console.log("CHATTTTTTTT", this.chat.active)
+    });
 
 
     //Cargo los datos de la BBDD
-    this.dbFirebase.getMessagesFromChat('1504469397735').subscribe(messages=>{
+    this.dbFirebase.getMessagesFromChat(this.chatID).subscribe(messages=>{
       this.messages = messages;
+      // cuando recibo un mensaje nuevo hago scroll down
       this.scrollToBottom();
     })
 
@@ -66,12 +82,15 @@ export class ChatViewPage {
   }
 
   enviarMensaje(){
+
+    
+
     let message = {
       msg: this.message.msg,
       userName: this.user.name +' '+ this.user.surname,
       userKey: this.user.key
     }
-    this.dbFirebase.createChatMessage('1504469397735', message).then(res=>{
+    this.dbFirebase.createChatMessage(this.chatID, message).then(res=>{
         console.log('mesaje creado');
         this.message.msg = null;
     })

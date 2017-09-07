@@ -112,7 +112,8 @@ export class ConfiguracionPage {
 
 // se borrará en breve, solo es una demo
   demoChat(){
-    let modal = this.modalCtrl.create( 'ChatViewPage'/*, datos*/);
+    let chatID = '1504469397735';
+    let modal = this.modalCtrl.create( 'ChatViewPage');
     modal.present();
 
   }

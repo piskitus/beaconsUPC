@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Título del chat</ion-title>
+    <ion-title>{{chat.title}}</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cerrarChat()">
      <ion-icon name="md-close"></ion-icon>
@@ -32,14 +32,14 @@
   <ion-card *ngIf="chat.active == false"><!-- se muestra cuando el chat está inactivo para informar al usuario de porqué no puede escribir-->
     <ion-card-content>
       <ion-row>
-        <ion-col col-10>
-          <p style="text-align: justify"> ℹ️ Este chat se encuentra actualmente deshabilitado. Estará operativo en cuanto un administrador lo active. </p>
+        <ion-col col-12>
+          <p style="text-align: justify"> ℹ️ Este chat se encuentra actualmente deshabilitado. Estará operativo de nuevo en cuanto un administrador lo active. </p>
         </ion-col>
-        <ion-col col-2 align-self-center>
+        <!-- <ion-col col-2 align-self-center>
           <button ion-button large clear icon-only (click)="closeCardInfo()">
           <ion-icon name="close-circle"></ion-icon>
         </button>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-card-content>
   </ion-card>
@@ -55,7 +55,7 @@
         </ion-item>
       </ion-col>
       <ion-col col-2 style="padding: 0 !important">
-          <button color="dark" ion-button icon-only clear large style="margin: 0 !important" (click)="enviarMensaje()">
+          <button [disabled]="chat.active == false" color="dark" ion-button icon-only clear large style="margin: 0 !important" (click)="enviarMensaje()">
             <ion-icon name="md-send"></ion-icon>
           </button>
       </ion-col>

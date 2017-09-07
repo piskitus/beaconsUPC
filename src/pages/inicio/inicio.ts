@@ -15,6 +15,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 })
 export class InicioPage {
 
+  //chat:any;
   //coords: any;
   //nearBeaconMinor: number;
   cardInfoShow:boolean = false;//Card de información principal visible al entrar
@@ -86,14 +87,8 @@ export class InicioPage {
 
   ionViewDidLoad() {
     console.log('➡️ InicioPage');
-
-    // this.dbFirebase.getUserData(this.auth.getUser()).then((user)=>{
-    //   //this.user = user;
-    //   this.userProfile = user.val().profile;
-    //
-    // })
-
   }
+
 
 
   isLocationEnabled(){

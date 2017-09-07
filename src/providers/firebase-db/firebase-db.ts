@@ -195,6 +195,10 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('chats/'+chatID).once('value');
   }
 
+  getSpecificChat2(chatID){
+    return this.afDB.database.ref('chats/'+chatID);
+  }
+
   public deleteChat(id){
         this.afDB.database.ref('chats/'+id).remove();
   }
