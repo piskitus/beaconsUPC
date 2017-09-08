@@ -25,6 +25,8 @@ export class BeaconsPage {
   beacons = [];
   regionStatus = [];
 
+  recarga:boolean = true; // recarga activa
+
   // array de beacons que mostraré por pantalla (info de beacon detectado + info beacon bbdd)
   beaconsBBDD = [];
 
@@ -97,37 +99,46 @@ export class BeaconsPage {
 
 // función que coje los datos de la base de datos de cada beacon detectado
 getBeaconFromBBDD(beacons){
-  let displayableBeaconsBBDD : Array<any> = [];//limpio el array de beacons
+  if (this.recarga){// solo se entra si está la recarga activa
 
-  for(let i=0; i < beacons.length; i++){// recorro cada beacon del array (estos beacons ya estaban ordenados por proximidad)
-    //accedo a la base de datos de cada beacon para obtener sus datos
-    this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
-      let beacon = snapshot.val();//datos de la bbdd aquí
+    let displayableBeaconsBBDD : Array<any> = [];//limpio el array de beacons
 
-      //fusiono los datos de la bbdd con los de los beacon recibidos
-      beacon.accuracy = beacons[i].accuracy;
-      beacon.age = beacons[i].age;
-      beacon.color = beacons[i].color;
-      beacon.proximity = beacons[i].proximity;
-      beacon.rssi = beacons[i].rssi;
-      beacon.timestamp = beacons[i].timestamp;
-      beacon.tx = beacons[i].tx;
+    for(let i=0; i < beacons.length; i++){// recorro cada beacon del array (estos beacons ya estaban ordenados por proximidad)
+      //accedo a la base de datos de cada beacon para obtener sus datos
+      this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
+        let beacon = snapshot.val();//datos de la bbdd aquí
 
-      // meto el beacon fusionado en el array temporal
-      displayableBeaconsBBDD.push(beacon);
+        //fusiono los datos de la bbdd con los de los beacon recibidos
+        beacon.accuracy = beacons[i].accuracy;
+        beacon.age = beacons[i].age;
+        beacon.color = beacons[i].color;
+        beacon.proximity = beacons[i].proximity;
+        beacon.rssi = beacons[i].rssi;
+        beacon.timestamp = beacons[i].timestamp;
+        beacon.tx = beacons[i].tx;
 
-    })
-    //una vez ya he salido del bucle y ya tengo todos los beacons completos los paso a el array que se muestra en el html
-    this.beaconsBBDD = displayableBeaconsBBDD;
+        // meto el beacon fusionado en el array temporal
+        displayableBeaconsBBDD.push(beacon);
+
+      })
+      //una vez ya he salido del bucle y ya tengo todos los beacons completos los paso a el array que se muestra en el html
+      this.beaconsBBDD = displayableBeaconsBBDD;
+    }
+
   }
-
-
 
 }
 
 openChat(chatID){
   let modal = this.modalCtrl.create( 'ChatViewPage', {id: chatID});
   modal.present();
+}
+
+pausarRecarga(){
+  this.recarga = false;
+}
+reanudarRecarga(){
+  this.recarga = true;
 }
 
 

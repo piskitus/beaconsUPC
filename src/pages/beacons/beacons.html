@@ -1,8 +1,22 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Beacons</ion-title>
+  <ion-navbar style="padding: 0 !important">
+
+    <ion-row>
+      <ion-col col-10 >
+        <ion-title>Beacons</ion-title>
+      </ion-col>
+      <ion-col col-2 style="padding: 0 !important">
+          <button *ngIf="recarga" color="warning" ion-button icon-only clear large style="margin: 0 !important" (click)="pausarRecarga()">
+            <ion-icon name="pause"></ion-icon>
+          </button>
+          <button *ngIf="!recarga" color="default" ion-button icon-only clear large style="margin: 0 !important" (click)="reanudarRecarga()">
+            <ion-icon name="play"></ion-icon>
+          </button>
+      </ion-col>
+    </ion-row>
   </ion-navbar>
 </ion-header>
+
 
 <ion-content>
 <!--Versión antigua donde solo se mostraba la info de los beacons detectados-->
