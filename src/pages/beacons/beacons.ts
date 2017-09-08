@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams, Platform, Events, LoadingControlle
 
 //plugins
 import { IBeacon } from '@ionic-native/ibeacon';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 
 //providers
 import { BeaconProvider } from '../../providers/beacon/beacon';
@@ -26,36 +25,24 @@ export class BeaconsPage {
   beacons = [];
   regionStatus = [];
 
-  // para los datos de bbdd
+  // array de beacons que mostraré por pantalla (info de beacon detectado + info beacon bbdd)
   beaconsBBDD = [];
-  //displayableBeaconsBBDD: Array<any> = [];
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
-  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController, public modalCtrl : ModalController,
+  public loadingCtrl: LoadingController, public modalCtrl : ModalController,
   public dbFirebase :FirebaseDbProvider) {
-
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
-
-
   }
 
+// función que detecta cambios en los beacons detectados
   private handleBeaconStatusChanged = (beacons) => {
       const maxAge = 30000; //30 segundos de vida
-      let displayableBeacons: Array<any> = [];
-
-      //this.displayableBeaconsBBDD = [];// Vacío el array para que luego se vuelva a llenar
-
+      let displayableBeacons: Array<any> = []; // guardaré cada beacon de los que detecto
       let currentTimestamp = (new Date()).getTime();
-      for (let key in beacons) {
+      for (let key in beacons) { //recorro los beacons que he detectado
         let beacon = beacons[key];
-
-        //console.log("💛💛BEACON ORIGINAL RECIBIDO: ", beacon)
-
-
-        //beacon.chat = beaconBBDD.chat;
-
-
         //let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
         let age = (currentTimestamp - beacon.timestamp);
         let isWithinAgeLimit = age <= maxAge;
@@ -65,14 +52,10 @@ export class BeaconsPage {
           displayableBeacons.push(beacon);
         }
       }
+      // guardo los beacons ordenados por proximidad
       this.beacons = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
-      console.log("💛💛💛💛💛💛", this.beacons)
+      // paso los beacons ordenados a la función que recojerá los datos de cada beacon almacenados en la bbdd
       this.getBeaconFromBBDD(this.beacons);
-      //this.beaconsBBDD = this.displayableBeaconsBBDD.sort((a, b) => a.accuracy - b.accuracy);// lo ordeno
-      //console.log("💛💛💛💛💛💛displayableBeacons",displayableBeacons)
-      //console.log("💜💜💜💜💜💜this.displayableBeaconsBBDD",this.displayableBeaconsBBDD)
-
-      //console.log("💜💜this.beaconsBBDD", this.beaconsBBDD);
 
       this.changeDetectorRef.detectChanges();
     }
@@ -80,21 +63,17 @@ export class BeaconsPage {
 
   ionViewDidLoad() {
 
-    this.presentLoading();
+    this.presentLoading();// loading al entrar a la tab para simular la primera carga y detección de beacons
 
     this.platform.ready().then(() => {
-
-      setInterval(() => { //Para definir un intervalo
-        //console.log("Han pasado 5 segundos");
+      setInterval(() => {
         this.regionStatus = this.beaconProvider.getRegionStatus();
-        //console.log("------------------------>",JSON.stringify(this.regionStatus, null, 2))
-        //this.setLocalNotification();
       }, 5000);
-
     });
 
   }
 
+// función para asignar un color a los beacons detectados en función del tiempo que hace que no se detectan
   setBeaconColor(age){
     if(age <= 10000){
       return "#D6EAF8";//Azul clarito
@@ -107,14 +86,7 @@ export class BeaconsPage {
     }
   }
 
-  setLocalNotification(){
-    this.localNotifications.schedule({
-      id: 1,
-      title: 'Hola',
-      text: 'Single ILocalNotification'
-    });
-  }
-
+// loading que se muestra al entrar en la pestaña por primera vez
   presentLoading() {
   let loader = this.loadingCtrl.create({
     content: "Buscando beacons...",
@@ -123,34 +95,31 @@ export class BeaconsPage {
   loader.present();
 }
 
+// función que coje los datos de la base de datos de cada beacon detectado
 getBeaconFromBBDD(beacons){
-
   let displayableBeaconsBBDD : Array<any> = [];//limpio el array de beacons
 
-//console.log("💜💜💜💜💜💜💜💜💜💜",beacons)
+  for(let i=0; i < beacons.length; i++){// recorro cada beacon del array (estos beacons ya estaban ordenados por proximidad)
+    //accedo a la base de datos de cada beacon para obtener sus datos
+    this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
+      let beacon = snapshot.val();//datos de la bbdd aquí
 
-for(let i=0; i < beacons.length; i++){
-  console.log("💜💜💜💜💜💜💜💜💜💜",beacons[i].key)
+      //fusiono los datos de la bbdd con los de los beacon recibidos
+      beacon.accuracy = beacons[i].accuracy;
+      beacon.age = beacons[i].age;
+      beacon.color = beacons[i].color;
+      beacon.proximity = beacons[i].proximity;
+      beacon.rssi = beacons[i].rssi;
+      beacon.timestamp = beacons[i].timestamp;
+      beacon.tx = beacons[i].tx;
 
-  this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
-    let beacon = snapshot.val();
-    beacon.accuracy = beacons[i].accuracy;
-    beacon.age = beacons[i].age;
-    beacon.color = beacons[i].color;
-    beacon.proximity = beacons[i].proximity;
-    beacon.rssi = beacons[i].rssi;
-    beacon.timestamp = beacons[i].timestamp;
-    beacon.tx = beacons[i].tx;
+      // meto el beacon fusionado en el array temporal
+      displayableBeaconsBBDD.push(beacon);
 
-    //console.log("💜💜BEACON BBDD + beaconRX", beacon)
-    displayableBeaconsBBDD.push(beacon);
-
-  })
-
-  this.beaconsBBDD = displayableBeaconsBBDD;
-
-
-}
+    })
+    //una vez ya he salido del bucle y ya tengo todos los beacons completos los paso a el array que se muestra en el html
+    this.beaconsBBDD = displayableBeaconsBBDD;
+  }
 
 
 

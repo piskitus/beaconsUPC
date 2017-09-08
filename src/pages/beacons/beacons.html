@@ -5,45 +5,46 @@
 </ion-header>
 
 <ion-content>
-    <!-- <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
-          <ion-card-header>
-            <h1>Beacon #{{beacon.minor}} {{beacon.chat}}</h1>
-          </ion-card-header>
-          <ion-card-content>
-            <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
-            <p>Range: {{beacon.accuracy}}</p>
-          </ion-card-content>
-        </ion-card> -->
+<!--Versión antigua donde solo se mostraba la info de los beacons detectados-->
+<!-- <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
+      <ion-card-header>
+        <h1>Beacon #{{beacon.minor}} {{beacon.chat}}</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
+        <p>Range: {{beacon.accuracy}}</p>
+      </ion-card-content>
+    </ion-card> -->
 
 
-         <ion-card *ngFor="let beacon of beaconsBBDD"  [ngStyle]="{'background-color': beacon.color}">
-          <ion-card-content style="padding: 0 !important">
-            <ion-row>
-              <ion-col col-10>
-                <h1>Beacon #{{beacon.minor}}</h1>
-                <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
-                <p>Range: {{beacon.accuracy}}</p>
-              </ion-col>
-              <ion-col col-2 align-self-center style="padding: 0 !important">
-                <ion-row style="padding: 0 !important">
-                  <button color="dark" ion-button large clear icon-only style="margin: 0 !important" (click)="openNews(beacon.news)">
+  <ion-card *ngFor="let beacon of beaconsBBDD" [ngStyle]="{'background-color': beacon.color}">
+    <ion-card-content style="padding: 0 !important">
+      <ion-row>
+        <ion-col col-10>
+          <h1>Beacon #{{beacon.minor}}</h1>
+          <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
+          <p>Range: {{beacon.accuracy}}</p>
+        </ion-col>
+        <ion-col col-2 align-self-center style="padding: 0 !important">
+          <ion-row style="padding: 0 !important">
+            <button color="dark" ion-button large clear icon-only style="margin: 0 !important" (click)="openNews(beacon.news)">
                   <ion-icon name="document"></ion-icon>
                 </button>
-                </ion-row>
-                <ion-row style="padding: 0 !important">
-                  <button color="danger" ion-button large clear icon-only style="margin: 0 !important" (click)="openMarker(beacon.marker)">
+          </ion-row>
+          <ion-row style="padding: 0 !important">
+            <button color="danger" ion-button large clear icon-only style="margin: 0 !important" (click)="openMarker(beacon.marker)">
                   <ion-icon name="md-pin"></ion-icon>
                 </button>
-                </ion-row>
-                <ion-row style="padding: 0 !important">
-                  <button [disabled]="beacon.chat == 'null'" color="secondary" ion-button large clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
+          </ion-row>
+          <ion-row style="padding: 0 !important">
+            <button [disabled]="beacon.chat == 'null'" color="secondary" ion-button large clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
                   <ion-icon name="ios-chatbubbles"></ion-icon>
                 </button>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 
 
 </ion-content>
