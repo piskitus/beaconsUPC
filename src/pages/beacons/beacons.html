@@ -16,7 +16,7 @@
         </ion-card>
 
 
-        <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
+        <ion-card *ngFor="let beacon of beaconsBBDD"  [ngStyle]="{'background-color': beacon.color}">
           <ion-card-content style="padding: 0 !important">
             <ion-row>
               <ion-col col-10>
@@ -36,7 +36,7 @@
                 </button>
                 </ion-row>
                 <ion-row style="padding: 0 !important">
-                  <button color="secondary" ion-button large clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
+                  <button [disabled]="beacon.chat == 'null'" color="secondary" ion-button large clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
                   <ion-icon name="ios-chatbubbles"></ion-icon>
                 </button>
                 </ion-row>

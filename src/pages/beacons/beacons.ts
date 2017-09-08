@@ -8,6 +8,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 //providers
 import { BeaconProvider } from '../../providers/beacon/beacon';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 //models
 import { BeaconModel } from '../../models/beacon-model';
@@ -25,9 +26,14 @@ export class BeaconsPage {
   beacons = [];
   regionStatus = [];
 
+  // para los datos de bbdd
+  beaconsBBDD = [];
+  displayableBeaconsBBDD: Array<any> = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
-  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController, public modalCtrl : ModalController) {
+  private localNotifications: LocalNotifications, public loadingCtrl: LoadingController, public modalCtrl : ModalController,
+  public dbFirebase :FirebaseDbProvider) {
 
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
 
@@ -37,9 +43,17 @@ export class BeaconsPage {
   private handleBeaconStatusChanged = (beacons) => {
       const maxAge = 30000; //30 segundos de vida
       let displayableBeacons: Array<any> = [];
+
+      this.displayableBeaconsBBDD = [];// Vacío el array para que luego se vuelva a llenar
+
       let currentTimestamp = (new Date()).getTime();
       for (let key in beacons) {
         let beacon = beacons[key];
+
+        console.log("💛💛BEACON ORIGINAL RECIBIDO: ", beacon)
+
+        this.getBeaconFromBBDD(key, beacon);
+
         //let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
         let age = (currentTimestamp - beacon.timestamp);
         let isWithinAgeLimit = age <= maxAge;
@@ -50,6 +64,12 @@ export class BeaconsPage {
         }
       }
       this.beacons = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
+      this.beaconsBBDD = this.displayableBeaconsBBDD.sort((a, b) => a.accuracy - b.accuracy);// lo ordeno
+      console.log("💛💛💛💛💛💛displayableBeacons",displayableBeacons)
+      console.log("💜💜💜💜💜💜this.displayableBeaconsBBDD",this.displayableBeaconsBBDD)
+
+      //console.log("💜💜this.beaconsBBDD", this.beaconsBBDD);
+
       this.changeDetectorRef.detectChanges();
     }
 
@@ -98,5 +118,27 @@ export class BeaconsPage {
   });
   loader.present();
 }
+
+getBeaconFromBBDD(beaconKey, beaconRx){
+  this.dbFirebase.getSpecificBeacon(beaconKey).then((snapshot)=>{
+    let beacon = snapshot.val();
+    beacon.accuracy = beaconRx.accuracy;
+    beacon.age = beaconRx.age;
+    beacon.color = beaconRx.color;
+    beacon.proximity = beaconRx.proximity;
+    beacon.rssi = beaconRx.rssi;
+    beacon.timestamp = beaconRx.timestamp;
+    beacon.tx = beaconRx.tx;
+
+    console.log("💜💜BEACON BBDD + beaconRX", beacon)
+    this.displayableBeaconsBBDD.push(beacon);
+  })
+}
+
+openChat(chatID){
+  let modal = this.modalCtrl.create( 'ChatViewPage', {id: chatID});
+  modal.present();
+}
+
 
 }

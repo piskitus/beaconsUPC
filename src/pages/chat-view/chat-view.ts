@@ -53,11 +53,7 @@ export class ChatViewPage {
 
     var chat = this.dbFirebase.getSpecificChat2(this.chatID);
     chat.on('value', snapshot => {
-      console.log("QUE RECIBO CON EL ON: ", snapshot.val());
       this.chat = snapshot.val();
-      //this.updateChat(snapshot.val());
-      //updateStarCount(postElement, snapshot.val());
-      console.log("CHATTTTTTTT", this.chat.active)
     });
 
 
@@ -83,7 +79,7 @@ export class ChatViewPage {
 
   enviarMensaje(){
 
-    
+
 
     let message = {
       msg: this.message.msg,

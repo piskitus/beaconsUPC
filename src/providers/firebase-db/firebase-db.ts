@@ -130,6 +130,10 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('markers/'+markerID).once('value');
   }
 
+  getSpecificBeacon(beaconKey){
+    return this.afDB.database.ref('beacons/'+beaconKey).once('value');
+  }
+
 //Cojo los datos guardados de un usuario
   getUserData(){
     return this.afDB.database.ref('users/'+this.auth.getUser()).once('value');
@@ -195,6 +199,7 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('chats/'+chatID).once('value');
   }
 
+  // para conectar con ".on" y así controlar cambios de estado en la base de datos (siempre estará escuchando esa rama)
   getSpecificChat2(chatID){
     return this.afDB.database.ref('chats/'+chatID);
   }
