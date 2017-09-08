@@ -28,7 +28,7 @@ export class BeaconsPage {
 
   // para los datos de bbdd
   beaconsBBDD = [];
-  displayableBeaconsBBDD: Array<any> = [];
+  //displayableBeaconsBBDD: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
@@ -44,15 +44,17 @@ export class BeaconsPage {
       const maxAge = 30000; //30 segundos de vida
       let displayableBeacons: Array<any> = [];
 
-      this.displayableBeaconsBBDD = [];// Vacío el array para que luego se vuelva a llenar
+      //this.displayableBeaconsBBDD = [];// Vacío el array para que luego se vuelva a llenar
 
       let currentTimestamp = (new Date()).getTime();
       for (let key in beacons) {
         let beacon = beacons[key];
 
-        console.log("💛💛BEACON ORIGINAL RECIBIDO: ", beacon)
+        //console.log("💛💛BEACON ORIGINAL RECIBIDO: ", beacon)
 
-        this.getBeaconFromBBDD(key, beacon);
+
+        //beacon.chat = beaconBBDD.chat;
+
 
         //let isWithinRange = this.settings.accuracyThreshold === 0 || beacon.accuracy <= this.settings.accuracyThreshold;
         let age = (currentTimestamp - beacon.timestamp);
@@ -64,9 +66,11 @@ export class BeaconsPage {
         }
       }
       this.beacons = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
-      this.beaconsBBDD = this.displayableBeaconsBBDD.sort((a, b) => a.accuracy - b.accuracy);// lo ordeno
-      console.log("💛💛💛💛💛💛displayableBeacons",displayableBeacons)
-      console.log("💜💜💜💜💜💜this.displayableBeaconsBBDD",this.displayableBeaconsBBDD)
+      console.log("💛💛💛💛💛💛", this.beacons)
+      this.getBeaconFromBBDD(this.beacons);
+      //this.beaconsBBDD = this.displayableBeaconsBBDD.sort((a, b) => a.accuracy - b.accuracy);// lo ordeno
+      //console.log("💛💛💛💛💛💛displayableBeacons",displayableBeacons)
+      //console.log("💜💜💜💜💜💜this.displayableBeaconsBBDD",this.displayableBeaconsBBDD)
 
       //console.log("💜💜this.beaconsBBDD", this.beaconsBBDD);
 
@@ -119,20 +123,37 @@ export class BeaconsPage {
   loader.present();
 }
 
-getBeaconFromBBDD(beaconKey, beaconRx){
-  this.dbFirebase.getSpecificBeacon(beaconKey).then((snapshot)=>{
-    let beacon = snapshot.val();
-    beacon.accuracy = beaconRx.accuracy;
-    beacon.age = beaconRx.age;
-    beacon.color = beaconRx.color;
-    beacon.proximity = beaconRx.proximity;
-    beacon.rssi = beaconRx.rssi;
-    beacon.timestamp = beaconRx.timestamp;
-    beacon.tx = beaconRx.tx;
+getBeaconFromBBDD(beacons){
 
-    console.log("💜💜BEACON BBDD + beaconRX", beacon)
-    this.displayableBeaconsBBDD.push(beacon);
+  let displayableBeaconsBBDD : Array<any> = [];//limpio el array de beacons
+
+//console.log("💜💜💜💜💜💜💜💜💜💜",beacons)
+
+for(let i=0; i < beacons.length; i++){
+  console.log("💜💜💜💜💜💜💜💜💜💜",beacons[i].key)
+
+  this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
+    let beacon = snapshot.val();
+    beacon.accuracy = beacons[i].accuracy;
+    beacon.age = beacons[i].age;
+    beacon.color = beacons[i].color;
+    beacon.proximity = beacons[i].proximity;
+    beacon.rssi = beacons[i].rssi;
+    beacon.timestamp = beacons[i].timestamp;
+    beacon.tx = beacons[i].tx;
+
+    //console.log("💜💜BEACON BBDD + beaconRX", beacon)
+    displayableBeaconsBBDD.push(beacon);
+
   })
+
+  this.beaconsBBDD = displayableBeaconsBBDD;
+
+
+}
+
+
+
 }
 
 openChat(chatID){

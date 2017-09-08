@@ -5,18 +5,18 @@
 </ion-header>
 
 <ion-content>
-    <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
+    <!-- <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
           <ion-card-header>
-            <h1>Beacon #{{beacon.minor}}</h1>
+            <h1>Beacon #{{beacon.minor}} {{beacon.chat}}</h1>
           </ion-card-header>
           <ion-card-content>
             <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
             <p>Range: {{beacon.accuracy}}</p>
           </ion-card-content>
-        </ion-card>
+        </ion-card> -->
 
 
-        <ion-card *ngFor="let beacon of beaconsBBDD"  [ngStyle]="{'background-color': beacon.color}">
+         <ion-card *ngFor="let beacon of beaconsBBDD"  [ngStyle]="{'background-color': beacon.color}">
           <ion-card-content style="padding: 0 !important">
             <ion-row>
               <ion-col col-10>
