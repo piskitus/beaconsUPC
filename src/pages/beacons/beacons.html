@@ -1,11 +1,12 @@
 <ion-header>
-  <ion-navbar style="padding: 0 !important">
 
+  <ion-navbar style="padding: 0 !important">
+    <ion-spinner color="dark" class="loading" name="crescent" [paused]="!recarga"></ion-spinner>
     <ion-row>
       <ion-col col-10 >
         <ion-title>Beacons</ion-title>
       </ion-col>
-      <ion-col col-2 style="padding: 0 !important">
+      <ion-col col-2 style="padding: 0 !important; text-align: right !important;"><!--text align right para que el botón siempre esté pegado a la derecha-->
           <button *ngIf="recarga" color="warning" ion-button icon-only clear large style="margin: 0 !important" (click)="pausarRecarga()">
             <ion-icon name="pause"></ion-icon>
           </button>
