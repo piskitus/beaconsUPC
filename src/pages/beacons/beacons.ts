@@ -122,8 +122,11 @@ getBeaconFromBBDD(beacons){
 
       })
       //una vez ya he salido del bucle y ya tengo todos los beacons completos los paso a el array que se muestra en el html
-      this.beaconsBBDD = displayableBeaconsBBDD;
-      console.log(this.beaconsBBDD);
+      setTimeout(() => {
+        this.beaconsBBDD = displayableBeaconsBBDD;
+        console.log(this.beaconsBBDD);
+      }, 500);
+
     }
 
   }
