@@ -78,9 +78,6 @@ export class ChatViewPage {
   }
 
   enviarMensaje(){
-
-
-
     let message = {
       msg: this.message.msg,
       userName: this.user.name +' '+ this.user.surname,

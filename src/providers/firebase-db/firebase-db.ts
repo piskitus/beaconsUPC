@@ -125,6 +125,9 @@ export class FirebaseDbProvider {
   getSpecificNews(newsID){
     return this.afDB.database.ref('news/' + newsID).once('value');
   }
+  getSpecificNews2(newsID){
+    return this.afDB.database.ref('news/' + newsID);
+  }
 
   getSpecificMarker(markerID){
     return this.afDB.database.ref('markers/'+markerID).once('value');

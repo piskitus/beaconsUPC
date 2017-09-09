@@ -21,14 +21,14 @@ import { BeaconModel } from '../../models/beacon-model';
 
 
 export class BeaconsPage {
+  beaconsFind = [];// guardo los beacons detectados por bluetooth
+  beaconsBBDD:any;// guardo los beacons descargados de la bbdd
 
-  beacons = [];
-  regionStatus = [];
-
-  recarga:boolean = true; // recarga activa
+  recarga:boolean = true; // recarga activa (hace que el spiner se mueva y el botón pause se muestre)
 
   // array de beacons que mostraré por pantalla (info de beacon detectado + info beacon bbdd)
-  beaconsBBDD = [];
+  beacons = [];
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
@@ -55,9 +55,9 @@ export class BeaconsPage {
         }
       }
       // guardo los beacons ordenados por proximidad
-      this.beacons = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
+      this.beaconsFind = displayableBeacons.sort((a, b) => a.accuracy - b.accuracy);
       // paso los beacons ordenados a la función que recojerá los datos de cada beacon almacenados en la bbdd
-      this.getBeaconFromBBDD(this.beacons);
+      this.fusionBeacons(this.beaconsFind);
 
       this.changeDetectorRef.detectChanges();
     }
@@ -67,15 +67,15 @@ export class BeaconsPage {
 
     this.presentLoading();// loading al entrar a la tab para simular la primera carga y detección de beacons
 
-    this.platform.ready().then(() => {
-      setInterval(() => {
-        this.regionStatus = this.beaconProvider.getRegionStatus();
-      }, 5000);
-    });
+    // descargo todos los beacons de la base de datos (COMO ESTOY SUSCRITO, SI HAY CAMBIOS EN LA BBDD SE ACTUALIZAN)
+    this.dbFirebase.getBeacons().subscribe(beacons=>{
+      this.beaconsBBDD = beacons;
+    })
 
   }
 
-// función para asignar un color a los beacons detectados en función del tiempo que hace que no se detectan
+
+  // función para asignar un color a los beacons detectados en función del tiempo que hace que no se detectan
   setBeaconColor(age){
     if(age <= 10000){
       return "#D6EAF8";//Azul clarito
@@ -89,7 +89,7 @@ export class BeaconsPage {
   }
 
 // loading que se muestra al entrar en la pestaña por primera vez
-  presentLoading() {
+presentLoading() {
   let loader = this.loadingCtrl.create({
     content: "Buscando beacons...",
     duration: 2500
@@ -97,44 +97,47 @@ export class BeaconsPage {
   loader.present();
 }
 
-// función que coje los datos de la base de datos de cada beacon detectado
-getBeaconFromBBDD(beacons){
+
+// función que coje los datos de los beacons detectados y los de los beacons descargados de la bbdd y los junta
+fusionBeacons(beacons){
   if (this.recarga){// solo se entra si está la recarga activa
 
-    let displayableBeaconsBBDD : Array<any> = [];//limpio el array de beacons
+    let displayableBeacons : Array<any> = [];// Array vacío para ir guardando los beacons fusionados
 
-    for(let i=0; i < beacons.length; i++){// recorro cada beacon del array (estos beacons ya estaban ordenados por proximidad)
-      //accedo a la base de datos de cada beacon para obtener sus datos
-      this.dbFirebase.getSpecificBeacon(beacons[i].key).then((snapshot)=>{
-        let beacon = snapshot.val();//datos de la bbdd aquí
+    for(let i=0; i < beacons.length; i++){// recorro cada beacon de los detectados por bluetooth (estos beacons ya estaban ordenados por proximidad)
 
-        //fusiono los datos de la bbdd con los de los beacon recibidos
-        beacon.accuracy = beacons[i].accuracy;
-        beacon.age = beacons[i].age;
-        beacon.color = beacons[i].color;
-        beacon.proximity = beacons[i].proximity;
-        beacon.rssi = beacons[i].rssi;
-        beacon.timestamp = beacons[i].timestamp;
-        beacon.tx = beacons[i].tx;
+      // recorro los beacons de la bbdd buscando coincidencia de KEY entre el detectado y el descargado
+      for(let j=0; j < this.beaconsBBDD.length; j++){
+        if(this.beaconsBBDD[j].key == beacons[i].key){
+            this.beaconsBBDD[j].accuracy = beacons[i].accuracy;
+            this.beaconsBBDD[j].age = beacons[i].age;
+            this.beaconsBBDD[j].color = beacons[i].color;
+            this.beaconsBBDD[j].proximity = beacons[i].proximity;
+            this.beaconsBBDD[j].rssi = beacons[i].rssi;
+            this.beaconsBBDD[j].timestamp = beacons[i].timestamp;
+            this.beaconsBBDD[j].tx = beacons[i].tx;
 
-        // meto el beacon fusionado en el array temporal
-        displayableBeaconsBBDD.push(beacon);
+            // guardo el beacon fusionado en el array
+            displayableBeacons.push(this.beaconsBBDD[j]);
+        }
+      }
 
-      })
       //una vez ya he salido del bucle y ya tengo todos los beacons completos los paso a el array que se muestra en el html
       setTimeout(() => {
-        this.beaconsBBDD = displayableBeaconsBBDD;
-        console.log(this.beaconsBBDD);
+        this.beacons = displayableBeacons;
       }, 500);
 
     }
-
   }
-
 }
 
 openChat(chatID){
   let modal = this.modalCtrl.create( 'ChatViewPage', {id: chatID});
+  modal.present();
+}
+
+openNews(newsID){
+  let modal = this.modalCtrl.create( 'NewsViewPage', {id: newsID});
   modal.present();
 }
 
