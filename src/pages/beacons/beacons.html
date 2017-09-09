@@ -3,14 +3,15 @@
   <ion-navbar style="padding: 0 !important">
     <ion-spinner color="dark" class="loading" name="crescent" [paused]="!recarga"></ion-spinner>
     <ion-row>
-      <ion-col col-10 >
+      <ion-col col-10>
         <ion-title>Beacons</ion-title>
       </ion-col>
-      <ion-col col-2 style="padding: 0 !important; text-align: right !important;"><!--text align right para que el botón siempre esté pegado a la derecha-->
-          <button *ngIf="recarga" color="warning" ion-button icon-only clear large style="margin: 0 !important" (click)="pausarRecarga()">
+      <ion-col col-2 style="padding: 0 !important; text-align: right !important;">
+        <!--text align right para que el botón siempre esté pegado a la derecha-->
+        <button *ngIf="recarga" color="warning" ion-button icon-only clear large style="margin: 0 !important" (click)="pausarRecarga()">
             <ion-icon name="pause"></ion-icon>
           </button>
-          <button *ngIf="!recarga" color="default" ion-button icon-only clear large style="margin: 0 !important" (click)="reanudarRecarga()">
+        <button *ngIf="!recarga" color="default" ion-button icon-only clear large style="margin: 0 !important" (click)="reanudarRecarga()">
             <ion-icon name="play"></ion-icon>
           </button>
       </ion-col>
@@ -20,8 +21,8 @@
 
 
 <ion-content>
-<!--Versión antigua donde solo se mostraba la info de los beacons detectados-->
-<!-- <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
+  <!--Versión antigua donde solo se mostraba la info de los beacons detectados-->
+  <!-- <ion-card *ngFor="let beacon of beacons"  [ngStyle]="{'background-color': beacon.color}">
       <ion-card-header>
         <h1>Beacon #{{beacon.minor}} {{beacon.chat}}</h1>
       </ion-card-header>
@@ -31,30 +32,45 @@
       </ion-card-content>
     </ion-card> -->
 
-
   <ion-card *ngFor="let beacon of beaconsBBDD" [ngStyle]="{'background-color': beacon.color}">
     <ion-card-content style="padding: 0 !important">
-      <ion-row>
+      <ion-row style="vertical-align:middle !important">
         <ion-col col-10>
-          <h1>Beacon #{{beacon.minor}}</h1>
-          <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'dd/M/yyyy H:mm:ss'}}</p>
-          <p>Range: {{beacon.accuracy}}</p>
+          <ion-row ion-item [ngStyle]="{'background-color': beacon.color}">
+            <ion-avatar item-start>
+              <img src="{{beacon.img}}">
+            </ion-avatar>
+            <h1>{{ beacon.title }}</h1>
+            <p>{{ beacon.description }}</p>
+          </ion-row>
+          <ion-row>
+            <ion-col class="col1">
+              <p style="float: right; color: #aaa;">{{beacon.timestamp | date:'H:mm:ss'}}</p>
+              <h3>~ {{beacon.accuracy}} m</h3>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-2 align-self-center style="padding: 0 !important">
+        <ion-col col-2 align-self-center style="padding: 0 !important;">
           <ion-row style="padding: 0 !important">
-            <button color="dark" ion-button large clear icon-only style="margin: 0 !important" (click)="openNews(beacon.news)">
-                  <ion-icon name="document"></ion-icon>
-                </button>
+            <ion-col style="padding: 0 !important; text-align: right !important;">
+              <button [disabled]="beacon.news == 'null'" color="dark" ion-button clear icon-only style="margin: 0 !important" (click)="openNews(beacon.news)">
+                <ion-icon name="document"></ion-icon>
+              </button>
+            </ion-col>
           </ion-row>
           <ion-row style="padding: 0 !important">
-            <button color="danger" ion-button large clear icon-only style="margin: 0 !important" (click)="openMarker(beacon.marker)">
-                  <ion-icon name="md-pin"></ion-icon>
-                </button>
+            <ion-col style="padding: 0 !important; text-align: right !important;">
+              <button [disabled]="beacon.marker == 'null'" color="danger" ion-button clear icon-only style="margin: 0 !important" (click)="openMarker(beacon.marker)">
+                <ion-icon name="md-pin"></ion-icon>
+              </button>
+            </ion-col>
           </ion-row>
           <ion-row style="padding: 0 !important">
-            <button [disabled]="beacon.chat == 'null'" color="secondary" ion-button large clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
-                  <ion-icon name="ios-chatbubbles"></ion-icon>
-                </button>
+            <ion-col style="padding: 0 !important; text-align: right !important;">
+              <button [disabled]="beacon.chat == 'null'" color="secondary" ion-button clear icon-only style="margin: 0 !important" (click)="openChat(beacon.chat)">
+                <ion-icon name="ios-chatbubbles"></ion-icon>
+              </button>
+            </ion-col>
           </ion-row>
         </ion-col>
       </ion-row>
