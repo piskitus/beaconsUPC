@@ -1,0 +1,77 @@
+<ion-header>
+
+  <ion-navbar>
+    <!-- <ion-row>
+      <ion-col col-10 *ngIf="!reminder.id">
+        <button block  ion-button color="primary" outline (click)="crearRecordatorio()">
+            Crear Recordatorio
+         </button>
+      </ion-col>
+      <ion-col col-5 *ngIf="reminder.id" >
+        <button block ion-button color="warning" outline (click)="guardarRecordatorio()">
+          Actualizar
+         </button>
+      </ion-col>
+      <ion-col col-5 *ngIf="reminder.id">
+        <button block  ion-button color="danger" outline (click)="borrarRecordatorio(reminder.id)">
+          Eliminar
+         </button>
+      </ion-col>
+      <ion-col col-2>
+          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+         <ion-icon name="md-close"></ion-icon>
+       </button>
+      </ion-col>
+    </ion-row> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button block outline color="dark" icon-only (click)="newSubject()">
+ <ion-icon name="add-circle"></ion-icon>
+</button>
+<button ion-button block outline color="danger" icon-only (click)="deleteSubjects()">
+<ion-icon name="trash"></ion-icon>
+</button>
+<ion-item>
+  <ion-label color="dark">Asignatura</ion-label>
+  <ion-select [(ngModel)]="class.subject" name="subject">
+    <ion-option value="null">No definida</ion-option>
+    <ion-option *ngFor="let subj of subjects" value="{{subj.acronym}}" required>{{subj.acronym}} - {{subj.name}}</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label color="dark">Día</ion-label>
+  <ion-select [(ngModel)]="class.day" name="day">
+    <ion-option value="lunes">Lunes</ion-option>
+    <ion-option value="martes">Martes</ion-option>
+    <ion-option value="miercoles">Miércoles</ion-option>
+    <ion-option value="jueves">Jueves</ion-option>
+    <ion-option value="viernes">Viernes</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label color="dark">Hora inicio</ion-label>
+  <ion-datetime displayFormat="HH:mm" [(ngModel)]="class.startTime">h</ion-datetime>
+</ion-item>
+<ion-item>
+  <ion-label color="dark" fixed>Nº Aula</ion-label>
+  <ion-input type="number" placeholder="223" [(ngModel)]="class.classroom"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label color="dark">Edificio</ion-label>
+  <ion-select [(ngModel)]="class.day" name="day">
+    <ion-option value="null">⚫ No definido</ion-option>
+    <ion-option value="rojo">❤️ Rojo</ion-option>
+    <ion-option value="amarillo">💛 Amarillo</ion-option>
+    <ion-option value="azul">💙 Azul</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label color="dark" fixed>Observaciones</ion-label>
+  <ion-textarea [(ngModel)]="class.obs" rows="3" type="text" placeholder="Información opcional que se mostrará debajo del mensaje de aviso"></ion-textarea>
+</ion-item>
+
+</ion-content>

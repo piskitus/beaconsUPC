@@ -49,6 +49,11 @@ export class AvisosPage {
    modal.present();
   }
 
+  nuevaClase(){
+   let modal = this.modalCtrl.create( 'ModalAddClassPage'/*,this.coords Aquí puede ir info*/);
+   modal.present();
+  }
+
   borrarRecordatorio(id){
     let alert = this.alertCtrl.create({
       title: '¿Estás seguro?',

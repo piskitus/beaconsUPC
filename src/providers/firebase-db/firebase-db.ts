@@ -232,6 +232,21 @@ export class FirebaseDbProvider {
   }
 
 
+  ////////////////////////////////////////////////
+  ////////////       SUBJECTS       //////////////
+  ////////////////////////////////////////////////
+
+  createSubject(subject){
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/subjects/'+subject.acronym).set(subject)
+  }
+
+  public deleteSubject(acronym){
+        this.afDB.database.ref('users/'+this.auth.getUser()+'/subjects/'+acronym).remove();
+  }
+
+  getUserSubjects(){
+    return this.afDB.list('users/'+this.auth.getUser()+'/subjects')
+  }
 
 
 
