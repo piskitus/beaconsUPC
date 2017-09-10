@@ -58,8 +58,8 @@ const cloudSettings: CloudSettings = {
     IonicModule.forRoot(MyApp,{
       monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
       monthShortNames: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
-      dayNames: ['lunes', 'martes', 'miercoles', 'jueves', 'viernes' ],
-      dayShortNames: ['lun', 'mar', 'mie', 'jue', 'vie' ],
+      dayNames: ['domingo','lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
+      dayShortNames: ['dom','lun', 'mar', 'mié', 'jue', 'vie', 'sab'],
     }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
