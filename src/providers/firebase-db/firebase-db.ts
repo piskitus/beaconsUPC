@@ -249,6 +249,34 @@ export class FirebaseDbProvider {
   }
 
 
+  ////////////////////////////////////////////////
+  ////////////       CLASSES        //////////////
+  ////////////////////////////////////////////////
+
+  createClass(clase){
+    if(!clase.id){
+      clase.id = Date.now();
+    }
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/classes/'+clase.day+'/'+clase.id).set(clase)
+  }
+
+  updateClass(clase){
+    return this.afDB.database.ref('users/'+this.auth.getUser()+'/classes/'+clase.day+'/'+clase.id).update(clase)
+  }
+
+  getClasses(){
+    return this.afDB.list('users/'+this.auth.getUser()+'/classes')
+  }
+
+  getDayClasses(day){
+    return this.afDB.list('users/'+this.auth.getUser()+'/classes/'+day)
+  }
+
+  public deleteClass(day, id){
+        this.afDB.database.ref('users/'+this.auth.getUser()+'/classes/'+day+'/'+id).remove();
+  }
+
+
 
 
 

@@ -9,12 +9,12 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 })
 export class ModalAddClassPage {
 
-  class:any;
+  clase:any;
   subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
               public alertCtrl : AlertController) {
-    this.class = this.navParams.data;
+    this.clase = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -108,6 +108,24 @@ deleteSubjects() {
     });
 
     alert.present();
+  }
+
+
+  crearClase(){
+
+    let clase = {
+      subject: this.clase.subject,
+      day: this.clase.day,
+      startTime: this.clase.startTime,
+      classroom: this.clase.classroom,
+      building: this.clase.building,
+      obs: this.clase.obs
+    }
+
+    this.dbFirebase.createClass(clase).then(res=>{
+        console.log('Clase guardada en firebase:');
+        this.cerrarModal();
+    })
   }
 
 }

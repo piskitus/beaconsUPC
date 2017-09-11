@@ -50,7 +50,15 @@ export class AvisosPage {
   }
 
   nuevaClase(){
-   let modal = this.modalCtrl.create( 'ModalAddClassPage'/*,this.coords Aquí puede ir info*/);
+    let clase = {
+      subject: 'null',
+      day: 'lunes',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
    modal.present();
   }
 
