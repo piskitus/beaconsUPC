@@ -9,7 +9,7 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 })
 export class AvisosPage {
 
-  segment:string = "reminders";//Segmento por defecto
+  segment:string = "classes";//Segmento por defecto
 
   reminders:any;
   news:any;
@@ -45,19 +45,29 @@ export class AvisosPage {
 
       for(let i=0; i<classes.length; i++){
         if(classes[i].$key == 'lunes'){
-          this.lunes = classes[i];
+          this.dbFirebase.getUserClassesDay('lunes').subscribe(lunes=>{
+            this.lunes = lunes;
+          })
         }
         else if(classes[i].$key == 'martes'){
-          this.martes = classes[i];
+          this.dbFirebase.getUserClassesDay('martes').subscribe(martes=>{
+            this.martes = martes;
+          })
         }
         else if(classes[i].$key == 'miercoles'){
-          this.miercoles = classes[i];
+          this.dbFirebase.getUserClassesDay('miercoles').subscribe(miercoles=>{
+            this.miercoles = miercoles;
+          })
         }
         else if(classes[i].$key == 'jueves'){
-          this.jueves = classes[i];
+          this.dbFirebase.getUserClassesDay('jueves').subscribe(jueves=>{
+            this.jueves = jueves;
+          })
         }
         else if(classes[i].$key == 'viernes'){
-          this.viernes = classes[i];
+          this.dbFirebase.getUserClassesDay('viernes').subscribe(viernes=>{
+            this.viernes = viernes;
+          })
         }
         else{}
       }

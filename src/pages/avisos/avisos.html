@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-segment [(ngModel)]="segment" color="primary">
-      <ion-segment-button value="reminders">
-        <ion-icon name="notifications"></ion-icon>
-      </ion-segment-button>
       <ion-segment-button value="classes">
         <ion-icon name="school"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="reminders">
+        <ion-icon name="notifications"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="news">
         <ion-icon name="bookmarks"></ion-icon>
@@ -64,6 +64,74 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'classes'">
+
+
+
+      <ion-card>
+        <ion-card-header>
+          LUNES
+        </ion-card-header>
+        <ion-card-content *ngIf="lunes">
+          <ion-item *ngFor="let clase of lunes">
+            {{clase.subject}}
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          MARTES
+        </ion-card-header>
+        <ion-card-content *ngIf="martes">
+          <ion-item *ngFor="let clase of martes">
+            {{clase.subject}}
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          MIÉRCOLES
+        </ion-card-header>
+        <ion-card-content *ngIf="miercoles">
+          <ion-item *ngFor="let clase of miercoles">
+            {{clase.subject}}
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          JUEVES
+        </ion-card-header>
+        <ion-card-content *ngIf="jueves">
+          <ion-item *ngFor="let clase of jueves">
+            {{clase.subject}}
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          VIERNES
+        </ion-card-header>
+        <ion-card-content *ngIf="viernes">
+          <ion-item *ngFor="let clase of viernes">
+            {{clase.subject}}
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+
+
+
+
+
+
+
+
+
+
       <!-- <ion-item-sliding #item *ngFor="let marker of markers">
         <ion-item (click)="muestraMarcador(marker)">
           <h2>{{ marker.title }}</h2>

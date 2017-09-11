@@ -268,6 +268,10 @@ export class FirebaseDbProvider {
     return this.afDB.list('users/'+this.auth.getUser()+'/classes')
   }
 
+  getUserClassesDay(day){
+    return this.afDB.list('users/'+this.auth.getUser()+'/classes/'+day)
+  }
+
   getDayClasses(day){
     return this.afDB.list('users/'+this.auth.getUser()+'/classes/'+day)
   }
