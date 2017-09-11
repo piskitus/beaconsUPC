@@ -264,7 +264,7 @@ export class FirebaseDbProvider {
     return this.afDB.database.ref('users/'+this.auth.getUser()+'/classes/'+clase.day+'/'+clase.id).update(clase)
   }
 
-  getClasses(){
+  getUserClasses(){
     return this.afDB.list('users/'+this.auth.getUser()+'/classes')
   }
 

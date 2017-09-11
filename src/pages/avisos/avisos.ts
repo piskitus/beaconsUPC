@@ -13,6 +13,14 @@ export class AvisosPage {
 
   reminders:any;
   news:any;
+  classes:any;
+
+  // se guardan las clases de la base de datos según en que día de la semana están guardadas
+  lunes:any = null;
+  martes:any = null;
+  miercoles:any = null;
+  jueves:any = null;
+  viernes:any = null;
   //subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController,
@@ -31,6 +39,28 @@ export class AvisosPage {
     })
     this.dbFirebase.getUserNews().subscribe(news=>{
       this.news = news;
+    })
+    this.dbFirebase.getUserClasses().subscribe(classes=>{
+      this.classes = classes;
+
+      for(let i=0; i<classes.length; i++){
+        if(classes[i].$key == 'lunes'){
+          this.lunes = classes[i];
+        }
+        else if(classes[i].$key == 'martes'){
+          this.martes = classes[i];
+        }
+        else if(classes[i].$key == 'miercoles'){
+          this.miercoles = classes[i];
+        }
+        else if(classes[i].$key == 'jueves'){
+          this.jueves = classes[i];
+        }
+        else if(classes[i].$key == 'viernes'){
+          this.viernes = classes[i];
+        }
+        else{}
+      }
     })
     // this.dbFirebase.getSubjects().subscribe(subjects=>{
     //   this.subjects = subjects;
