@@ -65,16 +65,37 @@
 
     <ion-list *ngSwitchCase="'classes'">
 
-
-
       <ion-card>
-        <ion-card-header>
+        <ion-card-header class="padding">
           LUNES
         </ion-card-header>
-        <ion-card-content *ngIf="lunes">
-          <ion-item *ngFor="let clase of lunes">
+        <ion-card-content class="padding" *ngIf="lunes">
+          <ion-row *ngFor="let clase of lunes">
+            <ion-col col-3>
+              <ion-row>
+                <h3><ion-icon color="dark" name="document"></ion-icon> {{clase.subject}}</h3>
+              </ion-row>
+
+            </ion-col>
+            <ion-col col-3>
+                  <ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+            </ion-col>
+            <ion-col col-2>
+                <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                {{clase.classroom}}
+
+                <!-- <span *ngIf="clase.building == 'rojo'">❤️</span><span *ngIf="clase.building == 'azul'">💙</span><span *ngIf="clase.building == 'amarillo'">💛</span> -->
+            </ion-col>
+            <ion-col col-4>
+                <span *ngIf="clase.obs"><ion-icon color="dark" name="information-circle"></ion-icon> {{clase.obs}}</span>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-item *ngFor="let clase of lunes"  class="margin">
             {{clase.subject}}
-          </ion-item>
+          </ion-item> -->
         </ion-card-content>
       </ion-card>
 

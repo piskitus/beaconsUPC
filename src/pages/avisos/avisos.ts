@@ -30,6 +30,18 @@ export class AvisosPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AvisosPage');
 
+    var d = new Date();
+    var weekday = new Array(7);
+      weekday[0] =  "domingo";
+      weekday[1] = "lunes";
+      weekday[2] = "martes";
+      weekday[3] = "miercoles";
+      weekday[4] = "jueves";
+      weekday[5] = "viernes";
+      weekday[6] = "sabado";
+    var n = weekday[d.getDay()];
+    console.log("Hoy es: ", n)
+
   }
 
   ionViewDidEnter(){//Cada vez que entro a avisos

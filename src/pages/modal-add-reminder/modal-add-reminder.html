@@ -64,20 +64,6 @@
         </ion-select>
       </ion-item>
     </ion-col>
-
-    <ion-col col-12>
-      <ion-item>
-        <ion-label>Día de la semana</ion-label>
-        <ion-select [(ngModel)]="reminder.day" name="day" required>
-          <ion-option value="lunes">Lunes</ion-option>
-          <ion-option value="martes">Martes</ion-option>
-          <ion-option value="miercoles">Miércoles</ion-option>
-          <ion-option value="jueves">Jueves</ion-option>
-          <ion-option value="viernes">Viernes</ion-option>
-        </ion-select>
-        </ion-item>
-    </ion-col>
-
   </ion-row>
   <ion-card *ngIf="cardInfoShow && reminder.period == 'once'">
   <ion-card-content>

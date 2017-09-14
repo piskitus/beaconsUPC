@@ -58,7 +58,7 @@
 </ion-item>
 <ion-item>
   <ion-label color="dark" fixed>Nº Aula</ion-label>
-  <ion-input text-right type="number" placeholder="223" [(ngModel)]="clase.classroom"></ion-input>
+  <ion-input maxlength="3" text-right type="number" placeholder="223" [(ngModel)]="clase.classroom"></ion-input>
 </ion-item>
 <ion-item>
   <ion-label color="dark">Edificio</ion-label>
@@ -71,7 +71,7 @@
 </ion-item>
 <ion-item>
   <ion-label color="dark" stacked>Observaciones</ion-label>
-  <ion-textarea [(ngModel)]="clase.obs" rows="3" type="text" placeholder="Información opcional que se mostrará debajo del mensaje de aviso"></ion-textarea>
+  <ion-input [(ngModel)]="clase.obs" maxlength="30" rows="1" type="text" placeholder="Información opcional que se mostrará debajo del mensaje de aviso"></ion-input>
 </ion-item>
 
 </ion-content>

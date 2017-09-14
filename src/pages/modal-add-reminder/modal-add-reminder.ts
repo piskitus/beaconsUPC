@@ -19,17 +19,7 @@ export class ModalAddReminderPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalAddReminderPage');
-    var d = new Date();
-    var weekday = new Array(7);
-      weekday[0] =  "domingo";
-      weekday[1] = "lunes";
-      weekday[2] = "martes";
-      weekday[3] = "miercoles";
-      weekday[4] = "jueves";
-      weekday[5] = "viernes";
-      weekday[6] = "sabado";
-    var n = weekday[d.getDay()];
-    console.log("Hoy es: ", n)
+
   }
 
   cerrarModal(){
@@ -42,7 +32,6 @@ export class ModalAddReminderPage {
       description: this.reminder.description,
       when: this.reminder.when,
       period: this.reminder.period,
-      day: this.reminder.day,
       time: Date.now() - 28800000 //Le creo un time (milisegundos) y le resto 8horas para que ya pueda empezar a funcionar pasando el filtro del controller
     }
 
@@ -59,7 +48,6 @@ export class ModalAddReminderPage {
       description: this.reminder.description,
       when: this.reminder.when,
       period: this.reminder.period,
-      day: this.reminder.day
     }
     this.dbFirebase.updateReminder(reminder).then(res=>{
     console.log('Recordatorio modificada en firebase');
