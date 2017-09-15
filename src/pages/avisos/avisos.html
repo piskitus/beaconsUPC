@@ -65,20 +65,30 @@
 
     <ion-list *ngSwitchCase="'classes'">
 
+<!-- CARD LUNES -->
       <ion-card>
-        <ion-card-header class="padding">
-          LUNES
+        <ion-card-header class="padding" style="background-color: lightgray">
+          <ion-row>
+            <ion-col col-8 style="text-align: center !important;">
+              <span style="font-size: 20px; font-weight: bold;">L U N E S</span>
+            </ion-col>
+            <ion-col col-4 style="padding: 0 !important; text-align: right !important;">
+              <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseLunes()">
+                  <ion-icon name="add"></ion-icon><ion-icon name="school"></ion-icon>
+                </button>
+            </ion-col>
+          </ion-row>
+
         </ion-card-header>
         <ion-card-content class="padding" *ngIf="lunes">
           <ion-row *ngFor="let clase of lunes">
-            <ion-col col-3>
-              <ion-row>
-                <h3><ion-icon color="dark" name="document"></ion-icon> {{clase.subject}}</h3>
+            <ion-col col-2>
+              <ion-row style="flex-wrap: nowrap !important">
+                <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
               </ion-row>
-
             </ion-col>
             <ion-col col-3>
-                  <ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+                  &nbsp;&nbsp;&nbsp;<ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
             </ion-col>
             <ion-col col-2>
                 <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
@@ -86,131 +96,196 @@
                 <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
                 <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
                 {{clase.classroom}}
-
-                <!-- <span *ngIf="clase.building == 'rojo'">❤️</span><span *ngIf="clase.building == 'azul'">💙</span><span *ngIf="clase.building == 'amarillo'">💛</span> -->
             </ion-col>
-            <ion-col col-4>
-                <span *ngIf="clase.obs"><ion-icon color="dark" name="information-circle"></ion-icon> {{clase.obs}}</span>
+            <ion-col col-5>
+              <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+              </ion-row>
             </ion-col>
           </ion-row>
-          <!-- <ion-item *ngFor="let clase of lunes"  class="margin">
-            {{clase.subject}}
-          </ion-item> -->
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
-        <ion-card-header>
-          MARTES
-        </ion-card-header>
-        <ion-card-content *ngIf="martes">
-          <ion-item *ngFor="let clase of martes">
-            {{clase.subject}}
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+      <!-- CARD MARTES -->
+            <ion-card>
+              <ion-card-header class="padding" style="background-color: lightgray">
+                <ion-row>
+                  <ion-col col-8 style="text-align: center !important;">
+                    <span style="font-size: 20px; font-weight: bold;">M A R T E S</span>
+                  </ion-col>
+                  <ion-col col-4 style="padding: 0 !important; text-align: right !important;">
+                    <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMartes()">
+                        <ion-icon name="add"></ion-icon><ion-icon name="school"></ion-icon>
+                      </button>
+                  </ion-col>
+                </ion-row>
 
-      <ion-card>
-        <ion-card-header>
-          MIÉRCOLES
-        </ion-card-header>
-        <ion-card-content *ngIf="miercoles">
-          <ion-item *ngFor="let clase of miercoles">
-            {{clase.subject}}
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+              </ion-card-header>
+              <ion-card-content class="padding" *ngIf="martes">
+                <ion-row *ngFor="let clase of martes">
+                  <ion-col col-2>
+                    <ion-row style="flex-wrap: nowrap !important">
+                      <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
+                    </ion-row>
+                  </ion-col>
+                  <ion-col col-3>
+                        &nbsp;&nbsp;&nbsp;<ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+                  </ion-col>
+                  <ion-col col-2>
+                      <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                      <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                      <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                      <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                      {{clase.classroom}}
+                  </ion-col>
+                  <ion-col col-5>
+                    <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                      <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
 
-      <ion-card>
-        <ion-card-header>
-          JUEVES
-        </ion-card-header>
-        <ion-card-content *ngIf="jueves">
-          <ion-item *ngFor="let clase of jueves">
-            {{clase.subject}}
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+            <!-- CARD MIERCOLES -->
+                  <ion-card>
+                    <ion-card-header class="padding" style="background-color: lightgray">
+                      <ion-row>
+                        <ion-col col-8 style="text-align: center !important;">
+                          <span style="font-size: 20px; font-weight: bold;">M I É R C O L E S</span>
+                        </ion-col>
+                        <ion-col col-4 style="padding: 0 !important; text-align: right !important;">
+                          <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMiercoles()">
+                              <ion-icon name="add"></ion-icon><ion-icon name="school"></ion-icon>
+                            </button>
+                        </ion-col>
+                      </ion-row>
 
-      <ion-card>
-        <ion-card-header>
-          VIERNES
-        </ion-card-header>
-        <ion-card-content *ngIf="viernes">
-          <ion-item *ngFor="let clase of viernes">
-            {{clase.subject}}
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+                    </ion-card-header>
+                    <ion-card-content class="padding" *ngIf="miercoles">
+                      <ion-row *ngFor="let clase of miercoles">
+                        <ion-col col-2>
+                          <ion-row style="flex-wrap: nowrap !important">
+                            <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-3>
+                              &nbsp;&nbsp;&nbsp;<ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+                        </ion-col>
+                        <ion-col col-2>
+                            <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                            <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                            <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                            <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                            {{clase.classroom}}
+                        </ion-col>
+                        <ion-col col-5>
+                          <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                            <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+
+                  <!-- CARD JUEVES -->
+                        <ion-card>
+                          <ion-card-header class="padding" style="background-color: lightgray">
+                            <ion-row>
+                              <ion-col col-8 style="text-align: center !important;">
+                                <span style="font-size: 20px; font-weight: bold;">J U E V E S</span>
+                              </ion-col>
+                              <ion-col col-4 style="padding: 0 !important; text-align: right !important;">
+                                <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseJueves()">
+                                    <ion-icon name="add"></ion-icon><ion-icon name="school"></ion-icon>
+                                  </button>
+                              </ion-col>
+                            </ion-row>
+
+                          </ion-card-header>
+                          <ion-card-content class="padding" *ngIf="jueves">
+                            <ion-row *ngFor="let clase of jueves">
+                              <ion-col col-2>
+                                <ion-row style="flex-wrap: nowrap !important">
+                                  <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
+                                </ion-row>
+                              </ion-col>
+                              <ion-col col-3>
+                                    &nbsp;&nbsp;&nbsp;<ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+                              </ion-col>
+                              <ion-col col-2>
+                                  <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                                  <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                                  <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                                  <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                                  {{clase.classroom}}
+                              </ion-col>
+                              <ion-col col-5>
+                                <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                                  <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+                                </ion-row>
+                              </ion-col>
+                            </ion-row>
+                          </ion-card-content>
+                        </ion-card>
+
+                        <!-- CARD VIERNES -->
+                              <ion-card>
+                                <ion-card-header class="padding" style="background-color: lightgray">
+                                  <ion-row>
+                                    <ion-col col-8 style="text-align: center !important;">
+                                      <span style="font-size: 20px; font-weight: bold;">V I E R N E S</span>
+                                    </ion-col>
+                                    <ion-col col-4 style="padding: 0 !important; text-align: right !important;">
+                                      <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseViernes()">
+                                          <ion-icon name="add"></ion-icon><ion-icon name="school"></ion-icon>
+                                        </button>
+                                    </ion-col>
+                                  </ion-row>
+
+                                </ion-card-header>
+                                <ion-card-content class="padding" *ngIf="viernes">
+                                  <ion-row *ngFor="let clase of viernes">
+                                    <ion-col col-2>
+                                      <ion-row style="flex-wrap: nowrap !important">
+                                        <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
+                                      </ion-row>
+                                    </ion-col>
+                                    <ion-col col-3>
+                                          &nbsp;&nbsp;&nbsp;<ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+                                    </ion-col>
+                                    <ion-col col-2>
+                                        <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                                        <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                                        <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                                        <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                                        {{clase.classroom}}
+                                    </ion-col>
+                                    <ion-col col-5>
+                                      <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                                        <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+                                      </ion-row>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-card-content>
+                              </ion-card>
 
 
-
-
-
-
-
-
-
-
-
-      <!-- <ion-item-sliding #item *ngFor="let marker of markers">
-        <ion-item (click)="muestraMarcador(marker)">
-          <h2>{{ marker.title }}</h2>
-          <p>Lat: {{ marker.lat }}, Long: {{marker.lng}}</p>
-        </ion-item>
-      <ion-item-options side="right">
-        <button ion-button  color="danger" (click)="borrarMarcador(marker.id)"><ion-icon name="trash"></ion-icon>
-           Borrar
-        </button>
-      </ion-item-options>
-      <ion-item-options side="left">
-        <button ion-button  color="warning" (click)="muestraMarcador(marker)"><ion-icon name="md-create"></ion-icon>
-           Editar
-        </button>
-      </ion-item-options>
-      </ion-item-sliding> -->
     </ion-list>
 
-    <!-- <ion-list *ngSwitchCase="'users'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-1.jpg">
-        </ion-thumbnail>
-        <h2>Daffy</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-2.jpg">
-        </ion-thumbnail>
-        <h2>Huey</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-3.jpg">
-        </ion-thumbnail>
-        <h2>Dewey</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-4.jpg">
-        </ion-thumbnail>
-        <h2>Louie</h2>
-      </ion-item>
-    </ion-list> -->
+
   </div>
 
 <!--Botón flotante-->
-  <ion-fab right top edge>
+  <!-- <ion-fab right top edge>
     <button ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>
     <ion-fab-list color="black">
       <button ion-fab (tap)="nuevaNotificacion()"><ion-icon name="notifications"></ion-icon></button>
       <button ion-fab (tap)="nuevaClase()"><ion-icon name="school"></ion-icon></button>
-      <!--<button ion-fab (tap)="nuevoMarcador()"><ion-icon name="locate"></ion-icon></button>
-      <button ion-fab (tap)="nuevoUsuario()"><ion-icon name="person"></ion-icon></button> -->
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 
 </ion-content>
 

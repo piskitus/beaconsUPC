@@ -114,6 +114,66 @@ export class AvisosPage {
    modal.present();
   }
 
+  nuevaClaseLunes(){
+    let clase = {
+      subject: 'null',
+      day: 'lunes',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+   modal.present();
+  }
+
+  nuevaClaseMartes(){
+    let clase = {
+      subject: 'null',
+      day: 'martes',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+   modal.present();
+  }
+
+  nuevaClaseMiercoles(){
+    let clase = {
+      subject: 'null',
+      day: 'miercoles',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+   modal.present();
+  }
+
+  nuevaClaseJueves(){
+    let clase = {
+      subject: 'null',
+      day: 'jueves',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+   modal.present();
+  }
+
+  nuevaClaseViernes(){
+    let clase = {
+      subject: 'null',
+      day: 'viernes',
+      startTime: '10:00',
+      building: 'null',
+      obs: null
+    }
+   let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+   modal.present();
+  }
+
   borrarRecordatorio(id){
     let alert = this.alertCtrl.create({
       title: '¿Estás seguro?',
