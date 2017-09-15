@@ -6,7 +6,33 @@ page-avisos {
       padding-bottom: 0px !important;
   }
 
+  .no-padding{
+    padding: 0px !important
+  }
+
   .margin {
       margin: 0px !important;
+  }
+
+// colores cuando coincide el día
+  .cardColor{
+    background-color: #FFFFFF;
+  }
+
+  .titleCardColor{
+    background-color: #A5D6A7 !important;
+  }
+
+  .toolbar-background-md {
+    border-color: #b2b2b2;
+    background: #333;
+  }
+
+  .card-md{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
   }
 }

@@ -15,6 +15,8 @@ export class AvisosPage {
   news:any;
   classes:any;
 
+  today:any;
+
   // se guardan las clases de la base de datos según en que día de la semana están guardadas
   lunes:any = null;
   martes:any = null;
@@ -39,8 +41,8 @@ export class AvisosPage {
       weekday[4] = "jueves";
       weekday[5] = "viernes";
       weekday[6] = "sabado";
-    var n = weekday[d.getDay()];
-    console.log("Hoy es: ", n)
+    this.today = weekday[d.getDay()];
+    console.log("Hoy es: ", this.today)
 
   }
 
@@ -107,6 +109,7 @@ export class AvisosPage {
       day: 'lunes',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
 
@@ -120,6 +123,7 @@ export class AvisosPage {
       day: 'lunes',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
@@ -132,6 +136,7 @@ export class AvisosPage {
       day: 'martes',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
@@ -144,6 +149,7 @@ export class AvisosPage {
       day: 'miercoles',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
@@ -156,6 +162,7 @@ export class AvisosPage {
       day: 'jueves',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
@@ -168,6 +175,7 @@ export class AvisosPage {
       day: 'viernes',
       startTime: '10:00',
       building: 'null',
+      classroom: null,
       obs: null
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);

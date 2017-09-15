@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
@@ -13,7 +13,7 @@ export class ModalAddClassPage {
   subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController) {
+              public alertCtrl : AlertController, public toastCtrl: ToastController) {
     this.clase = this.navParams.data;
   }
 
@@ -62,16 +62,26 @@ export class ModalAddClassPage {
             acronym: data.acronym
           }
           // añado asignatura a la base de datos
-          this.dbFirebase.createSubject(subject);
+
 
           //TODO: validar que no hayan campos vacíos y que el acrónimo no tenga espacios
 
-          // if (User.isValid(data.username, data.password)) {
-          //   // logged in!
-          // } else {
-          //   // invalid login
-          //   return false;
-          // }
+          if (subject.acronym != '' && subject.name != '') {
+            if(subject.acronym.length <= 8){
+              console.log("TODO OK", subject.acronym)
+              this.dbFirebase.createSubject(subject);
+            }
+            else{
+              this.showToast('🔴 Diminutivo demasiado largo 🔴', 2000)
+              return false;
+              //acronyme demasiado largo
+            }
+          } else {
+            this.showToast('🔴 Campos incompletos 🔴', 2000)
+            console.log("ACRONYM ES NULL")
+            // campos incompletos
+            return false;
+          }
 
         }
       }
@@ -122,10 +132,29 @@ deleteSubjects() {
       obs: this.clase.obs
     }
 
-    this.dbFirebase.createClass(clase).then(res=>{
-        console.log('Clase guardada en firebase:');
-        this.cerrarModal();
-    })
+    // validación
+    if(clase.subject != 'null'){// elegir asignatura
+      if(clase.classroom != null){// rellenar número aula
+        this.dbFirebase.createClass(clase).then(res=>{
+            console.log('Clase guardada en firebase:');
+            this.cerrarModal();
+        })
+      }else{this.showToast('🔴 Debes definir un número de aula 🔴', 2000)}
+    }else{this.showToast('🔴 Debes seleccionar una asignatura 🔴', 2000)}
+
+
+
   }
+
+  showToast(message:string, duration:number) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        position: 'top',
+        duration: duration,
+        dismissOnPageChange: true,
+        cssClass: "toastCSS"
+      });
+      toast.present();
+    }
 
 }

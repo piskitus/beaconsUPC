@@ -1,24 +1,11 @@
-<ion-header>
+<!-- <ion-header>
   <ion-navbar>
-    <ion-segment [(ngModel)]="segment" color="primary">
-      <ion-segment-button value="classes">
-        <ion-icon name="school"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="reminders">
-        <ion-icon name="notifications"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="news">
-        <ion-icon name="bookmarks"></ion-icon>
-      </ion-segment-button>
-      <!-- <ion-segment-button value="users">
-        <ion-icon name="contacts"></ion-icon>
-      </ion-segment-button> -->
-    </ion-segment>
+
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
 
-<ion-content>
+<ion-content style="background-color: #333">
   <div [ngSwitch]="segment">
     <ion-list *ngSwitchCase="'reminders'">
       <ion-item-sliding #item *ngFor="let reminder of reminders">
@@ -64,10 +51,20 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'classes'">
+<!-- card informativo-->
+      <ion-card *ngIf="!lunes && !martes && !miercoles && !jueves && !viernes"><!-- se muestra cuando no hay ninguna clase creada-->
+        <ion-card-content>
+          <ion-row>
+            <ion-col col-12>
+              <p style="text-align: justify"> ℹ️ En esta pestaña puedes añadir tus clases de toda la semana. Nosotros nos encargaremos de notificarte a qué clase debes ir cada vez que entres al campus 😜 </p>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
 
 <!-- CARD LUNES -->
       <ion-card>
-        <ion-card-header class="padding" style="background-color: lightgray">
+        <ion-card-header class="padding" style="background-color: #BDBDBD">
           <ion-row>
             <ion-col col-8 style="text-align: center !important;">
               <span style="font-size: 20px; font-weight: bold;">L U N E S</span>
@@ -80,7 +77,7 @@
           </ion-row>
 
         </ion-card-header>
-        <ion-card-content class="padding" *ngIf="lunes">
+        <ion-card-content class="padding" *ngIf="lunes" [ngClass]="{'cardColor' : (today == 'lunes')}">
           <ion-row *ngFor="let clase of lunes">
             <ion-col col-2>
               <ion-row style="flex-wrap: nowrap !important">
@@ -108,7 +105,7 @@
 
       <!-- CARD MARTES -->
             <ion-card>
-              <ion-card-header class="padding" style="background-color: lightgray">
+              <ion-card-header class="padding" style="background-color: #BDBDBD">
                 <ion-row>
                   <ion-col col-8 style="text-align: center !important;">
                     <span style="font-size: 20px; font-weight: bold;">M A R T E S</span>
@@ -121,7 +118,7 @@
                 </ion-row>
 
               </ion-card-header>
-              <ion-card-content class="padding" *ngIf="martes">
+              <ion-card-content class="padding" *ngIf="martes" [ngClass]="{'cardColor' : (today == 'martes')}">
                 <ion-row *ngFor="let clase of martes">
                   <ion-col col-2>
                     <ion-row style="flex-wrap: nowrap !important">
@@ -149,7 +146,7 @@
 
             <!-- CARD MIERCOLES -->
                   <ion-card>
-                    <ion-card-header class="padding" style="background-color: lightgray">
+                    <ion-card-header class="padding" style="background-color: #BDBDBD">
                       <ion-row>
                         <ion-col col-8 style="text-align: center !important;">
                           <span style="font-size: 20px; font-weight: bold;">M I É R C O L E S</span>
@@ -162,7 +159,7 @@
                       </ion-row>
 
                     </ion-card-header>
-                    <ion-card-content class="padding" *ngIf="miercoles">
+                    <ion-card-content class="padding" *ngIf="miercoles" [ngClass]="{'cardColor' : (today == 'miercoles')}">
                       <ion-row *ngFor="let clase of miercoles">
                         <ion-col col-2>
                           <ion-row style="flex-wrap: nowrap !important">
@@ -190,7 +187,7 @@
 
                   <!-- CARD JUEVES -->
                         <ion-card>
-                          <ion-card-header class="padding" style="background-color: lightgray">
+                          <ion-card-header class="padding" style="background-color: #BDBDBD">
                             <ion-row>
                               <ion-col col-8 style="text-align: center !important;">
                                 <span style="font-size: 20px; font-weight: bold;">J U E V E S</span>
@@ -203,7 +200,7 @@
                             </ion-row>
 
                           </ion-card-header>
-                          <ion-card-content class="padding" *ngIf="jueves">
+                          <ion-card-content class="padding" *ngIf="jueves" [ngClass]="{'cardColor' : (today == 'jueves')}">
                             <ion-row *ngFor="let clase of jueves">
                               <ion-col col-2>
                                 <ion-row style="flex-wrap: nowrap !important">
@@ -231,7 +228,7 @@
 
                         <!-- CARD VIERNES -->
                               <ion-card>
-                                <ion-card-header class="padding" style="background-color: lightgray">
+                                <ion-card-header class="padding" style="background-color: #BDBDBD" [ngClass]="{'titleCardColor' : (today == 'viernes')}">
                                   <ion-row>
                                     <ion-col col-8 style="text-align: center !important;">
                                       <span style="font-size: 20px; font-weight: bold;">V I E R N E S</span>
@@ -244,7 +241,7 @@
                                   </ion-row>
 
                                 </ion-card-header>
-                                <ion-card-content class="padding" *ngIf="viernes">
+                                <ion-card-content class="padding" *ngIf="viernes" [ngClass]="{'cardColor' : (today == 'viernes')}">
                                   <ion-row *ngFor="let clase of viernes">
                                     <ion-col col-2>
                                       <ion-row style="flex-wrap: nowrap !important">
@@ -289,7 +286,18 @@
 
 </ion-content>
 
-<!-- <ion-footer>
-  <ion-toolbar no-border-top>
+<ion-footer >
+  <ion-toolbar no-border-top class="no-padding">
+    <ion-segment [(ngModel)]="segment" color="light" style="background-color: #333">
+      <ion-segment-button value="classes">
+        <ion-icon name="school"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="reminders">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="news">
+        <ion-icon name="bookmarks"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
-</ion-footer> -->
+</ion-footer>
