@@ -60,27 +60,54 @@ export class AvisosPage {
       for(let i=0; i<classes.length; i++){
         if(classes[i].$key == 'lunes'){
           this.dbFirebase.getUserClassesDay('lunes').subscribe(lunes=>{
-            this.lunes = lunes;
+            // recorro el objeto que me llega transformando la hora en minutos para luego poder ordenarla
+            for (let i=0; i < lunes.length; i++){
+              let hora = lunes[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              lunes[i].minutos = minutos;
+            }
+            // ordeno en función de la hora (minutos)
+            this.lunes = lunes.sort((a, b) => a.minutos - b.minutos);
           })
         }
         else if(classes[i].$key == 'martes'){
           this.dbFirebase.getUserClassesDay('martes').subscribe(martes=>{
-            this.martes = martes;
+            for (let i=0; i < martes.length; i++){
+              let hora = martes[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              martes[i].minutos = minutos;
+            }
+            this.martes = martes.sort((a, b) => a.minutos - b.minutos);
           })
         }
         else if(classes[i].$key == 'miercoles'){
           this.dbFirebase.getUserClassesDay('miercoles').subscribe(miercoles=>{
-            this.miercoles = miercoles;
+            for (let i=0; i < miercoles.length; i++){
+              let hora = miercoles[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              miercoles[i].minutos = minutos;
+            }
+            this.miercoles = miercoles.sort((a, b) => a.minutos - b.minutos);
           })
         }
         else if(classes[i].$key == 'jueves'){
           this.dbFirebase.getUserClassesDay('jueves').subscribe(jueves=>{
-            this.jueves = jueves;
+            for (let i=0; i < jueves.length; i++){
+              let hora = jueves[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              jueves[i].minutos = minutos;
+            }
+            this.jueves = jueves.sort((a, b) => a.minutos - b.minutos);
           })
         }
         else if(classes[i].$key == 'viernes'){
           this.dbFirebase.getUserClassesDay('viernes').subscribe(viernes=>{
-            this.viernes = viernes;
+            for (let i=0; i < viernes.length; i++){
+              let hora = viernes[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              viernes[i].minutos = minutos;
+            }
+            this.viernes = viernes.sort((a, b) => a.minutos - b.minutos);
           })
         }
         else{}

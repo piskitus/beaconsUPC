@@ -6,6 +6,20 @@ page-avisos {
       padding-bottom: 0px !important;
   }
 
+  .icon-padding-left {
+      padding-left: 10px !important;
+      padding-right: 5px !important;
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+  }
+
+  .icon-padding-right {
+      padding-left: 5px !important;
+      padding-right: 10px !important;
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+  }
+
   .no-padding{
     padding: 0px !important
   }
@@ -33,6 +47,6 @@ page-avisos {
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 10px !important;
   }
 }
