@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController,AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, ModalController,AlertController, Content } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
@@ -8,6 +8,14 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
   templateUrl: 'avisos.html',
 })
 export class AvisosPage {
+  @ViewChild(Content) content: Content;
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom(1500);
+    }, 500);
+
+  }
 
   segment:string = "classes";//Segmento por defecto
 
@@ -43,6 +51,11 @@ export class AvisosPage {
       weekday[6] = "sabado";
     this.today = weekday[d.getDay()];
     console.log("Hoy es: ", this.today)
+
+    // si es jueves o viernes bajo la vista hasta abajo para que se vean esos días
+    if(this.today == 'jueves' || this.today == 'viernes'){
+      this.scrollToBottom();
+    }
 
   }
 
