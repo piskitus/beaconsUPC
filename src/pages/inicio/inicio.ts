@@ -41,13 +41,16 @@ export class InicioPage {
 
     platform.ready().then(() => {
 
-
       //Miro si la localización está activada
       this.isLocationEnabled();
 
       //TODO: que si salgo de la región me vuelva a mostrar la card principal
 
       setInterval(() => { //Para definir un intervalo
+        //Miro si tengo que notificar una clase
+        this.beaconProvider.classesDisplayNotifications();
+
+        //Miro si hay un beacon cercano
         let nearBeaconKey = this.beaconProvider.getNearBeaconKey();
 
         if(nearBeaconKey != null && (nearBeaconKey != this.nearBeaconKey)){//Compruebo que no sean iguales para entrar (xq si son el mismo no necesito actualizar la noticia)
@@ -79,7 +82,7 @@ export class InicioPage {
             })
           }
         }
-      }, 1000);//Cada segundo
+      }, 2000);//Cada 2 segundos
 
     });//Cierro platformReady
 

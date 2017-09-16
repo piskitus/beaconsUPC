@@ -20,12 +20,33 @@ export class BeaconProvider {
   enterRegionTime:number;
   exitRegionTime:number;
 
+  // lo utilizo para saber si estoy dentro o fuera de la región
+  insideRegion:boolean = false;
+  // lo utilizo para guardar la última notificación de clase que se ha hecho al usuario para no repetir notificaciones iguales
+  lastClassNotification:number = null;
 
   //Bases de datos
   reminders:any;
+  classes:any;
+
+
+  today:any;
+  minutesNow:any;
 
   constructor(private iBeacon: IBeacon, private localNotifications: LocalNotifications,public dbFirebase :FirebaseDbProvider) {
     console.log('➡️ Beacon provider🔆');
+
+    // que día es hoy?
+    var d = new Date();
+    var weekday = new Array(7);
+      weekday[0] =  "domingo";
+      weekday[1] = "lunes";
+      weekday[2] = "martes";
+      weekday[3] = "miercoles";
+      weekday[4] = "jueves";
+      weekday[5] = "viernes";
+      weekday[6] = "sabado";
+    this.today = weekday[d.getDay()];
   }
 
   start(identifier, uuid): any {//Inicializo los procesos de búsqueda de beacons
@@ -61,6 +82,7 @@ export class BeaconProvider {
           //this.setLocalNotification(data.region.identifier)
           this.enterRegionTime = Date.now();
           this.enterRegionDisplayNotifications(true);
+          this.insideRegion = true;
           //this.regionChangeStatus(data.region.identifier, true);
         }
       );
@@ -69,6 +91,7 @@ export class BeaconProvider {
           this.stopBeaconRanging();//SI SALGO DE LA REGION DEJO DE BUSCAR BEACONS PARA NO SATURAR
           console.log("🔴didExitRegion: ", data.region.identifier);
           this.exitRegionTime = Date.now();
+          this.insideRegion = false;
           this.enterRegionDisplayNotifications(false);
           //this.regionChangeStatus(data.region.identifier, false);
         }
@@ -225,6 +248,7 @@ export class BeaconProvider {
 
 
 enterRegionDisplayNotifications(action:boolean){
+
   //Cargo los datos de la BBDD
   this.dbFirebase.getUserReminders().subscribe(reminders => {
     let dateUpdate = Date.now() - 10000;//le quito 10 segundos para entrar cuando se inicia la app
@@ -263,6 +287,69 @@ enterRegionDisplayNotifications(action:boolean){
     }//Se cierra el for
 
   })
+
+}
+
+//this.classesDisplayNotifications();
+
+classesDisplayNotifications(){
+  // si estoy dentro de la región y no he notificado aún o la última notificación fué hace más de 30 minutos entro
+  if(this.insideRegion && (this.lastClassNotification == null || this.lastClassNotification+1800000 < Date.now())){// 1800000 = 30min
+    // miro que hora es y la paso a minutos
+    var d = new Date();
+    console.log("Son las: ", d.getHours(),':',d.getMinutes())
+    this.minutesNow = (d.getHours())*60+(d.getMinutes());
+
+    this.dbFirebase.getUserClasses().subscribe(classes=>{
+      this.classes = classes;
+
+      this.today='lunes' //TODO: BORRAR ESTA LINEA!
+
+      for(let i=0; i<classes.length; i++){
+        if(classes[i].$key == this.today){
+          this.dbFirebase.getUserClassesDay(this.today).subscribe(dia=>{
+            // recorro el objeto que me llega transformando la hora en minutos para luego poder compararla con minutesNow (hora actual)
+            for (let i=0; i < dia.length; i++){
+              let hora = dia[i].startTime.split(':');// startTime format -> HH:mm
+              let minutos = (+hora[0])*60+(+hora[1]);
+              dia[i].minutos = minutos;
+            }
+            //recorro el dia que ha coincidido para ver si encuentro alguna clase entre los 20 minutos antes y los 10 despues de la hora actual
+            for(let j=0; j < dia.length; j++){
+              if(dia[j].minutos-20 <= this.minutesNow && dia[j].minutos+10 >= this.minutesNow){
+                // monto la notificación
+                let edificio=null
+                if(dia[j].building == 'rojo'){edificio='❤️'}
+                else if(dia[j].building == 'amarillo'){edificio='💛'}
+                else if(dia[j].building == 'azul'){edificio='💙'}
+                else{edificio=''}
+
+                let observaciones=null
+                if(dia[j].obs){observaciones='Obs: '+dia[j].obs}
+                else{observaciones='Que vaya bien la clase!'}
+
+                let title = '⚫ '+dia[j].subject+' en el aula '+dia[j].classroom+edificio+' a las '+dia[j].startTime+'h ⚫'
+                let description = '⚪ '+observaciones+' ⚪'
+
+                // envío la notificación
+                this.setLocalNotification(dia[j].id, title, description);
+
+                // guardo la hora de esta notificación
+                this.lastClassNotification = Date.now();
+              }else{}
+            }
+          })
+        }
+        else{
+          //console.log("NO COINCIDE NINGÚN DÍA")
+        }
+      }
+    })
+
+  }
+  else{
+    //console.log("No ejecuto la función de notificación de clase")
+  }
 
 }
 }
