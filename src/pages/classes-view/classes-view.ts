@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 
@@ -14,7 +14,7 @@ export class ClassesViewPage {
   classTitle:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController) {
+              public alertCtrl : AlertController, public toastCtrl: ToastController) {
     this.classesDay = this.navParams.data;
 
     if(this.classesDay[0].day == 'lunes'){
@@ -42,5 +42,44 @@ export class ClassesViewPage {
   cerrarVista(){
     this.viewCtrl.dismiss();
   }
+
+  borrarClase(index, dia, id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás segur@?',
+      message: 'Una vez borrada ya no se podrá recuperar',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+               // AquÍ borramos la clase de la base de datos
+               this.dbFirebase.deleteClass(dia, id);
+               this.showToast('🔵 Clase eliminada correctamente 🔵', 2000)
+               this.classesDay.splice(index, 1);// la borro de la lista xq no se actualiza sola la view
+           }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+
+  showToast(message:string, duration:number) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        position: 'top',
+        duration: duration,
+        dismissOnPageChange: true,
+        cssClass: "toastCSS"
+      });
+      toast.present();
+    }
 
 }
