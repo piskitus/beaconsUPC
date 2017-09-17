@@ -93,6 +93,7 @@ export class ModalAddClassPage {
 deleteSubjects() {
     let alert = this.alertCtrl.create();
     alert.setTitle('¿Qué asignaturas quieres eliminar?');
+    alert.setSubTitle('No se borrarán las clases que estén creadas con esas asignaturas')
 
     // listo las asignaturas a escojer
     for(let i=0; i<this.subjects.length; i++){
@@ -121,7 +122,6 @@ deleteSubjects() {
 
 
   crearClase(){
-
     let clase = {
       subject: this.clase.subject,
       day: this.clase.day,
@@ -136,13 +136,63 @@ deleteSubjects() {
       if(clase.classroom != null){// rellenar número aula
         this.dbFirebase.createClass(clase).then(res=>{
             console.log('Clase guardada en firebase:');
+            this.showToast('🔵 Clase creada correctamente 🔵', 2000)
             this.cerrarModal();
         })
       }else{this.showToast('🔴 Debes definir un número de aula 🔴', 2000)}
     }else{this.showToast('🔴 Debes seleccionar una asignatura 🔴', 2000)}
 
+  }
 
+  actualizarClase(){
+    let clase = {
+      id: this.clase.id,
+      subject: this.clase.subject,
+      day: this.clase.day,
+      startTime: this.clase.startTime,
+      classroom: this.clase.classroom,
+      building: this.clase.building,
+      obs: this.clase.obs
+    }
 
+    // validación
+    if(clase.subject != 'null'){// elegir asignatura
+      if(clase.classroom != null){// rellenar número aula
+        this.dbFirebase.updateClass(clase).then(res=>{
+            console.log('Clase guardada en firebase:');
+            this.showToast('🔵 Clase actualizada correctamente 🔵', 2000)
+            this.cerrarModal();
+        })
+      }else{this.showToast('🔴 Debes definir un número de aula 🔴', 2000)}
+    }else{this.showToast('🔴 Debes seleccionar una asignatura 🔴', 2000)}
+
+  }
+
+  borrarClase(dia, id){
+    let alert = this.alertCtrl.create({
+      title: '¿Estás segur@?',
+      message: 'Una vez borrada ya no se podrá recuperar',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            // Ha respondido que no así que no hacemos nada
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+               // AquÍ borramos la clase de la base de datos
+               this.dbFirebase.deleteClass(dia, id);
+               this.showToast('🔵 Clase eliminada correctamente 🔵', 2000)
+               this.cerrarModal();
+           }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   showToast(message:string, duration:number) {
@@ -150,7 +200,6 @@ deleteSubjects() {
         message: message,
         position: 'top',
         duration: duration,
-        dismissOnPageChange: true,
         cssClass: "toastCSS"
       });
       toast.present();

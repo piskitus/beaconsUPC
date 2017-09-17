@@ -4,21 +4,21 @@
     <ion-row>
       <ion-col col-10 *ngIf="!clase.id">
         <button block  ion-button color="primary" (click)="crearClase()">
-            <ion-icon name="school"></ion-icon>&nbsp;&nbsp;Crear Clase
+          Crear Clase
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="clase.id" >
-        <button block ion-button color="warning" outline (click)="actualizarClase()">
+        <button block ion-button color="warning" (click)="actualizarClase()">
           Actualizar
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="clase.id">
-        <button block  ion-button color="danger" outline (click)="borrarClase(clase.day, clase.id)">
+        <button block  ion-button color="danger" (click)="borrarClase(clase.day, clase.id)">
           Eliminar
          </button>
       </ion-col>
       <ion-col col-2 style="text-align: right !important;">
-          <button ion-button color="dark" icon-only (click)="cerrarModal()">
+          <button ion-button color="light" icon-only (click)="cerrarModal()">
          <ion-icon name="md-close"></ion-icon>
        </button>
       </ion-col>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController, ModalController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 
@@ -14,7 +14,7 @@ export class ClassesViewPage {
   classTitle:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController, public toastCtrl: ToastController) {
+              public alertCtrl : AlertController, public toastCtrl: ToastController, public modalCtrl : ModalController) {
     this.classesDay = this.navParams.data;
 
     if(this.classesDay[0].day == 'lunes'){
@@ -68,6 +68,11 @@ export class ClassesViewPage {
     });
 
     alert.present();
+  }
+
+  editarClase(clase){
+    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
+    modal.present();
   }
 
 
