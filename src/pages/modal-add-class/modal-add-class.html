@@ -28,31 +28,31 @@
 </ion-header>
 
 
-<ion-content padding-right>
+<ion-content padding style="background-color: #333">
 
-  <ion-row class="padding">
-    <ion-col col-6 class="padding-col-button">
-      <button color="danger" ion-button round outline icon-only style="margin: 0 !important" (click)="deleteSubjects()">
-          <ion-icon name="remove-circle"></ion-icon>Asignatura/s &nbsp;&nbsp;&nbsp;
+  <ion-row style="padding:0px;">
+    <ion-col col-6 class="padding-col-button-left">
+      <button color="danger" ion-button clear full icon-only style="margin: 0 !important" (click)="deleteSubjects()">
+          <ion-icon name="remove-circle"></ion-icon>Asignatura/s
         </button>
     </ion-col>
-    <ion-col col-6 class="padding-col-button">
-      <button color="secondary" ion-button round outline icon-only style="margin: 0 !important" (click)="newSubject()">
-          <ion-icon name="add-circle"></ion-icon>Asignatura &nbsp;&nbsp;&nbsp;
+    <ion-col col-6 class="padding-col-button-right">
+      <button color="secondary" ion-button clear full icon-only style="margin: 0 !important" (click)="newSubject()">
+          <ion-icon name="add-circle"></ion-icon>Asignatura
         </button>
     </ion-col>
   </ion-row>
 
-<ion-item>
+<ion-item class="item-asignatura" style="margin-top: 0px;">
   <ion-label color="dark">Asignatura</ion-label>
-  <ion-select [(ngModel)]="clase.subject" name="subject">
+  <ion-select cancelText="Cancelar" okText="Aceptar" [(ngModel)]="clase.subject" name="subject">
     <ion-option value="null">No definida</ion-option>
     <ion-option *ngFor="let subj of subjects" value="{{subj.acronym}}" required>{{subj.acronym}} - {{subj.name}}</ion-option>
   </ion-select>
 </ion-item>
 <ion-item>
   <ion-label color="dark">Día</ion-label>
-  <ion-select [(ngModel)]="clase.day" name="day">
+  <ion-select cancelText="Cancelar" okText="Aceptar" [(ngModel)]="clase.day" name="day">
     <ion-option value="lunes">Lunes</ion-option>
     <ion-option value="martes">Martes</ion-option>
     <ion-option value="miercoles">Miércoles</ion-option>
@@ -62,7 +62,7 @@
 </ion-item>
 <ion-item>
   <ion-label color="dark">Hora inicio</ion-label>
-  <ion-datetime displayFormat="HH:mm" [(ngModel)]="clase.startTime"></ion-datetime>
+  <ion-datetime cancelText="Cancelar" doneText="Aceptar" displayFormat="HH:mm" [(ngModel)]="clase.startTime"></ion-datetime>
 </ion-item>
 <ion-item>
   <ion-label color="dark" fixed>Nº Aula</ion-label>
@@ -70,34 +70,36 @@
 </ion-item>
 <ion-item>
   <ion-label color="dark">Edificio</ion-label>
-  <ion-select text-right [(ngModel)]="clase.building" name="building">
-    <ion-option value="null">No definido</ion-option>
+  <ion-select cancelText="Cancelar" okText="Aceptar" text-right [(ngModel)]="clase.building" name="building">
+    <ion-option value="null">No especificado</ion-option>
     <ion-option value="rojo">❤️ Rojo (V)</ion-option>
     <ion-option value="amarillo">💛 Amarillo (G)</ion-option>
     <ion-option value="azul">💙 Azul (B)</ion-option>
   </ion-select>
 </ion-item>
 <ion-item>
-  <ion-label color="dark" stacked>Observaciones (opcional)</ion-label>
-  <ion-input [(ngModel)]="clase.obs" maxlength="30" rows="1" type="text" placeholder="Problemas, Teoría, Actividad Dirigida..."></ion-input>
+  <ion-label color="dark" stacked style="margin-left:10px">Observaciones (opcional)</ion-label>
+  <ion-input style="margin-left:10px;" text-center [(ngModel)]="clase.obs" maxlength="30" rows="1" type="text" placeholder="Problemas, Teoría, Actividad Dirigida..."></ion-input>
 </ion-item>
 
 </ion-content>
 
 <ion-footer *ngIf="clase.subject != 'null' && clase.classroom != null">
   <ion-toolbar>
-    <ion-row>
-      <span style="padding-left: 10px; padding-bottom: 5px;">Vista previa de notificación:</span>
-    </ion-row>
-    <ion-row>
-      <span *ngIf="clase.building == 'null'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}} a las {{clase.startTime}}h</b></span>
-      <span *ngIf="clase.building == 'rojo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}❤️  a las {{clase.startTime}}h</b></span>
-      <span *ngIf="clase.building == 'amarillo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💛 a las {{clase.startTime}}h</b></span>
-      <span *ngIf="clase.building == 'azul'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💙 a las {{clase.startTime}}h</b></span>
-    </ion-row>
-    <ion-row>
-      <span *ngIf="clase.obs != ''" class="notification-subtitle">⚪ Obs: {{clase.obs}}</span>
-      <span *ngIf="clase.obs == null || clase.obs == ''" class="notification-subtitle">⚪ Que vaya bien la clase!</span>
-    </ion-row>
+    <div >
+      <ion-row>
+        <span class="span-style">Vista previa de notificación</span>
+      </ion-row>
+      <ion-row class="border-title">
+        <span *ngIf="clase.building == 'null'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}} a las {{clase.startTime}}h</b></span>
+        <span *ngIf="clase.building == 'rojo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}❤️  a las {{clase.startTime}}h</b></span>
+        <span *ngIf="clase.building == 'amarillo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💛 a las {{clase.startTime}}h</b></span>
+        <span *ngIf="clase.building == 'azul'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💙 a las {{clase.startTime}}h</b></span>
+      </ion-row>
+      <ion-row class="border-subtitle">
+        <span *ngIf="clase.obs != ''" class="notification-subtitle">⚪ Obs: {{clase.obs}}</span>
+        <span *ngIf="clase.obs == ''" class="notification-subtitle">⚪ Que vaya bien la clase!</span>
+      </ion-row>
+    </div>
   </ion-toolbar>
 </ion-footer>

@@ -93,7 +93,7 @@ export class ModalAddClassPage {
 deleteSubjects() {
     let alert = this.alertCtrl.create();
     alert.setTitle('¿Qué asignaturas quieres eliminar?');
-    alert.setSubTitle('No se borrarán las clases que estén creadas con esas asignaturas')
+    alert.setSubTitle('No se borrarán las clases que estén creadas con las asignaturas que borres')
 
     // listo las asignaturas a escojer
     for(let i=0; i<this.subjects.length; i++){

@@ -1,29 +1,83 @@
 page-modal-add-class {
 
 .padding{
-  padding-left: 16px;
+  padding-left: 0px;
   padding-top: 10px;
   padding-bottom: 5px;
   padding-right: 0px; // porque ya tiene 16 de paging el content general
 }
 
-.padding-col-button{
+.padding-col-button-left{
   padding: 0px;
-  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-color: #fff;
+}
+
+.padding-col-button-right{
+  padding: 0px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  background-color: #fff;
 }
 
 .notification-title{
-  padding-left: 10px;padding-bottom: 5px;font-size:16px
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size:16px;
+}
+
+.border-title{
+  border-top-right-radius: 5px;
+  background-color: #fff;
 }
 
 .notification-subtitle{
-  padding-left: 10px;padding-bottom: 5px;font-size:14px
+  padding-left: 10px;
+  padding-bottom: 5px;
+  font-size:14px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
-// .toolbar-background-md {
-//   border-color: #b2b2b2;
-//   background: #333;
-// }
+.border-subtitle{
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #fff;
+}
+
+.item{
+  padding: 0px;
+  border-radius: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.item-asignatura{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.label{
+  margin: 13px;
+}
+
+
+.toolbar-background-md {
+  border-color: #b2b2b2;
+  background: #333;
+}
+
+.span-style{
+  padding-left: 10px;
+  padding-bottom: 0px;
+  padding-right: 10px;
+  padding-top: 5px;
+  background-color: #fff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
 
 
 }

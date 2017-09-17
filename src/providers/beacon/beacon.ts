@@ -302,8 +302,6 @@ classesDisplayNotifications(){
     this.dbFirebase.getUserClasses().subscribe(classes=>{
       this.classes = classes;
 
-      this.today='lunes' //TODO: BORRAR ESTA LINEA!
-
       for(let i=0; i<classes.length; i++){
         if(classes[i].$key == this.today){
           this.dbFirebase.getUserClassesDay(this.today).subscribe(dia=>{

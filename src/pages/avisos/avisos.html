@@ -64,7 +64,7 @@
 
 <!-- CARD LUNES -->
       <ion-card>
-        <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
+        <ion-card-header style="background-color: #BDBDBD; padding: 0px;" [ngClass]="{'titleCardColor' : (today == 'lunes')}">
           <ion-row>
             <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
               <button *ngIf="lunes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(lunes)">
@@ -75,7 +75,7 @@
               <span style="font-size: 20px; font-weight: bold;">L U N E S</span>
             </ion-col>
             <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-              <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseLunes()">
+              <button class="button-right" color="warning" ion-button full icon-only style="margin: 0 !important" (click)="nuevaClaseLunes()">
                   <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                 </button>
             </ion-col>
@@ -110,7 +110,7 @@
 
       <!-- CARD MARTES -->
             <ion-card>
-              <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
+              <ion-card-header style="background-color: #BDBDBD; padding: 0px;" [ngClass]="{'titleCardColor' : (today == 'martes')}">
                 <ion-row>
                   <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
                     <button *ngIf="martes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(martes)">
@@ -121,7 +121,7 @@
                     <span style="font-size: 20px; font-weight: bold;">M A R T E S</span>
                   </ion-col>
                   <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                    <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMartes()">
+                    <button class="button-right" color="warning" ion-button full icon-only style="margin: 0 !important" (click)="nuevaClaseMartes()">
                         <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                       </button>
                   </ion-col>
@@ -156,7 +156,7 @@
 
             <!-- CARD MIERCOLES -->
                   <ion-card>
-                    <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
+                    <ion-card-header style="background-color: #BDBDBD; padding: 0px;" [ngClass]="{'titleCardColor' : (today == 'miercoles')}">
                       <ion-row>
                         <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
                           <button *ngIf="miercoles" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(miercoles)">
@@ -167,7 +167,7 @@
                           <span style="font-size: 20px; font-weight: bold;">M I É R C O L E S</span>
                         </ion-col>
                         <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                          <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMiercoles()">
+                          <button class="button-right" color="warning" ion-button full icon-only style="margin: 0 !important" (click)="nuevaClaseMiercoles()">
                               <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                             </button>
                         </ion-col>
@@ -202,7 +202,7 @@
 
                   <!-- CARD JUEVES -->
                         <ion-card>
-                          <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
+                          <ion-card-header style="background-color: #BDBDBD; padding: 0px;" [ngClass]="{'titleCardColor' : (today == 'jueves')}">
                             <ion-row>
                               <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
                                 <button *ngIf="jueves" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(jueves)">
@@ -213,7 +213,7 @@
                                 <span style="font-size: 20px; font-weight: bold;">J U E V E S</span>
                               </ion-col>
                               <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                                <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseJueves()">
+                                <button class="button-right" color="warning" ion-button full icon-only style="margin: 0 !important" (click)="nuevaClaseJueves()">
                                     <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                                   </button>
                               </ion-col>
@@ -248,7 +248,7 @@
 
                         <!-- CARD VIERNES -->
                               <ion-card>
-                                <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
+                                <ion-card-header style="background-color: #BDBDBD; padding: 0px;" [ngClass]="{'titleCardColor' : (today == 'viernes')}">
                                   <ion-row>
                                     <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
                                       <button *ngIf="viernes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(viernes)">
@@ -259,7 +259,7 @@
                                       <span style="font-size: 20px; font-weight: bold;">V I E R N E S</span>
                                     </ion-col>
                                     <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                                      <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseViernes()">
+                                      <button class="button-right" color="warning" ion-button full icon-only style="margin: 0 !important" (click)="nuevaClaseViernes()">
                                           <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                                         </button>
                                     </ion-col>
