@@ -1,5 +1,24 @@
 page-modal-add-class {
 
+.padding{
+  padding-left: 16px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-right: 0px; // porque ya tiene 16 de paging el content general
+}
+
+.padding-col-button{
+  padding: 0px;
+  text-align: center;
+}
+
+.notification-title{
+  padding-left: 10px;padding-bottom: 5px;font-size:16px
+}
+
+.notification-subtitle{
+  padding-left: 10px;padding-bottom: 5px;font-size:14px
+}
 
 
 }

@@ -38,12 +38,12 @@ export class ModalAddClassPage {
     message: 'Introduce el nombre y las siglas de la asignatura que quieres crear',
     inputs: [
       {
-        name: 'name',
-        placeholder: 'Nombre: Cálculo'
+        name: 'acronym',
+        placeholder: 'Nombre corto (obligatorio): CAL'
       },
       {
-        name: 'acronym',
-        placeholder: 'Siglas o diminutivo: CAL'
+        name: 'name',
+        placeholder: 'Nombre largo (opcional): Cálculo'
       }
     ],
     buttons: [
@@ -61,18 +61,17 @@ export class ModalAddClassPage {
             name: data.name,
             acronym: data.acronym
           }
-          // añado asignatura a la base de datos
-
-
-          //TODO: validar que no hayan campos vacíos y que el acrónimo no tenga espacios
-
-          if (subject.acronym != '' && subject.name != '') {
-            if(subject.acronym.length <= 8){
+          // compruebo los campos (el acronym es obligatorio y no puede ser más largo de 6 caracteres)
+          if (subject.acronym != '') {
+            if(subject.name == ''){// si no han puesto nombre largo lo pongo en null para que no se guarde en la bbdd
+              subject.name = null;
+            }else{}
+            if(subject.acronym.length <= 7){
               console.log("TODO OK", subject.acronym)
-              this.dbFirebase.createSubject(subject);
+              this.dbFirebase.createSubject(subject);// añado la asignatura a la base de datos
             }
             else{
-              this.showToast('🔴 Diminutivo demasiado largo 🔴', 2000)
+              this.showToast('🔴 Nombre corto demasiado largo (max 7 caracteres) 🔴', 2000)
               return false;
               //acronyme demasiado largo
             }

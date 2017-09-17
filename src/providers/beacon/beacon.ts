@@ -297,7 +297,6 @@ classesDisplayNotifications(){
   if(this.insideRegion && (this.lastClassNotification == null || this.lastClassNotification+1800000 < Date.now())){// 1800000 = 30min
     // miro que hora es y la paso a minutos
     var d = new Date();
-    console.log("Son las: ", d.getHours(),':',d.getMinutes())
     this.minutesNow = (d.getHours())*60+(d.getMinutes());
 
     this.dbFirebase.getUserClasses().subscribe(classes=>{
@@ -325,11 +324,11 @@ classesDisplayNotifications(){
                 else{edificio=''}
 
                 let observaciones=null
-                if(dia[j].obs){observaciones='Obs: '+dia[j].obs}
+                if(dia[j].obs && dia[j].obs != ''){observaciones='Obs: '+dia[j].obs}
                 else{observaciones='Que vaya bien la clase!'}
 
-                let title = '⚫ '+dia[j].subject+' en el aula '+dia[j].classroom+edificio+' a las '+dia[j].startTime+'h ⚫'
-                let description = '⚪ '+observaciones+' ⚪'
+                let title = '⚫ '+dia[j].subject+' en el aula '+dia[j].classroom+edificio+' a las '+dia[j].startTime+'h'
+                let description = '⚪ '+observaciones
 
                 // envío la notificación
                 this.setLocalNotification(dia[j].id, title, description);

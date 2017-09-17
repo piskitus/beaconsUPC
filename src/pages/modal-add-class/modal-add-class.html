@@ -3,8 +3,8 @@
   <ion-navbar>
     <ion-row>
       <ion-col col-10 *ngIf="!clase.id">
-        <button block  ion-button color="primary" outline (click)="crearClase()">
-            Crear Clase
+        <button block  ion-button color="primary" (click)="crearClase()">
+            <ion-icon name="school"></ion-icon>&nbsp;&nbsp;Crear Clase
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="clase.id" >
@@ -17,8 +17,8 @@
           Eliminar
          </button>
       </ion-col>
-      <ion-col col-2>
-          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+      <ion-col col-2 style="text-align: right !important;">
+          <button ion-button color="dark" icon-only (click)="cerrarModal()">
          <ion-icon name="md-close"></ion-icon>
        </button>
       </ion-col>
@@ -29,12 +29,20 @@
 
 
 <ion-content padding-right>
-  <button ion-button block outline color="dark" icon-only (click)="newSubject()">
- <ion-icon name="add-circle"></ion-icon>
-</button>
-<button ion-button block outline color="danger" icon-only (click)="deleteSubjects()">
-<ion-icon name="trash"></ion-icon>
-</button>
+
+  <ion-row class="padding">
+    <ion-col col-6 class="padding-col-button">
+      <button color="danger" ion-button round outline icon-only style="margin: 0 !important" (click)="deleteSubjects()">
+          <ion-icon name="remove-circle"></ion-icon>Asignatura/s &nbsp;&nbsp;&nbsp;
+        </button>
+    </ion-col>
+    <ion-col col-6 class="padding-col-button">
+      <button color="secondary" ion-button round outline icon-only style="margin: 0 !important" (click)="newSubject()">
+          <ion-icon name="add-circle"></ion-icon>Asignatura &nbsp;&nbsp;&nbsp;
+        </button>
+    </ion-col>
+  </ion-row>
+
 <ion-item>
   <ion-label color="dark">Asignatura</ion-label>
   <ion-select [(ngModel)]="clase.subject" name="subject">
@@ -70,8 +78,26 @@
   </ion-select>
 </ion-item>
 <ion-item>
-  <ion-label color="dark" stacked>Observaciones</ion-label>
-  <ion-input [(ngModel)]="clase.obs" maxlength="30" rows="1" type="text" placeholder="Información opcional"></ion-input>
+  <ion-label color="dark" stacked>Observaciones (opcional)</ion-label>
+  <ion-input [(ngModel)]="clase.obs" maxlength="30" rows="1" type="text" placeholder="Problemas, Teoría, Actividad Dirigida..."></ion-input>
 </ion-item>
 
 </ion-content>
+
+<ion-footer *ngIf="clase.subject != 'null' && clase.classroom != null">
+  <ion-toolbar>
+    <ion-row>
+      <span style="padding-left: 10px; padding-bottom: 5px;">Vista previa de notificación:</span>
+    </ion-row>
+    <ion-row>
+      <span *ngIf="clase.building == 'null'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}} a las {{clase.startTime}}h</b></span>
+      <span *ngIf="clase.building == 'rojo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}❤️  a las {{clase.startTime}}h</b></span>
+      <span *ngIf="clase.building == 'amarillo'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💛 a las {{clase.startTime}}h</b></span>
+      <span *ngIf="clase.building == 'azul'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💙 a las {{clase.startTime}}h</b></span>
+    </ion-row>
+    <ion-row>
+      <span *ngIf="clase.obs != null && clase.obs != ''" class="notification-subtitle">⚪ Obs: {{clase.obs}}</span>
+      <span *ngIf="clase.obs == null || clase.obs == ''" class="notification-subtitle">⚪ Que vaya bien la clase!</span>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

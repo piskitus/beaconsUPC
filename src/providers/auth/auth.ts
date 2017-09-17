@@ -58,7 +58,6 @@ export class AuthProvider {
 
   // Obtenemos el id de usuario.
  getUser(){
-   console.log("🔑 getUser")
     return this.afAuth.auth.currentUser.uid;
  }
 
