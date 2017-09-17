@@ -1,0 +1,20 @@
+page-classes-view {
+
+  .button-right{
+    //border-top-right-radius: 5px;
+    border-bottom-right-radius: 30px;
+  }
+
+  .button-left{
+    border-top-left-radius: 30px;
+    //border-bottom-left-radius: 5px;
+  }
+
+  .card{
+    border-bottom-right-radius: 30px;
+    //border-top-right-radius: 5px;
+    border-top-left-radius: 30px;
+    //border-bottom-left-radius: 5px;
+  }
+
+}

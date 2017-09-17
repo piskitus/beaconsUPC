@@ -64,20 +64,25 @@
 
 <!-- CARD LUNES -->
       <ion-card>
-        <ion-card-header class="padding" style="background-color: #BDBDBD">
+        <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
           <ion-row>
-            <ion-col col-9 style="text-align: center !important;">
+            <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
+              <button *ngIf="lunes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(lunes)">
+                  <ion-icon name="eye"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col col-8 style="text-align: center !important;">
               <span style="font-size: 20px; font-weight: bold;">L U N E S</span>
             </ion-col>
             <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-              <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseLunes()">
+              <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseLunes()">
                   <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                 </button>
             </ion-col>
           </ion-row>
 
         </ion-card-header>
-        <ion-card-content class="padding" *ngIf="lunes" [ngClass]="{'cardColor' : (today == 'lunes')}">
+        <ion-card-content class="padding" *ngIf="lunes" [ngClass]="{'cardColor' : (today == 'lunes')}" (click)="goToClassesView(lunes)">
           <ion-row *ngFor="let clase of lunes">
             <ion-col col-2>
               <ion-row style="flex-wrap: nowrap !important">
@@ -105,20 +110,25 @@
 
       <!-- CARD MARTES -->
             <ion-card>
-              <ion-card-header class="padding" style="background-color: #BDBDBD">
+              <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
                 <ion-row>
-                  <ion-col col-9 style="text-align: center !important;">
+                  <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
+                    <button *ngIf="martes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(martes)">
+                        <ion-icon name="eye"></ion-icon>
+                      </button>
+                  </ion-col>
+                  <ion-col col-8 style="text-align: center !important;">
                     <span style="font-size: 20px; font-weight: bold;">M A R T E S</span>
                   </ion-col>
                   <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                    <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMartes()">
+                    <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMartes()">
                         <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                       </button>
                   </ion-col>
                 </ion-row>
 
               </ion-card-header>
-              <ion-card-content class="padding" *ngIf="martes" [ngClass]="{'cardColor' : (today == 'martes')}">
+              <ion-card-content class="padding" *ngIf="martes" [ngClass]="{'cardColor' : (today == 'martes')}" (click)="goToClassesView(martes)">
                 <ion-row *ngFor="let clase of martes">
                   <ion-col col-2>
                     <ion-row style="flex-wrap: nowrap !important">
@@ -146,20 +156,25 @@
 
             <!-- CARD MIERCOLES -->
                   <ion-card>
-                    <ion-card-header class="padding" style="background-color: #BDBDBD">
+                    <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
                       <ion-row>
-                        <ion-col col-9 style="text-align: center !important;">
+                        <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
+                          <button *ngIf="miercoles" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(miercoles)">
+                              <ion-icon name="eye"></ion-icon>
+                            </button>
+                        </ion-col>
+                        <ion-col col-8 style="text-align: center !important;">
                           <span style="font-size: 20px; font-weight: bold;">M I É R C O L E S</span>
                         </ion-col>
                         <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                          <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMiercoles()">
+                          <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseMiercoles()">
                               <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                             </button>
                         </ion-col>
                       </ion-row>
 
                     </ion-card-header>
-                    <ion-card-content class="padding" *ngIf="miercoles" [ngClass]="{'cardColor' : (today == 'miercoles')}">
+                    <ion-card-content class="padding" *ngIf="miercoles" [ngClass]="{'cardColor' : (today == 'miercoles')}" (click)="goToClassesView(miercoles)">
                       <ion-row *ngFor="let clase of miercoles">
                         <ion-col col-2>
                           <ion-row style="flex-wrap: nowrap !important">
@@ -187,20 +202,25 @@
 
                   <!-- CARD JUEVES -->
                         <ion-card>
-                          <ion-card-header class="padding" style="background-color: #BDBDBD">
+                          <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
                             <ion-row>
-                              <ion-col col-9 style="text-align: center !important;">
+                              <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
+                                <button *ngIf="jueves" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(jueves)">
+                                    <ion-icon name="eye"></ion-icon>
+                                  </button>
+                              </ion-col>
+                              <ion-col col-8 style="text-align: center !important;">
                                 <span style="font-size: 20px; font-weight: bold;">J U E V E S</span>
                               </ion-col>
                               <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                                <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseJueves()">
+                                <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseJueves()">
                                     <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                                   </button>
                               </ion-col>
                             </ion-row>
 
                           </ion-card-header>
-                          <ion-card-content class="padding" *ngIf="jueves" [ngClass]="{'cardColor' : (today == 'jueves')}">
+                          <ion-card-content class="padding" *ngIf="jueves" [ngClass]="{'cardColor' : (today == 'jueves')}" (click)="goToClassesView(jueves)">
                             <ion-row *ngFor="let clase of jueves">
                               <ion-col col-2>
                                 <ion-row style="flex-wrap: nowrap !important">
@@ -228,20 +248,25 @@
 
                         <!-- CARD VIERNES -->
                               <ion-card>
-                                <ion-card-header class="padding" style="background-color: #BDBDBD" [ngClass]="{'titleCardColor' : (today == 'viernes')}">
+                                <ion-card-header style="background-color: #BDBDBD; padding: 0px;">
                                   <ion-row>
-                                    <ion-col col-9 style="text-align: center !important;">
+                                    <ion-col col-1 style="padding: 0 !important; text-align: left !important;">
+                                      <button *ngIf="viernes" class="button-left" color="white" ion-button icon-only clear style="margin: 0 !important" (click)="goToClassesView(viernes)">
+                                          <ion-icon name="eye"></ion-icon>
+                                        </button>
+                                    </ion-col>
+                                    <ion-col col-8 style="text-align: center !important;">
                                       <span style="font-size: 20px; font-weight: bold;">V I E R N E S</span>
                                     </ion-col>
                                     <ion-col col-3 style="padding: 0 !important; text-align: right !important;">
-                                      <button color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseViernes()">
+                                      <button class="button-right" color="warning" ion-button icon-only style="margin: 0 !important" (click)="nuevaClaseViernes()">
                                           <ion-icon class="icon-padding-left" name="add"></ion-icon><ion-icon class="icon-padding-right" name="school"></ion-icon>
                                         </button>
                                     </ion-col>
                                   </ion-row>
 
                                 </ion-card-header>
-                                <ion-card-content class="padding" *ngIf="viernes" [ngClass]="{'cardColor' : (today == 'viernes')}">
+                                <ion-card-content class="padding" *ngIf="viernes" [ngClass]="{'cardColor' : (today == 'viernes')}" (click)="goToClassesView(viernes)">
                                   <ion-row *ngFor="let clase of viernes">
                                     <ion-col col-2>
                                       <ion-row style="flex-wrap: nowrap !important">

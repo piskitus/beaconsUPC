@@ -1,0 +1,60 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{classTitle}}</ion-title> <!--*ngFor="let day of classesDay"-->
+    <ion-buttons start>
+      <button ion-button (click)="cerrarVista()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content style="background-color: #333">
+  <ion-card *ngFor="let clase of classesDay" style="margin-top: 20px; margin-bottom: 20px;">
+    <ion-card-header style="padding: 0px !important">
+      <ion-row>
+        <ion-col col-2 style="padding: 0 !important; text-align: left !important;">
+          <button class="button-left" color="warning" ion-button icon-only large style="margin: 0 !important" (click)="nuevaClaseLunes()">
+              <ion-icon style="padding-right: 10px; padding-left: 12px" name="create"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col col-8 style="padding-top: 0px; padding-bottom:0px;">
+          <ion-row>
+            <ion-col col-4>
+              <ion-row style="flex-wrap: nowrap !important">
+                <ion-icon color="dark" name="document"></ion-icon>&nbsp;{{clase.subject}}
+              </ion-row>
+            </ion-col>
+            <ion-col col-4>
+                  <ion-icon color="dark" name="clock"></ion-icon> {{clase.startTime}}h
+            </ion-col>
+            <ion-col col-4 style="text-align: right">
+                <ion-icon *ngIf="clase.building == 'null'" color="dark" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'azul'" color="primary" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'rojo'" color="danger" name="home"></ion-icon>
+                <ion-icon *ngIf="clase.building == 'amarillo'" color="yellow" name="home"></ion-icon>
+                {{clase.classroom}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 style="padding-top: 0px">
+              <ion-row style="flex-wrap: nowrap !important" *ngIf="clase.obs">
+                <ion-icon color="dark" name="information-circle"></ion-icon>&nbsp;{{clase.obs}}
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-2 style="padding: 0 !important; text-align: right !important;">
+          <button class="button-right" color="danger" ion-button icon-only large style="margin: 0 !important" (click)="nuevaClaseLunes()">
+              <ion-icon style="padding-left: 12px; padding-right: 13px" name="trash"></ion-icon>
+            </button>
+        </ion-col>
+      </ion-row>
+
+  </ion-card-header>
+  </ion-card>
+</ion-content>

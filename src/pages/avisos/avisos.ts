@@ -270,4 +270,9 @@ export class AvisosPage {
     alert.present();
   }
 
+  goToClassesView(classesDay){
+    let modal = this.modalCtrl.create( 'ClassesViewPage', classesDay);
+    modal.present();
+  }
+
 }
