@@ -35,7 +35,7 @@ export class ModalAddClassPage {
   newSubject() {
   let alert = this.alertCtrl.create({
     title: 'Añadir asignatura',
-    message: 'Introduce el nombre y las siglas de la asignatura que quieres crear',
+    // message: 'Introduce el nombre y las siglas de la asignatura que quieres crear',
     inputs: [
       {
         name: 'acronym',

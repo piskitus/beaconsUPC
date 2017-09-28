@@ -9,7 +9,7 @@ import { IBeacon } from '@ionic-native/ibeacon';
 import { BeaconProvider } from '../../providers/beacon/beacon';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
-//models
+// models
 import { BeaconModel } from '../../models/beacon-model';
 
 

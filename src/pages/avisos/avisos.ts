@@ -12,7 +12,7 @@ export class AvisosPage {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom(1500);
+      this.content.scrollToBottom(1000);
     }, 500);
 
   }
@@ -52,14 +52,15 @@ export class AvisosPage {
     this.today = weekday[d.getDay()];
     console.log("Hoy es: ", this.today)
 
+  }
+
+  ionViewDidEnter(){//Cada vez que entro a avisos
+
     // si es jueves o viernes bajo la vista hasta abajo para que se vean esos días
     if(this.today == 'jueves' || this.today == 'viernes'){
       this.scrollToBottom();
     }
 
-  }
-
-  ionViewDidEnter(){//Cada vez que entro a avisos
     //Cargo los datos de la BBDD
     this.dbFirebase.getUserReminders().subscribe(reminders=>{
       this.reminders = reminders;

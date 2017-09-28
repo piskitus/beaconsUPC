@@ -14,9 +14,10 @@
 
 <ion-content padding>
   <button ion-button icon-start block (click)="cerrarSesion()"><ion-icon name="log-out"></ion-icon> Cerrar Sesión</button>
-  <button ion-button icon-start block (click)="disablePushNotifications()"><ion-icon name="notifications"></ion-icon> Deshabilitar notificaciones PUSH</button>
-  <button ion-button icon-start block (click)="resetPassword()"><ion-icon name="build"></ion-icon> ¿Olvidaste la contraseña? Reseteala</button>
-  <ion-list>
+  <button disabled ion-button icon-start block (click)="disablePushNotifications()"><ion-icon name="notifications"></ion-icon> Deshabilitar notificaciones PUSH</button>
+  <!-- <button ion-button icon-start block (click)="resetPassword()"><ion-icon name="build" color="warning"></ion-icon> ¿Olvidaste la contraseña? Reseteala</button> -->
+
+  <!-- <ion-list>
     <ion-list-header>
       Permisos
     </ion-list-header>
@@ -35,7 +36,7 @@
       <ion-toggle [(ngModel)]="locationPermission" (ionChange)="changePermissionToggle()"></ion-toggle>
       <ion-icon name='locate' item-start></ion-icon>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
   <button ion-button icon-start block color="danger" (click)="deleteUser()"><ion-icon name="trash"></ion-icon> Eliminar cuenta</button>
-  <button ion-button icon-start block color="secondary" (click)="demoChat()"><ion-icon name="ios-chatbubbles"></ion-icon> Chat demo</button>
+  <!-- <button ion-button icon-start block color="secondary" (click)="demoChat()"><ion-icon name="ios-chatbubbles"></ion-icon> Chat demo</button> -->
 </ion-content>
