@@ -95,8 +95,8 @@ export class MyApp {
 
       //Arranco la búsqueda de beacons pasándole la Región a escanear el valor major y el valor minor
       //BeaconRegion(identifier, uuid, major, minor, notifyEntryStateOnDisplay)
-      this.beaconProvider.start('Estimote','b9407f30-f5f8-466e-aff9-25556b57fe6d');
-      //this.beaconProvider.start('UPC','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
+      //this.beaconProvider.start('Estimote','b9407f30-f5f8-466e-aff9-25556b57fe6d');
+      this.beaconProvider.start('UPC','6a1a5d49-a1bd-4ae8-bdcb-f2ee498e609a');
     }
 
 //For push notifications
