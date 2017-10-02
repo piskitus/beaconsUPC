@@ -165,7 +165,7 @@ export class AvisosPage {
       startTime: '10:00',
       building: 'null',
       classroom: null,
-      obs: null
+      obs: ''
     }
    let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
    modal.present();
