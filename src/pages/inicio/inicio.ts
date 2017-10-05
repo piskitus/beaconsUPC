@@ -95,11 +95,9 @@ export class InicioPage {
 
 
   isLocationEnabled(){
-    let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable);
-                                              if (!isAvailable){//Si no lo tiene activado le pido que lo active
-                                                this.activarUbicacion();
-                                              }
-                                            };
+    let successCallback = (isAvailable) => { // si no lo tiene activado le pido que lo active
+                                              if (!isAvailable){this.activarUbicacion();}
+                                           };
     let errorCallback = (e) => console.error(e);
 
     this.diagnostic.isLocationAvailable().then(successCallback).catch(errorCallback);
