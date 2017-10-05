@@ -59,7 +59,7 @@ export class BeaconProvider {
       data => {
         //let dateTime = ((new Date()).getTime()/1000);
         let dateTime = new Date().toISOString()
-        console.log(dateTime+" Detected Beacons: "+ data.beacons.length);//Muestro en la consola del inspector cuantos beacons detecto
+        console.log(dateTime+" Detected Beacons: "+ data.beacons.length);//Muestro en la consola del inspector cuantos beacons detecto "JSON.stringify(data, null, 10)""
         if (data.beacons.length != 0) {//Si detecto beacons, llamo a la función que los guarda
           this.saveBeacons(data);
         }
@@ -171,7 +171,7 @@ export class BeaconProvider {
   };
 
   getNearBeaconKey(): any{
-    console.log("🔆 getNearBeaconKey", this.nearBeaconKey)
+    //console.log("🔆 getNearBeaconKey", this.nearBeaconKey)
     return this.nearBeaconKey;
   }
 

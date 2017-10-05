@@ -6,6 +6,7 @@ import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { BeaconProvider } from '../../providers/beacon/beacon';
 import { AuthProvider } from '../../providers/auth/auth';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 
 @IonicPage()
@@ -35,14 +36,13 @@ export class InicioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
     public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,
-    public beaconProvider: BeaconProvider, private auth: AuthProvider, private iab: InAppBrowser) {
+    public beaconProvider: BeaconProvider, private auth: AuthProvider, private iab: InAppBrowser, public settingsProvider: SettingsProvider) {
 
 
 
     platform.ready().then(() => {
-
       //Miro si la localización está activada
-      this.isLocationEnabled();
+      this.settingsProvider.isLocationEnabled();
 
       //TODO: que si salgo de la región me vuelva a mostrar la card principal
 
@@ -92,34 +92,6 @@ export class InicioPage {
     console.log('➡️ InicioPage');
   }
 
-
-
-  isLocationEnabled(){
-    let successCallback = (isAvailable) => { // si no lo tiene activado le pido que lo active
-                                              if (!isAvailable){this.activarUbicacion();}
-                                           };
-    let errorCallback = (e) => console.error(e);
-
-    this.diagnostic.isLocationAvailable().then(successCallback).catch(errorCallback);
-  }
-
-  activarUbicacion(){ //Función para solicitar la activación de la ubicación
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-      if(canRequest) {
-        // the accuracy option will be ignored by iOS
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => {//El usuario acepta
-            console.log('Request successful')
-            //El usuario acepta
-          },
-          error => {//El usuario no acepta
-            console.log('Error requesting location permissions', error)
-            alert("Algunas de las funcionalidades de la aplicación no funcionarán, puedes activar los permisos en el apartado de configuración.");
-          }
-        );
-      }
-    });
-  }
 
   ionViewDidEnter(){
 
