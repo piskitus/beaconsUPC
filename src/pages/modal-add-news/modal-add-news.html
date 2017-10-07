@@ -3,22 +3,23 @@
   <ion-navbar>
     <ion-row>
       <ion-col col-10 *ngIf="!noticia.id">
-        <button block  ion-button color="primary" outline (click)="crearNoticia()">
-            Crear noticia o evento
+        <button block  ion-button color="primary" (click)="crearNoticia()">
+            <div *ngIf="!eventSelected">Crear noticia</div>
+            <div *ngIf="eventSelected">Crear evento</div>
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="noticia.id">
-        <button block  ion-button color="warning" outline (click)="guardarNoticia()">
+        <button block  ion-button color="warning" (click)="guardarNoticia()">
            Actualizar
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="noticia.id">
-        <button block  ion-button color="danger" outline (click)="borrarNoticia(noticia.id)">
+        <button block  ion-button color="danger" (click)="borrarNoticia(noticia.id)">
           Eliminar
          </button>
       </ion-col>
       <ion-col col-2>
-          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+          <button ion-button block color="light" icon-only (click)="cerrarModal()">
          <ion-icon name="md-close"></ion-icon>
        </button>
       </ion-col>
@@ -53,19 +54,29 @@
 </ion-content> -->
 
 
-<ion-content>
+<ion-content style="background-color: #333">
   <ion-card [ngStyle]="{'background-color': noticia.color}">
-  <img src="assets/img/logo_beaconsUPC.png"/>
+  <img src="{{ noticia.img }}"/>
   <ion-card-content>
     <ion-card-title text-center>
-        <ion-input maxlength="40" placeholder="📣 Título" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+        <ion-input *ngIf="!eventSelected" maxlength="40" placeholder="📣 Título de la noticia" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+        <ion-input *ngIf="eventSelected" maxlength="40" placeholder="📣 Título del evento" [(ngModel)]="noticia.title" clearInput name="title" type="text" required></ion-input>
+
       </ion-card-title>
     <p>
-      <ion-textarea style="text-align: justify" maxlength="200" rows="4"
-    placeholder="📝 Descripción de la noticia o evento. Si no defines ubicación no mostraremos la fecha de inicio en la noticia porque supondremos que no es un evento"
+      <ion-textarea *ngIf="!eventSelected" style="text-align: justify" maxlength="200" rows="3"
+    placeholder="📝 Descripción de la noticia"
+      [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
+      <ion-textarea *ngIf="eventSelected" style="text-align: justify" maxlength="200" rows="3"
+    placeholder="📝 Descripción del evento"
       [(ngModel)]="noticia.description" clearInput name="description" type="text" required></ion-textarea>
     </p>
   </ion-card-content>
+  <ion-item>
+    <ion-label> Convertir en evento</ion-label>
+    <ion-toggle [(ngModel)]="eventSelected" (ionChange)="changeEventToggle()"></ion-toggle>
+    <ion-icon name='calendar' item-start></ion-icon>
+  </ion-item>
   <ion-item>
     <ion-label>🏳️‍🌈 Color de fondo</ion-label>
     <ion-select [(ngModel)]="noticia.color" name="color">
@@ -78,19 +89,23 @@
       <ion-option value="violet">💜 Violeta</ion-option>
     </ion-select>
   </ion-item>
-  <ion-item>
-  <ion-label>📅 Inicio</ion-label>
+  <ion-item *ngIf="eventSelected">
+  <ion-label>📅 Fecha y hora</ion-label>
   <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMM YYYY HH mm" max="2022" min="2017" [(ngModel)]="noticia.startNews"></ion-datetime>
 </ion-item>
-<ion-item>
+<ion-item *ngIf="eventSelected">
   <ion-label>📍 Ubicación</ion-label>
   <ion-select [(ngModel)]="noticia.marker" name="marker">
     <ion-option value="null">No definido</ion-option>
     <ion-option *ngFor="let marker of markers" value="{{marker.id}}" required>{{marker.title}}</ion-option>
   </ion-select>
 </ion-item>
+<ion-item>
+<ion-label color="primary" floating>🖼️ Imagen para mostrar (URL)</ion-label>
+<ion-input [(ngModel)]="noticia.img"></ion-input>
+</ion-item>
   <ion-item>
-  <ion-label color="primary" floating>ℹ️ URL para más información</ion-label>
+  <ion-label color="primary" floating>📎 Enlace web informativo (URL)</ion-label>
   <ion-input [(ngModel)]="noticia.url"></ion-input>
 </ion-item>
 

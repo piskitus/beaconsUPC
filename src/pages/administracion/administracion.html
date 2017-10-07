@@ -38,7 +38,7 @@
       <ion-item-sliding #item *ngFor="let noticia of noticias">
       <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
         <ion-thumbnail item-start>
-          <img src="assets/img/logo_beaconsUPC.png">
+          <img src="{{ noticia.img }}">
         </ion-thumbnail>
         <h1>{{ noticia.title }}</h1>
         <h3>{{ noticia.description }}</h3>

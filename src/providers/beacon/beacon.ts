@@ -322,7 +322,7 @@ classesDisplayNotifications(){
                 else{edificio=''}
 
                 let observaciones=null
-                if(dia[j].obs != ''){observaciones='Obs: '+dia[j].obs}
+                if(dia[j].obs != ''){observaciones=dia[j].obs}
                 else{observaciones='Que vaya bien la clase!'}
 
                 let title = '⚫ '+dia[j].subject+' en el aula '+dia[j].classroom+edificio+' a las '+dia[j].startTime+'h'

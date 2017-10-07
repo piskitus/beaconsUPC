@@ -14,7 +14,6 @@ export class AvisosPage {
     setTimeout(() => {
       this.content.scrollToBottom(1000);
     }, 500);
-
   }
 
   segment:string = "classes";//Segmento por defecto

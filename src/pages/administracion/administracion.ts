@@ -49,6 +49,7 @@ export class AdministracionPage {
   }
 
   muestraNoticia(noticia){
+    console.log("noticia: ",noticia,null,10)
   // aquí vamos a abrir el modal para añadir nuestro sitio.
    let modalNews = this.modalCtrl.create( 'ModalAddNewsPage', noticia);
    modalNews.present();
@@ -261,10 +262,13 @@ export class AdministracionPage {
   let tzoffset = (new Date()).getTimezoneOffset() * 60000;
 
   let newsDefault:any = {
+    title: '',
+    description: '',
     color:'gainsboro',
     startNews:(new Date(Date.now() - tzoffset)).toISOString().slice(0,-1),//Hora por defecto la actual
     url: '',
-    marker: 'null'
+    marker: 'null',
+    img: 'assets/img/logo_beaconsUPC.png'
     }
     let modalNoticia = this.modalCtrl.create( 'ModalAddNewsPage', newsDefault);
     modalNoticia.present();

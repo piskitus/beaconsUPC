@@ -97,7 +97,7 @@
         <span *ngIf="clase.building == 'azul'" class="notification-title"><b>⚫ {{clase.subject}} en el aula {{clase.classroom}}💙 a las {{clase.startTime}}h</b></span>
       </ion-row>
       <ion-row class="border-subtitle">
-        <span *ngIf="clase.obs != ''" class="notification-subtitle">⚪ Obs: {{clase.obs}}</span>
+        <span *ngIf="clase.obs != ''" class="notification-subtitle">⚪ {{clase.obs}}</span>
         <span *ngIf="clase.obs == ''" class="notification-subtitle">⚪ Que vaya bien la clase!</span>
       </ion-row>
     </div>

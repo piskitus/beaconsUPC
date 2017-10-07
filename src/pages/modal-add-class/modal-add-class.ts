@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { SettingsProvider } from '../../providers/settings/settings';
 
@@ -14,14 +14,11 @@ export class ModalAddClassPage {
   subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController, public toastCtrl: ToastController, public settingsProvider: SettingsProvider) {
+              public alertCtrl : AlertController, public settingsProvider: SettingsProvider) {
     this.clase = this.navParams.data;
   }
 
   ionViewDidLoad() {
-
-    this.settingsProvider.showToast('HOLA', 1000, 'info', false);
-
 
     console.log('ionViewDidLoad ModalAddClassPage');
 
@@ -136,16 +133,13 @@ deleteSubjects() {
       obs: this.clase.obs
     }
 
-    // validación
-    if(clase.subject != 'null'){// elegir asignatura
-      if(clase.classroom != null){// rellenar número aula
-        this.dbFirebase.createClass(clase).then(res=>{
-            console.log('Clase guardada en firebase:');
-            this.settingsProvider.showToast('Clase creada correctamente', 2000, 'success', false)
-            this.cerrarModal();
-        })
-      }else{this.settingsProvider.showToast('Debes definir un número de aula', 2000, 'error', false)}
-    }else{this.settingsProvider.showToast('Debes seleccionar una asignatura', 2000, 'error', false)}
+    if(this.classValidation(clase)){
+      this.dbFirebase.createClass(clase).then(res=>{
+          console.log('Clase guardada en firebase:');
+          this.settingsProvider.showToast('Clase creada correctamente', 2000, 'success', false)
+          this.cerrarModal();
+      })
+    }
 
   }
 
@@ -160,18 +154,25 @@ deleteSubjects() {
       obs: this.clase.obs
     }
 
-    // validación
-    if(clase.subject != 'null'){// elegir asignatura
-      if(clase.classroom != null){// rellenar número aula
-        this.dbFirebase.updateClass(clase).then(res=>{
-            console.log('Clase guardada en firebase:');
-            this.settingsProvider.showToast('Clase actualizada correctamente', 2000, 'success', false)
-            this.cerrarModal();
-        })
-      }else{this.settingsProvider.showToast('Debes definir un número de aula', 2000, 'error', false)}
-    }else{this.settingsProvider.showToast('Debes seleccionar una asignatura', 2000, 'error', false)}
+    if(this.classValidation(clase)){
+      this.dbFirebase.updateClass(clase).then(res=>{
+          console.log('Clase guardada en firebase:');
+          this.settingsProvider.showToast('Clase actualizada correctamente', 2000, 'success', false)
+          this.cerrarModal();
+      })
+    }
 
   }
+
+// validación de los campos obligatorios para crear una clase
+  classValidation(clase:any){
+    if(clase.subject != 'null'){// elegir asignatura
+      if(clase.classroom != null){// rellenar número aula
+        return true;
+      }else{this.settingsProvider.showToast('Debes definir un número de aula', 2000, 'error', false); return false;}
+    }else{this.settingsProvider.showToast('Debes seleccionar una asignatura', 2000, 'error', false); return false;}
+  }
+
 
   borrarClase(dia, id){
     let alert = this.alertCtrl.create({
@@ -199,17 +200,5 @@ deleteSubjects() {
 
     alert.present();
   }
-
-  showToast(message:string, duration:number, color:string) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        position: 'top',
-        duration: duration,
-        // showCloseButton: true,
-        // closeButtonText: 'x',
-        cssClass: color
-      });
-      toast.present();
-    }
 
 }

@@ -75,8 +75,9 @@ export class InicioPage {
                   this.news.url = snapshot.val().url;
                   this.news.startNews = snapshot.val().startNews;
                   this.news.marker = snapshot.val().marker;
+                  this.news.img = snapshot.val().img;
                   this.news.saveTime = Date.now(); //timestamp del momento en el que el usuario guardó la noticia para luego poder ordenarla en la vista
-                  //console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.color)
+                  console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.img)
                 })
               }
             })
