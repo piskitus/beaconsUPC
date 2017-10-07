@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 @IonicPage()
 @Component({
@@ -13,11 +14,15 @@ export class ModalAddClassPage {
   subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController, public toastCtrl: ToastController) {
+              public alertCtrl : AlertController, public toastCtrl: ToastController, public settingsProvider: SettingsProvider) {
     this.clase = this.navParams.data;
   }
 
   ionViewDidLoad() {
+
+    this.settingsProvider.showToast('HOLA', 1000, 'info', false);
+
+
     console.log('ionViewDidLoad ModalAddClassPage');
 
     this.dbFirebase.getUserSubjects().subscribe(subjects=>{
@@ -71,12 +76,12 @@ export class ModalAddClassPage {
               this.dbFirebase.createSubject(subject);// añado la asignatura a la base de datos
             }
             else{
-              this.showToast('🔴 Nombre corto demasiado largo (max 7 caracteres) 🔴', 2000)
+              this.settingsProvider.showToast('Nombre corto demasiado largo (max 7 caracteres)', 2000, 'error', false)
               return false;
               //acronyme demasiado largo
             }
           } else {
-            this.showToast('🔴 Campos incompletos 🔴', 2000)
+            this.settingsProvider.showToast('Campos incompletos', 2000, 'error', false)
             console.log("ACRONYM ES NULL")
             // campos incompletos
             return false;
@@ -136,11 +141,11 @@ deleteSubjects() {
       if(clase.classroom != null){// rellenar número aula
         this.dbFirebase.createClass(clase).then(res=>{
             console.log('Clase guardada en firebase:');
-            this.showToast('🔵 Clase creada correctamente 🔵', 2000)
+            this.settingsProvider.showToast('Clase creada correctamente', 2000, 'success', false)
             this.cerrarModal();
         })
-      }else{this.showToast('🔴 Debes definir un número de aula 🔴', 2000)}
-    }else{this.showToast('🔴 Debes seleccionar una asignatura 🔴', 2000)}
+      }else{this.settingsProvider.showToast('Debes definir un número de aula', 2000, 'error', false)}
+    }else{this.settingsProvider.showToast('Debes seleccionar una asignatura', 2000, 'error', false)}
 
   }
 
@@ -160,11 +165,11 @@ deleteSubjects() {
       if(clase.classroom != null){// rellenar número aula
         this.dbFirebase.updateClass(clase).then(res=>{
             console.log('Clase guardada en firebase:');
-            this.showToast('🔵 Clase actualizada correctamente 🔵', 2000)
+            this.settingsProvider.showToast('Clase actualizada correctamente', 2000, 'success', false)
             this.cerrarModal();
         })
-      }else{this.showToast('🔴 Debes definir un número de aula 🔴', 2000)}
-    }else{this.showToast('🔴 Debes seleccionar una asignatura 🔴', 2000)}
+      }else{this.settingsProvider.showToast('Debes definir un número de aula', 2000, 'error', false)}
+    }else{this.settingsProvider.showToast('Debes seleccionar una asignatura', 2000, 'error', false)}
 
   }
 
@@ -185,7 +190,7 @@ deleteSubjects() {
           handler: () => {
                // AquÍ borramos la clase de la base de datos
                this.dbFirebase.deleteClass(dia, id);
-               this.showToast('🔵 Clase eliminada correctamente 🔵', 2000)
+               this.settingsProvider.showToast('Clase eliminada correctamente', 2000, 'success', false)
                this.cerrarModal();
            }
         }
@@ -195,12 +200,14 @@ deleteSubjects() {
     alert.present();
   }
 
-  showToast(message:string, duration:number) {
+  showToast(message:string, duration:number, color:string) {
       let toast = this.toastCtrl.create({
         message: message,
         position: 'top',
         duration: duration,
-        cssClass: "toastCSS"
+        // showCloseButton: true,
+        // closeButtonText: 'x',
+        cssClass: color
       });
       toast.present();
     }

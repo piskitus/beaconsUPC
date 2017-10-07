@@ -28,7 +28,7 @@ export const firebaseConfig = {
   authDomain: "beaconsupc.firebaseapp.com",
   databaseURL: "https://beaconsupc.firebaseio.com",
   projectId: "beaconsupc",
-  storageBucket: "",
+  storageBucket: "gs://beaconsupc.appspot.com/",
   messagingSenderId: "837769766760"
 };
 

@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { ToastController } from 'ionic-angular'
 
 
 @Injectable()
 export class SettingsProvider {
 
-  constructor(private diagnostic: Diagnostic, private locationAccuracy: LocationAccuracy) {
+  constructor(private diagnostic: Diagnostic, private locationAccuracy: LocationAccuracy, public toastCtrl: ToastController) {
     console.log('Hello SettingsProvider Provider');
   }
 
+
+// verificar ubicación y solicitar activación en caso de que no esté
   isLocationEnabled(){
     let successCallback = (isAvailable) => { // si no lo tiene activado le pido que lo active
                                               if (!isAvailable){this.activarUbicacion();}
@@ -35,6 +38,19 @@ export class SettingsProvider {
         );
       }
     });
+  }
+
+// TOAST genérico
+showToast(message:string, duration:number, color:string, close:boolean) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      position: 'top',
+      duration: duration,
+      showCloseButton: close,
+      closeButtonText: 'x',
+      cssClass: color
+    });
+    toast.present();
   }
 
 }

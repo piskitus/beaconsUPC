@@ -14,3 +14,23 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+//Configuración global de los toasts (popups)
+// toast verde(success)
+ion-toast.success .toast-wrapper {
+	background: #32DB64;
+  text-align:center;
+}
+
+//toast rojo (error)
+ion-toast.error .toast-wrapper {
+	background: #F53D3D;
+  text-align:center;
+}
+
+//toast azul (info)
+ion-toast.info .toast-wrapper {
+	background: #488aff;
+  text-align:center;
+}

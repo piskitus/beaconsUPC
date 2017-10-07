@@ -247,7 +247,8 @@ export class MyApp {
           message: message,
           position: 'top',
           duration: duration,
-          dismissOnPageChange: true
+          dismissOnPageChange: true,
+          cssClass: 'green'
         });
         toast.present();
       }
