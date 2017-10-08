@@ -5,7 +5,7 @@ import { AuthProvider } from '../auth/auth';
 @Injectable()
 export class FirebaseDbProvider {
 
-  
+
 
   constructor(public afDB: AngularFireDatabase, public auth: AuthProvider) {
     console.log('➡️ Firebase Provider📊');

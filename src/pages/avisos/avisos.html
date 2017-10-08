@@ -7,7 +7,7 @@
 
 <ion-content style="background-color: #333">
   <div [ngSwitch]="segment">
-    <ion-list *ngSwitchCase="'reminders'">
+    <ion-list *ngSwitchCase="'reminders'" class="padding-lists">
       <ion-item-sliding #item *ngFor="let reminder of reminders">
       <ion-item (click)="muestraRecordatorio(reminder)">
         <h2>{{ reminder.title }} al {{reminder.when}}</h2>
@@ -26,25 +26,25 @@
       </ion-item-sliding>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'news'">
-      <ion-item-sliding #item *ngFor="let noticia of news">
-      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
-        <ion-thumbnail item-start>
-          <img src="assets/img/icon.png">
+    <ion-list *ngSwitchCase="'news'" class="padding-lists">
+      <ion-item-sliding #item *ngFor="let noticia of news" class="news-design">
+      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="openNews(noticia.id)" style="padding-left: 0" no-lines>
+        <ion-thumbnail item-start style="margin: 0 5px 0 0">
+          <img src="{{ noticia.img }}">
         </ion-thumbnail>
         <h1>{{ noticia.title }}</h1>
         <h3>{{ noticia.description }}</h3>
         <!--Oculto la siguiente fila si no tiene marcador asociado porque entonces quiere decir que es una noticia y no un evento con fecha de inicio-->
         <h5 *ngIf="noticia.marker != 'null'" style="float: left; background-color: #FFFFFF;">▶️ {{noticia.startNews | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" no-lines>
         <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>
            Borrar
         </button>
       </ion-item-options>
-      <ion-item-options side="left">
-        <button ion-button  color="warning" (click)="muestraNoticia(noticia)"><ion-icon name="md-create"></ion-icon>
-           Editar
+      <ion-item-options side="left" no-lines>
+        <button ion-button  color="secondary" (click)="openNews(noticia.id)"><ion-icon name="eye"></ion-icon>
+           &nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;
         </button>
       </ion-item-options>
       </ion-item-sliding>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController, ToastController, ModalController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 
 @IonicPage()
@@ -14,7 +15,7 @@ export class ClassesViewPage {
   classTitle:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController, public toastCtrl: ToastController, public modalCtrl : ModalController) {
+              public alertCtrl : AlertController, public toastCtrl: ToastController, public modalCtrl : ModalController, public settingsProvider: SettingsProvider) {
     this.classesDay = this.navParams.data;
 
     if(this.classesDay[0].day == 'lunes'){
@@ -60,7 +61,7 @@ export class ClassesViewPage {
           handler: () => {
                // AquÍ borramos la clase de la base de datos
                this.dbFirebase.deleteClass(dia, id);
-               this.showToast('🔵 Clase eliminada correctamente 🔵', 2000)
+               this.settingsProvider.showToast('Clase eliminada correctamente', 2000, 'success', false)
                this.classesDay.splice(index, 1);// la borro de la lista xq no se actualiza sola la view
            }
         }
@@ -74,17 +75,5 @@ export class ClassesViewPage {
     let modal = this.modalCtrl.create( 'ModalAddClassPage', clase);
     modal.present();
   }
-
-
-  showToast(message:string, duration:number) {
-      let toast = this.toastCtrl.create({
-        message: message,
-        position: 'top',
-        duration: duration,
-        dismissOnPageChange: true,
-        cssClass: "toastCSS"
-      });
-      toast.present();
-    }
 
 }

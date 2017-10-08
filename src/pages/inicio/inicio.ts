@@ -116,7 +116,7 @@ closeCardInfo(){
 
 saveUserNews(){
   this.dbFirebase.saveUserNews(this.news).then(res=>{
-          console.log('💛💛Noticia guardada correctamente en la pestaña de avisos');
+          this.settingsProvider.showToast('Noticia guardada en la pestaña de avisos', 2000, 'success', false)
       })
 }
 
@@ -128,9 +128,7 @@ openNewsMarkerInMapButton(marker){
 }
 
 openURL(newsURL){
-
-  const browser = this.iab.create(newsURL, '_self','location=no,zoom=no' );
-
+  const browser = this.iab.create(newsURL, '_self','location=yes,zoom=no' );
 }
 
 }

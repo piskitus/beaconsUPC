@@ -29,19 +29,7 @@
     </ion-card-content>
 
     <ion-row no-padding *ngIf="news.id || news.url">
-      <ion-col col-12 *ngIf="news.id && !news.url">
-        <button ion-button block color="dark" icon-start (click)=saveUserNews()>
-          <ion-icon name='star'></ion-icon>
-          Guardar
-        </button>
-      </ion-col>
-      <ion-col col-6 *ngIf="news.id && news.url" >
-        <button  ion-button block color="dark" icon-start (click)=saveUserNews()>
-          <ion-icon name='star'></ion-icon>
-          Guardar
-        </button>
-      </ion-col>
-      <ion-col col-6 *ngIf="news.url">
+      <ion-col col-12 *ngIf="news.url">
         <button ion-button block color="dark" icon-start (click)=openURL(news.url)>
       <ion-icon name='information-circle'></ion-icon>
       Más info

@@ -228,14 +228,14 @@ export class AvisosPage {
       message: 'Una vez borrado ya no se podrá recuperar',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteUserReminder(id);
@@ -252,14 +252,14 @@ export class AvisosPage {
       message: 'Una vez borrada ya no se podrá recuperar hasta que la vuelvas a detectar',
       buttons: [
         {
-          text: 'No',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Si',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteUserNews(id);
@@ -272,6 +272,11 @@ export class AvisosPage {
 
   goToClassesView(classesDay){
     let modal = this.modalCtrl.create( 'ClassesViewPage', classesDay);
+    modal.present();
+  }
+
+  openNews(newsID){
+    let modal = this.modalCtrl.create( 'NewsViewPage', {id: newsID});
     modal.present();
   }
 

@@ -54,7 +54,25 @@ page-avisos {
     border-bottom-right-radius: 0px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+  }
 
+//Diseño de la lista de noticias
+  .news-design{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  .padding-lists {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .label-md {
+    margin: 0;
   }
 
 }
