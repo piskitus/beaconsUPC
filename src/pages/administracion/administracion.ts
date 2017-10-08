@@ -110,14 +110,14 @@ export class AdministracionPage {
       message: 'Una vez borrado ya no se podrá recuperar',
       buttons: [
         {
-          text: 'Aceptar',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
             // Ha respondido que no así que no hacemos nada
           }
         },
         {
-          text: 'Cancelar',
+          text: 'Aceptar',
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteBeacon(key);

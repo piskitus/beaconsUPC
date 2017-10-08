@@ -49,7 +49,7 @@ export class AvisosPage {
       weekday[5] = "viernes";
       weekday[6] = "sabado";
     this.today = weekday[d.getDay()];
-    console.log("Hoy es: ", this.today)
+    //console.log("Hoy es: ", this.today)
 
   }
 
