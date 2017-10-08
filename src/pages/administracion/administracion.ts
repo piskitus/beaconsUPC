@@ -49,10 +49,14 @@ export class AdministracionPage {
   }
 
   muestraNoticia(noticia){
-    console.log("noticia: ",noticia,null,10)
   // aquí vamos a abrir el modal para añadir nuestro sitio.
    let modalNews = this.modalCtrl.create( 'ModalAddNewsPage', noticia);
    modalNews.present();
+  }
+
+  openNews(newsID){
+    let modal = this.modalCtrl.create( 'NewsViewPage', {id: newsID});
+    modal.present();
   }
 
   muestraBeacon(beacon){
@@ -264,7 +268,7 @@ export class AdministracionPage {
   let newsDefault:any = {
     title: '',
     description: '',
-    color:'gainsboro',
+    color:'whitesmoke',
     startNews:(new Date(Date.now() - tzoffset)).toISOString().slice(0,-1),//Hora por defecto la actual
     url: '',
     marker: 'null',

@@ -7,7 +7,7 @@
 </ion-header> -->
 
 
-<ion-content (swipe)="swipeEvent($event)">
+<ion-content (swipe)="swipeEvent($event)" style="background-color: #333">
 
   <ion-card *ngIf="cardInfoShow">
     <ion-card-content>
@@ -27,7 +27,7 @@
   <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
     <img *ngIf="news.img == ''" src="assets/img/logo_beaconsUPC.png" />
     <img *ngIf="news.img != ''" src="{{ news.img }}"/>
-    <ion-card-content>
+    <ion-card-content style="padding: 5px 15px !important">
       <h1 style="text-align: center">{{news.title}}</h1>
       <ion-card-title text-center>
         <h3 style="text-align: justify">{{news.description}}</h3>

@@ -10,12 +10,12 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content style="background-color: #333">
 
   <ion-card *ngIf="view" [ngStyle]="{'background-color': news.color}">
-    <img src="assets/img/logo_beaconsUPC.png" />
-    <!--<img src="{{news.image}}"/>-->
-    <ion-card-content>
+    <img *ngIf="news.img == ''" src="assets/img/logo_beaconsUPC.png" />
+    <img *ngIf="news.img != ''" src="{{ news.img }}"/>
+    <ion-card-content style="padding: 5px 15px !important">
       <h1 style="text-align: center">{{news.title}}</h1>
       <ion-card-title text-center>
         <h3 style="text-align: justify">{{news.description}}</h3>

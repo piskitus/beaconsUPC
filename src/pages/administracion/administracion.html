@@ -36,7 +36,7 @@
 
     <ion-list *ngSwitchCase="'news'">
       <ion-item-sliding #item *ngFor="let noticia of noticias">
-      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="muestraNoticia(noticia)">
+      <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="openNews(noticia.id)">
         <ion-thumbnail item-start>
           <img src="{{ noticia.img }}">
         </ion-thumbnail>
