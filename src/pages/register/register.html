@@ -1,7 +1,7 @@
 <ion-content padding-right>
     <form>
       <ion-row>
-        <ion-col col-4>
+        <ion-col col-5>
           <ion-item>
             <!-- <ion-avatar item-start>
               <img src="assets/img/icon.png"/>
@@ -10,17 +10,17 @@
             <ion-input [(ngModel)]="user.name" name="name" type="text" max="20" required></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-7>
           <ion-item>
             <ion-label floating>Apellidos</ion-label>
             <ion-input [(ngModel)]="user.surname" name="surname" type="text" max="50" required></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col col-2 align-self-bottom>
+        <!-- <ion-col col-2 align-self-bottom>
           <button disabled ion-button icon-only large clear>
             <ion-icon name="camera"></ion-icon>
           </button>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col col-12>
@@ -46,7 +46,7 @@
         <!-- <ion-col col-2>
         </ion-col> -->
       </ion-row>
-      <ion-row *ngIf="user.profile != 'visitante'">
+      <ion-row *ngIf="user.profile != 'visitante' && user.profile != ''">
         <ion-col col-12>
           <ion-item>
             <ion-label>Centro docente</ion-label>
@@ -63,7 +63,7 @@
         <ion-col col-12>
           <ion-item>
             <ion-label>Email:</ion-label>
-            <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" max="100" placeholder="nombre@upc.edu" required></ion-input>
+            <ion-input [(ngModel)]="user.email" name="email" type="email" autocapitalize="off" max="100" placeholder="nombre@upc.edu" required></ion-input>
             <ion-icon name='mail' item-start color="dark"></ion-icon>
           </ion-item>
         </ion-col>

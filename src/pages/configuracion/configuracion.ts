@@ -6,6 +6,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { BeaconProvider } from '../../providers/beacon/beacon';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,8 @@ export class ConfiguracionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth : AuthProvider, private push: Push,
   private locationAccuracy: LocationAccuracy,private dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController,
-  private alertCtrl: AlertController, public beaconProvider: BeaconProvider, private firebaseAnalytics: FirebaseAnalytics) {
+  private alertCtrl: AlertController, public beaconProvider: BeaconProvider, private firebaseAnalytics: FirebaseAnalytics,
+  public settingsProvider: SettingsProvider) {
   }
 
   ionViewDidLoad() {
@@ -34,6 +36,7 @@ export class ConfiguracionPage {
   }
 
   cerrarSesion(){
+      this.settingsProvider.showToast('Hasta pronto!', 2000, 'info', false);
       this.auth.logout();
 
       //Dejo de buscar beacons
@@ -95,8 +98,14 @@ export class ConfiguracionPage {
         text: 'Eliminar',
         handler: data => {
           //Ejecuto la función para eliminar usuario
-          let correct = this.auth.deleteUser(data.password);
-
+          if(data.password.length > 5){
+            this.auth.deleteUser(data.password)
+            this.settingsProvider.showToast('Eliminando cuenta... ', 2000, 'success', false);
+          }
+          else{
+            this.settingsProvider.showToast('Introduce una contraseña válida', 2000, 'error', false);
+            return false;
+          }
         }
       }
     ]

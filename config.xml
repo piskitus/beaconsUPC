@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.beaconsUPC.android" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.beaconsUPC.android" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>beaconsUPC</name>
     <description>Beacons app for use in college</description>
     <author email="marc.cabezas.alarcon@estudiant.upc.edu" href="https://eetac.upc.edu/">Marc Cabezas</author>

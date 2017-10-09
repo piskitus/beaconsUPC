@@ -9,6 +9,7 @@ import { Push, PushToken } from '@ionic/cloud-angular';
 import { Geofence } from '@ionic-native/geofence';
 import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { SettingsProvider } from '../providers/settings/settings';
 
 
 
@@ -32,6 +33,7 @@ export class MyApp {
     public dbFirebase :FirebaseDbProvider,
     private firebaseAnalytics: FirebaseAnalytics,
     public toastCtrl: ToastController,
+    public settingsProvider: SettingsProvider,
     ) {
 
 
@@ -62,16 +64,13 @@ export class MyApp {
           this.startBeaconProvider();//Inicializo la búsqueda de beacons y regiones
           this.registerAppInServer();//Registro las notificaciones push
         }
-          else{
-            console.log('➡️ redirect LoginPage');
-            setTimeout(() => {
-              splashScreen.hide();
-              this.rootPage = 'LoginPage';
-            }, 3000);
-
-            this.showToast(' Bienvenid@  a  beaconsUPC  👋😀', 2000)
-
-          }
+        else{
+          console.log('➡️ redirect LoginPage');
+          setTimeout(() => {
+            splashScreen.hide();
+            this.rootPage = 'LoginPage';
+          }, 3000);
+        }
       });
 
       });
@@ -167,12 +166,12 @@ export class MyApp {
       id: '69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb', //any unique ID
       latitude:       41.319147, //center of geofence radius
       longitude:      2.020015,
-      radius:         300, //radius to edge of geofence in meters
+      radius:         50, //radius to edge of geofence in meters
       transitionType: 1, //1: Enter, 2: Leave, 3: Both
       notification: { //notification settings
           id:             1, //any unique ID (La notificación anula la anterior si tiene la misma id)
-          title:          '¿Estás llegando a casa?', //notification title
-          text:           'Abre la app para tener una mejor experiencia!', //notification body
+          title:          'Estás cerca de casa del creador 😯', //notification title
+          text:           'Ten cuidado... Te vigila 😈', //notification body
           openAppOnClick: true, //open app when notification is tapped
           // smallIcon: 'assets/img/icon.png',
           //icon: 'assets/img/icon.png'
@@ -187,7 +186,7 @@ export class MyApp {
       transitionType: 1, //1: Enter, 2: Leave, 3: Both
       notification: { //notification settings
           id:             2, //any unique ID
-          title:          'Bienvenida/o al campus UPC', //notification title
+          title:          'Bienvenida/o al campus UPC 🎓', //notification title
           text:           'Abre la app para enterarte de todo', //notification body
           openAppOnClick: true, //open app when notification is tapped
           // smallIcon: 'assets/img/icon.png',
@@ -203,8 +202,8 @@ export class MyApp {
       transitionType: 1, //1: Enter, 2: Leave, 3: Both
       notification: { //notification settings
           id:             2, //any unique ID
-          title:          'Bienvenida/o a Namastech', //notification title
-          text:           'Los mejores servicios informáticos', //notification body
+          title:          'Bienvenida/o a Namastech 😎', //notification title
+          text:           'Servicios Informáticos de Barcelona', //notification body
           openAppOnClick: true, //open app when notification is tapped
           // smallIcon: 'assets/img/icon.png',
           //icon: 'assets/img/icon.png'
@@ -238,20 +237,10 @@ export class MyApp {
       console.log("toastSalutation")
       this.dbFirebase.getUserData().then((user)=>{
         this.user.name = user.val().name;
-        this.showToast(' Bienvenid@  '+this.user.name+'  👋😀', 2000)
+        this.settingsProvider.showToast('👋😀 Bienvenid@  '+this.user.name, 2000, 'info', false);
       })
     }
 
-    showToast(message:string, duration:number) {
-        let toast = this.toastCtrl.create({
-          message: message,
-          position: 'top',
-          duration: duration,
-          dismissOnPageChange: true,
-          cssClass: 'green'
-        });
-        toast.present();
-      }
 
 
 

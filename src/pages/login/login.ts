@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController  } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 
 @IonicPage()
 @Component({
@@ -17,6 +19,8 @@ export class LoginPage {
     public auth : AuthProvider,
     public alertCtrl : AlertController,
     public modalCtrl : ModalController,
+    public settingsProvider: SettingsProvider,
+    public dbFirebase :FirebaseDbProvider,
     ) {
       console.log('➡️ LoginPage');
   }
@@ -50,19 +54,24 @@ export class LoginPage {
   }
 
   login(){
-    this.auth.loginUser(this.user.email, this.user.password)
-    .then((user) => {
-    //OK
-    }
-    )
-      .catch(err => {
-        let alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: err.message,
-          buttons: ['Aceptar']
-        });
-        alert.present();
+    if(this.loginValidation()){
+      // si ha introducido los campos hago el login
+      this.auth.loginUser(this.user.email, this.user.password)
+      .then((user) => {
       })
+      .catch(err => {
+        this.settingsProvider.showToast('No existe un usuario con esos datos', 2000, 'error', false);
+      })
+    }
+  }
+
+// comprovación de que los campos estén rellenos
+  loginValidation(){
+    if(this.user.email){
+      if(this.user.password){
+        return true
+      }else{this.settingsProvider.showToast('Introduce una contraseña válida', 2000, 'error', false);return false}
+    }else{this.settingsProvider.showToast('Debes introducir un email válido', 2000, 'error', false);return false}
   }
 
   resetPassword() {
@@ -93,12 +102,7 @@ export class LoginPage {
               alert.present();
             })
             .catch(err => {
-              let alert = this.alertCtrl.create({
-                title: 'Error',
-                subTitle: 'El correo introducido es incorrecto o no coincide con el de ningún usuario registrado',
-                buttons: ['Vale']
-              });
-              alert.present();
+              this.settingsProvider.showToast('El correo introducido no existe en la base de datos', 2000, 'error', false);
             })
           }
         }
