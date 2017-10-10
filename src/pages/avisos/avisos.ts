@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController,AlertController, Content } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import * as moment from 'moment'
 
 @IonicPage()
 @Component({
@@ -66,6 +67,7 @@ export class AvisosPage {
     })
     this.dbFirebase.getUserNews().subscribe(news=>{
       this.news = news;
+      this.news.startNews = moment(this.news.startNews).utcOffset(0).format('DD/MM/YYYY - kk:mm');
     })
     this.dbFirebase.getUserClasses().subscribe(classes=>{
       this.classes = classes;

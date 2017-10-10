@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController,AlertController } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import * as moment from 'moment'
 
 @IonicPage()
 @Component({
@@ -28,6 +29,7 @@ export class AdministracionPage {
     //Cargo los datos de la BBDD
     this.dbFirebase.getNews().subscribe(noticias=>{
       this.noticias = noticias;
+      this.noticias.startNews = moment(this.noticias.startNews).utcOffset(0).format('DD/MM/YYYY - kk:mm');
     })
     this.dbFirebase.getBeacons().subscribe(beacons=>{
       this.beacons = beacons;

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController, Content } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import * as moment from 'moment'
 
 @IonicPage()
 @Component({
@@ -9,6 +10,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   templateUrl: 'news-view.html',
 })
 export class NewsViewPage {
+
+
 
   newsID:any;
   news:any = {
@@ -30,6 +33,7 @@ export class NewsViewPage {
     var news = this.dbFirebase.getSpecificNews2(this.newsID);
     news.on('value', snapshot => {
       this.news = snapshot.val();
+      this.news.startNews = moment(this.news.startNews).utcOffset(0).format('DD/MM/YYYY - kk:mm');
       this.view=true;
     });
 

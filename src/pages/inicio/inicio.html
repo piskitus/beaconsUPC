@@ -32,12 +32,13 @@
       <ion-card-title text-center>
         <h3 style="text-align: justify">{{news.description}}</h3>
       </ion-card-title>
-
+      <div style="text-align: center">
       <button (click)=openNewsMarkerInMapButton(news.marker) *ngIf="news.marker != 'null'" text-center ion-button clear round icon-end large color="danger" style="background-color: white">
-        <h1 style="color: black">{{news.startNews | date:'dd/MM/yyyy - HH:mm'}}h</h1>
+        <!-- <h1 style="color: black">{{news.startNews | date:'dd/MM/yyyy - HH:mm'}}h</h1> -->
+        <h1 style="color: black">{{news.startNews}}h</h1>
         <ion-icon name='pin' is-active="false"></ion-icon>
       </button>
-
+      </div>
     </ion-card-content>
 
     <ion-row no-padding *ngIf="news.id || news.url">

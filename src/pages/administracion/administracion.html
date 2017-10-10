@@ -43,10 +43,11 @@
         <h1>{{ noticia.title }}</h1>
         <h3>{{ noticia.description }}</h3>
         <!--Muestro la fecha de creación o de actualización de esta noticia-->
-        <h5 *ngIf="!noticia.updateTime" style="float: left; background-color: #FFFFFF;">🆕 {{noticia.id | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
-        <h5 *ngIf="noticia.updateTime" style="float: left; background-color: #FFFFFF;">🔁 {{noticia.updateTime | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
+        <!-- <h5 *ngIf="!noticia.updateTime" style="float: left; background-color: #FFFFFF;">🆕 {{noticia.id | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
+        <h5 *ngIf="noticia.updateTime" style="float: left; background-color: #FFFFFF;">🔁 {{noticia.updateTime | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5> -->
+
         <!--Oculto la siguiente fila si no tiene marcador asociado porque entonces quiere decir que es una noticia y no un evento con fecha de inicio-->
-        <h5 *ngIf="noticia.marker != 'null'" style="float: left; background-color: #FFFFFF;">▶️ {{noticia.startNews | date:'dd/MM/yyyy - HH:mm'}}&nbsp;</h5>
+        <h5 *ngIf="noticia.marker != 'null'" style="float: left; background-color: #FFFFFF;">▶️ {{noticia.startNews}}h&nbsp;</h5>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button  color="danger" (click)="borrarNoticia(noticia.id)"><ion-icon name="trash"></ion-icon>

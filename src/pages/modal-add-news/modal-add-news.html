@@ -91,7 +91,7 @@
   </ion-item>
   <ion-item *ngIf="eventSelected">
   <ion-label>📅 Fecha y hora</ion-label>
-  <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMM YYYY HH mm" max="2022" min="2017" [(ngModel)]="noticia.startNews"></ion-datetime>
+  <ion-datetime cancelText="Cancelar" doneText="Aceptar" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMM YYYY HH mm" max="2022" min="2017" [(ngModel)]="noticia.startNews"></ion-datetime>
 </ion-item>
 <ion-item *ngIf="eventSelected">
   <ion-label>📍 Ubicación</ion-label>

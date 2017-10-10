@@ -7,6 +7,7 @@ import { BeaconProvider } from '../../providers/beacon/beacon';
 import { AuthProvider } from '../../providers/auth/auth';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SettingsProvider } from '../../providers/settings/settings';
+import * as moment from 'moment'
 
 
 @IonicPage()
@@ -73,11 +74,12 @@ export class InicioPage {
                   this.news.color = snapshot.val().color;
                   this.news.id = snapshot.val().id;
                   this.news.url = snapshot.val().url;
-                  this.news.startNews = snapshot.val().startNews;
+                  // this.news.startNews = snapshot.val().startNews;
+                  this.news.startNews = moment(snapshot.val().startNews).utcOffset(0).format('DD/MM/YYYY - kk:mm');
                   this.news.marker = snapshot.val().marker;
                   this.news.img = snapshot.val().img;
                   this.news.saveTime = Date.now(); //timestamp del momento en el que el usuario guardó la noticia para luego poder ordenarla en la vista
-                  console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.img)
+                  //console.log("DATAAAAAA:", this.news.title, this.news.description, this.news.img)
                 })
               }
             })
