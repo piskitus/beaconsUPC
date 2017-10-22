@@ -311,7 +311,8 @@ classesDisplayNotifications(){
               let minutos = (+hora[0])*60+(+hora[1]);
               dia[i].minutos = minutos;
             }
-            //recorro el dia que ha coincidido para ver si encuentro alguna clase entre los 20 minutos antes y los 10 despues de la hora actual
+            //recorro el dia que ha coincidido para ver si encuentro alguna clase entre
+            //los 20 minutos antes y los 10 despues de la hora actual
             for(let j=0; j < dia.length; j++){
               if(dia[j].minutos-20 <= this.minutesNow && dia[j].minutos+10 >= this.minutesNow){
                 // monto la notificación
@@ -347,6 +348,5 @@ classesDisplayNotifications(){
   else{
     //console.log("No ejecuto la función de notificación de clase")
   }
-
 }
 }

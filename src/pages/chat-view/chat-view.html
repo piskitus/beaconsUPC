@@ -1,4 +1,4 @@
-<ion-header>
+d<ion-header>
   <ion-navbar>
     <ion-title>{{chat.title}}</ion-title>
     <ion-buttons start>
@@ -51,7 +51,7 @@
     <ion-row>
       <ion-col col-10>
         <ion-item>
-          <ion-input placeholder="Escribe aquí..." [(ngModel)]="message.msg" clearInput></ion-input>
+          <ion-input [disabled]="chat.active == false" placeholder="Escribe aquí..." [(ngModel)]="message.msg" clearInput></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-2 style="padding: 0 !important">
