@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController,AlertController, Content } from 'ionic-angular';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
 import * as moment from 'moment'
+import { SettingsProvider } from '../../providers/settings/settings';
+
 
 @IonicPage()
 @Component({
@@ -34,7 +36,8 @@ export class AvisosPage {
   //subjects:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController,
-              public dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController, public alertCtrl : AlertController) {
+              public dbFirebase :FirebaseDbProvider, public modalCtrl : ModalController, public alertCtrl : AlertController,
+              public settingsProvider: SettingsProvider) {
   }
 
   ionViewDidLoad() {
@@ -141,7 +144,13 @@ export class AvisosPage {
   }
 
   nuevaNotificacion(){
-   let modal = this.modalCtrl.create( 'ModalAddReminderPage'/*,this.coords Aquí puede ir info*/);
+    let reminder = {
+      title: "",
+      description: "",
+      when: 'entrar',
+      period: 'once'
+    }
+   let modal = this.modalCtrl.create( 'ModalAddReminderPage', reminder);
    modal.present();
   }
 
@@ -241,6 +250,8 @@ export class AvisosPage {
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteUserReminder(id);
+               this.settingsProvider.showToast('Recordatorio eliminado', 2000, 'success', false)
+               
            }
         }
       ]
@@ -265,6 +276,8 @@ export class AvisosPage {
           handler: () => {
                // AquÍ borramos la noticia de la base de datos
                this.dbFirebase.deleteUserNews(id);
+               this.settingsProvider.showToast('Eliminada correctamente', 2000, 'success', false)
+               
            }
         }
       ]

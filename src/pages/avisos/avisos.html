@@ -7,12 +7,61 @@
 
 <ion-content style="background-color: #333">
   <div [ngSwitch]="segment">
-    <ion-list *ngSwitchCase="'reminders'" class="padding-lists">
-      <ion-item-sliding #item *ngFor="let reminder of reminders">
-      <ion-item (click)="muestraRecordatorio(reminder)">
-        <h2>{{ reminder.title }} al {{reminder.when}}</h2>
+    <ion-list *ngSwitchCase="'reminders'" style="padding-right: 0px; padding-left: 0px;">
+
+      <!-- card informativo-->
+      <ion-card *ngIf="reminders.length == 0"><!-- se muestra cuando no hay avisos creados-->
+        <ion-card-content>
+          <ion-row>
+            <ion-col col-12>
+              <p style="text-align: justify"> ℹ️ En esta pestaña puedes añadir recordatorios para que se te notifiquen al entrar o salir del Campus ✌️😉 </p>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+      <!--Botón flotante-->
+      <ion-fab center bottom edge>
+          <button style="padding-bottom: 25px" ion-fab color="light" (tap)="nuevaNotificacion()"><ion-icon name="add-circle" color="dark"></ion-icon></button>
+        </ion-fab>
+
+        <ion-card *ngFor="let reminder of reminders" style="margin-top: 20px; margin-bottom: 20px;">
+            <ion-card-header style="padding: 0px !important">
+              <ion-row>
+                <ion-col col-2 style="padding: 0 !important; text-align: left !important;">
+                  <button class="button-left" color="warning" ion-button icon-only large style="margin: 0 !important" (click)="muestraRecordatorio(reminder)">
+                      <ion-icon style="padding-right: 10px; padding-left: 12px" name="create"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col col-8 style="padding-top: 0px; padding-bottom:0px;">
+                  <ion-row>
+                    <ion-col col-12>
+                        <div style="font-weight: bold;">{{ reminder.title }}</div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-12 style="padding-top: 0px">
+                        {{ reminder.description }}
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col col-2 style="padding: 0 !important; text-align: right !important;">
+                  <button class="button-right" color="danger" ion-button icon-only large style="margin: 0 !important" (click)="borrarRecordatorio(reminder.id)">
+                      <ion-icon style="padding-left: 12px; padding-right: 13px" name="trash"></ion-icon>
+                    </button>
+                </ion-col>
+              </ion-row>
+        
+          </ion-card-header>
+          </ion-card>
+
+
+      <!-- <ion-item-sliding style="margin-top: 10px" #item *ngFor="let reminder of reminders">
+      <ion-item class="item-reminder" (click)="muestraRecordatorio(reminder)">
+        <h2>{{ reminder.title }}</h2>
         <p>{{ reminder.description }}</p>
       </ion-item>
+
       <ion-item-options side="right">
         <button ion-button  color="danger" (click)="borrarRecordatorio(reminder.id)"><ion-icon name="trash"></ion-icon>
            Borrar
@@ -23,10 +72,22 @@
            Editar
         </button>
       </ion-item-options>
-      </ion-item-sliding>
+      </ion-item-sliding> -->
+
+
     </ion-list>
 
     <ion-list *ngSwitchCase="'news'" class="padding-lists">
+      <!-- card informativo-->
+      <ion-card *ngIf="news.length == 0"><!-- se muestra cuando no hay noticias o eventos guardados-->
+        <ion-card-content>
+          <ion-row>
+            <ion-col col-12>
+              <p style="text-align: justify"> ℹ️ En esta pestaña se almacenan las noticias o eventos que guardes desde la pantalla de inicio 💪😎 </p>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
       <ion-item-sliding #item *ngFor="let noticia of news" class="news-design">
       <ion-item  [ngStyle]="{'background-color': noticia.color}" (click)="openNews(noticia.id)" style="padding-left: 0" no-lines>
         <ion-thumbnail item-start style="margin: 0 5px 0 0">
@@ -43,8 +104,8 @@
         </button>
       </ion-item-options>
       <ion-item-options side="left" no-lines>
-        <button ion-button  color="secondary" (click)="openNews(noticia.id)"><ion-icon name="eye"></ion-icon>
-           &nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;
+        <button ion-button  color="warning" (click)="openNews(noticia.id)"><ion-icon name="eye"></ion-icon>
+           &nbsp;&nbsp;&nbsp;&nbsp;Ver&nbsp;&nbsp;&nbsp;&nbsp;
         </button>
       </ion-item-options>
       </ion-item-sliding>
@@ -297,17 +358,6 @@
 
 
   </div>
-
-<!--Botón flotante-->
-  <!-- <ion-fab right top edge>
-    <button ion-fab>
-      <ion-icon name="add"></ion-icon>
-    </button>
-    <ion-fab-list color="black">
-      <button ion-fab (tap)="nuevaNotificacion()"><ion-icon name="notifications"></ion-icon></button>
-      <button ion-fab (tap)="nuevaClase()"><ion-icon name="school"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab> -->
 
 </ion-content>
 

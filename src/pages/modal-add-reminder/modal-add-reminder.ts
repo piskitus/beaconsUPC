@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular'
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import { SettingsProvider } from '../../providers/settings/settings';
+
 
 @IonicPage()
 @Component({
@@ -11,9 +13,10 @@ export class ModalAddReminderPage {
 
   reminder: any;
   cardInfoShow:boolean=true; //card de información
+  cardInfoShow2:boolean=true; //card de información
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl : ViewController, private dbFirebase :FirebaseDbProvider,
-              public alertCtrl : AlertController) {
+              public alertCtrl : AlertController, public settingsProvider: SettingsProvider) {
     this.reminder = this.navParams.data;
   }
 
@@ -35,10 +38,12 @@ export class ModalAddReminderPage {
       time: Date.now() - 28800000 //Le creo un time (milisegundos) y le resto 8horas para que ya pueda empezar a funcionar pasando el filtro del controller
     }
 
-    this.dbFirebase.saveReminder(reminder).then(res=>{
-            console.log('Recordatorio guardado en firebase:');
-            this.cerrarModal();
-        })
+    if(this.reminderValidation(reminder)){
+      this.dbFirebase.saveReminder(reminder).then(res=>{
+        this.settingsProvider.showToast('Recordatorio creado', 2000, 'success', false)
+        this.cerrarModal();
+    })
+    }
   }
 
   guardarRecordatorio(){
@@ -49,11 +54,13 @@ export class ModalAddReminderPage {
       when: this.reminder.when,
       period: this.reminder.period,
     }
-    this.dbFirebase.updateReminder(reminder).then(res=>{
-    console.log('Recordatorio modificada en firebase');
-    this.cerrarModal();
-    })
-
+    if(this.reminderValidation(reminder)){
+      this.dbFirebase.updateReminder(reminder).then(res=>{
+        console.log('Recordatorio modificada en firebase');
+        this.settingsProvider.showToast('Recordatorio actualizado', 2000, 'success', false)        
+        this.cerrarModal();
+        })
+    }
   }
 
   borrarRecordatorio(id){
@@ -71,8 +78,10 @@ export class ModalAddReminderPage {
         {
           text: 'Aceptar',
           handler: () => {
-               // AquÍ borramos la noticia de la base de datos
+               // AquÍ borramos de la base de datos
                this.dbFirebase.deleteUserReminder(id);
+               this.settingsProvider.showToast('Recordatorio eliminado', 2000, 'success', false)
+               
                this.cerrarModal();
 
            }
@@ -85,6 +94,17 @@ export class ModalAddReminderPage {
 
   closeCardInfo(){
     this.cardInfoShow = false;
+  }
+
+  closeCardInfo2(){
+    this.cardInfoShow2 = false;
+  }
+
+  // validación de los campos 
+  reminderValidation(reminder:any){
+    if(reminder.title != '' && reminder.description != ''){
+        return true;
+    }else{this.settingsProvider.showToast('Campos incompletos', 2000, 'error', false); return false;}
   }
 
 }

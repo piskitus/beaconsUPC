@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar>
     <ion-title>Configuracion</ion-title>
@@ -9,11 +9,11 @@
     </ion-buttons>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
-<ion-content padding>
-  <button ion-button icon-start block (click)="cerrarSesion()"><ion-icon name="log-out"></ion-icon> Cerrar Sesión</button>
+<ion-content padding style="background-color: #333">
+  <button ion-button icon-start block (click)="cerrarSesion()" style="margin-bottom: 10px"><ion-icon name="log-out"></ion-icon> Cerrar Sesión</button>
   <!-- <button disabled ion-button icon-start block (click)="disablePushNotifications()"><ion-icon name="notifications"></ion-icon> Deshabilitar notificaciones PUSH</button> -->
   <!-- <button ion-button icon-start block (click)="resetPassword()"><ion-icon name="build" color="warning"></ion-icon> ¿Olvidaste la contraseña? Reseteala</button> -->
 
@@ -37,6 +37,18 @@
       <ion-icon name='locate' item-start></ion-icon>
     </ion-item>
   </ion-list> -->
-  <button ion-button icon-start block color="danger" (click)="deleteUser()"><ion-icon name="trash"></ion-icon> Eliminar cuenta</button>
+  <button ion-button icon-start block color="danger" (click)="deleteUser()" style="margin-bottom: 10px"><ion-icon name="trash"></ion-icon> Eliminar cuenta</button>
   <!-- <button ion-button icon-start block color="secondary" (click)="demoChat()"><ion-icon name="ios-chatbubbles"></ion-icon> Chat demo</button> -->
 </ion-content>
+
+
+<ion-footer>
+<ion-toolbar>
+    <ion-title></ion-title>
+    <ion-buttons start>
+      <button *ngIf="adminPermission" ion-button outline color="light" (click)="abrirPanelAdministracion()">
+        <ion-icon name='build'></ion-icon> &nbsp;&nbsp;Administración
+      </button>
+    </ion-buttons>
+</ion-toolbar>
+</ion-footer>

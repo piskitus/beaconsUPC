@@ -71,6 +71,8 @@ export class ModalAddClassPage {
             if(subject.acronym.length <= 7){
               console.log("TODO OK", subject.acronym)
               this.dbFirebase.createSubject(subject);// añado la asignatura a la base de datos
+              this.settingsProvider.showToast('Asignatura creada', 2000, 'success', false)
+              
             }
             else{
               this.settingsProvider.showToast('Nombre corto demasiado largo (max 7 caracteres)', 2000, 'error', false)
@@ -115,6 +117,8 @@ deleteSubjects() {
           // cojo los acronimos seleccionados por el usuario y los elimino
           for(let i=0; i<data.length;i++){
             this.dbFirebase.deleteSubject(data[i]);
+            this.settingsProvider.showToast('Asignaturas eliminadas', 2000, 'success', false)
+            
           }
       }
     });

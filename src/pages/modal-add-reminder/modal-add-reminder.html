@@ -3,22 +3,22 @@
   <ion-navbar>
     <ion-row>
       <ion-col col-10 *ngIf="!reminder.id">
-        <button block  ion-button color="primary" outline (click)="crearRecordatorio()">
+        <button block  ion-button color="primary"  (click)="crearRecordatorio()">
             Crear Recordatorio
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="reminder.id" >
-        <button block ion-button color="warning" outline (click)="guardarRecordatorio()">
+        <button block ion-button color="warning"  (click)="guardarRecordatorio()">
           Actualizar
          </button>
       </ion-col>
       <ion-col col-5 *ngIf="reminder.id">
-        <button block  ion-button color="danger" outline (click)="borrarRecordatorio(reminder.id)">
+        <button block  ion-button color="danger"  (click)="borrarRecordatorio(reminder.id)">
           Eliminar
          </button>
       </ion-col>
       <ion-col col-2>
-          <button ion-button block outline color="dark" icon-only (click)="cerrarModal()">
+          <button ion-button block  color="light" icon-only (click)="cerrarModal()">
          <ion-icon name="md-close"></ion-icon>
        </button>
       </ion-col>
@@ -28,48 +28,54 @@
 
 </ion-header>
 
-<ion-content>
-  <ion-row>
-    <ion-col col-12>
+<ion-content padding style="background-color: #333">
+
       <ion-item>
-        <ion-label floating>Título</ion-label>
-        <ion-input [(ngModel)]="reminder.title" name="title" type="text"  maxlength="30" required></ion-input>
+        <ion-label style="margin-left:10px;" color="dark" stacked>Título</ion-label>
+        <ion-input style="margin-left:20px;" [(ngModel)]="reminder.title" name="title" type="text"  maxlength="50" required></ion-input>
       </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col col-12>
+
       <ion-item>
-        <ion-label floating>Descripción</ion-label>
-        <ion-textarea maxlength="100" rows="2" [(ngModel)]="reminder.description" name="description" type="text"  required></ion-textarea>
+        <ion-label style="margin-left:10px;" color="dark" stacked>Descripción</ion-label>
+        <ion-textarea style="margin-left:10px;" maxlength="100" rows="2" [(ngModel)]="reminder.description" name="description" type="text"  required></ion-textarea>
       </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col col-12>
+
       <ion-item>
-        <ion-label>¿Cuándo?</ion-label>
-        <ion-select [(ngModel)]="reminder.when" name="when" required>
-          <ion-option value="entrar">Entrar a la EETAC</ion-option>
-          <ion-option value="salir">Salir de la EETAC</ion-option>
+        <ion-label color="dark">¿Cuándo?</ion-label>
+        <ion-select cancelText="Cancelar" okText="Aceptar" [(ngModel)]="reminder.when" name="when" required>
+          <ion-option value="entrar">Entrar al Campus</ion-option>
+          <ion-option value="salir">Salir del Campus</ion-option>
         </ion-select>
       </ion-item>
-    </ion-col>
-    <ion-col col-12>
+
       <ion-item>
-        <ion-label>Periodo</ion-label>
-        <ion-select [(ngModel)]="reminder.period" name="period" required>
+        <ion-label color="dark">Repetición</ion-label>
+        <ion-select cancelText="Cancelar" okText="Aceptar" [(ngModel)]="reminder.period" name="period" required>
           <ion-option value="once">Una única vez</ion-option>
           <ion-option value="always">Cada día</ion-option>
         </ion-select>
       </ion-item>
-    </ion-col>
-  </ion-row>
+
+      <ion-card *ngIf="cardInfoShow2 && reminder.when == 'salir'">
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-10>
+              <p style="text-align: justify"> ℹ️ Las notificaciones al salir del Campus pueden fallar, lamentamos los inconvenientes. </p>
+              </ion-col>
+              <ion-col col-2 align-self-center>
+                <button ion-button large clear  icon-only (click)="closeCardInfo2()">
+                  <ion-icon name="close-circle"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
   <ion-card *ngIf="cardInfoShow && reminder.period == 'once'">
   <ion-card-content>
     <ion-row>
       <ion-col col-10>
-      <p style="text-align: justify"> ℹ️ Con este periodo configurado el aviso se borrará de tu lista una vez se haya ejecutado la notificación. </p>
+      <p style="text-align: justify"> ℹ️ El recordatorio se borrará de tu lista una vez se te haya notificado. </p>
       </ion-col>
       <ion-col col-2 align-self-center>
         <button ion-button large clear  icon-only (click)="closeCardInfo()">
