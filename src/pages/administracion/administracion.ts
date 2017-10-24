@@ -235,10 +235,26 @@ export class AdministracionPage {
     this.dbFirebase.updateUser(user);
   }
 
+  ponerUsuarioSeguimiento(userKey){
+    let user:any= {
+      password: userKey,
+      tracing: true
+    }
+    this.dbFirebase.updateUser(user);
+  }
+
   eliminarUsuarioAdministrador(userKey){
     let user:any= {
       password: userKey,
       admin: false
+    }
+    this.dbFirebase.updateUser(user);
+  }
+
+  quitarUsuarioSeguimiento(userKey){
+    let user:any= {
+      password: userKey,
+      tracing: false
     }
     this.dbFirebase.updateUser(user);
   }

@@ -8,6 +8,8 @@ import { IBeacon } from '@ionic-native/ibeacon';
 //providers
 import { BeaconProvider } from '../../providers/beacon/beacon';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
+import { SettingsProvider } from '../../providers/settings/settings';
+
 
 // models
 import { BeaconModel } from '../../models/beacon-model';
@@ -34,7 +36,7 @@ export class BeaconsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
   private iBeacon: IBeacon, public beaconProvider: BeaconProvider, public events: Events, public changeDetectorRef: ChangeDetectorRef,
   public loadingCtrl: LoadingController, public modalCtrl : ModalController,
-  public dbFirebase :FirebaseDbProvider) {
+  public dbFirebase :FirebaseDbProvider, public settingsProvider: SettingsProvider) {
     beaconProvider.addBeaconStatusChangedHandler(this.handleBeaconStatusChanged);
   }
 
@@ -64,6 +66,8 @@ export class BeaconsPage {
 
 
   ionViewDidLoad() {
+
+    this.settingsProvider.isLocationEnabled();
 
     this.presentLoading();// loading al entrar a la tab para simular la primera carga y detección de beacons
 

@@ -117,7 +117,7 @@
 
     <ion-list *ngSwitchCase="'users'">
       <ion-item-sliding #item *ngFor="let user of users">
-        <ion-item [ngClass]="{'itemColor' : (user.admin == true)}" > <!-- [ngClass]="itemColor: user.admin == true"-->
+        <ion-item [ngClass]="{'itemColor' : (user.admin == true), 'itemColor2' : (user.tracing == true)}" > <!-- [ngClass]="itemColor: user.admin == true"-->
           <ion-avatar item-start>
             <!-- <img src="{{beacon.img}}"> -->
           </ion-avatar>
@@ -138,6 +138,12 @@
         <button *ngIf="user.admin == true" ion-button  color="warning" (click)="eliminarUsuarioAdministrador(user.password)"><ion-icon name="close-circle"></ion-icon>
            Admin
         </button>
+        <button *ngIf="user.tracing == false && user.admin == false" ion-button  color="default" (click)="ponerUsuarioSeguimiento(user.password)"><ion-icon name="eye"></ion-icon>
+          Seguimiento
+       </button>
+       <button *ngIf="user.tracing == true && user.admin == false" ion-button  color="warning" (click)="quitarUsuarioSeguimiento(user.password)"><ion-icon name="close-circle"></ion-icon>
+          Seguimiento
+       </button>
       </ion-item-options>
       </ion-item-sliding>
     </ion-list>
