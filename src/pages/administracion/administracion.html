@@ -123,7 +123,9 @@
           </ion-avatar>
           <h2>{{ user.name }} {{user.surname}}</h2>
           <h3>{{user.email}}</h3>
-          <p>{{ user.profile }} <span *ngIf="user.school">en {{user.school}}</span><span style="float: right">{{user.birthday | date:'dd/MM/yyyy'}}</span></p>
+          <h5>Ref: {{user.password}}</h5>
+          <p>{{ user.profile }} <span *ngIf="user.school">en la {{user.school}}</span><span style="float: right">{{user.birthday | date:'dd/MM/yyyy'}}</span></p>
+          
 
         </ion-item>
       <ion-item-options side="right">
@@ -150,14 +152,14 @@
   </div>
 
 <!--Botón flotante-->
-  <ion-fab right top edge>
-    <button ion-fab>
+  <ion-fab right top edge style="padding-right: 20px">
+    <button ion-fab color="dark">
       <ion-icon name="add"></ion-icon>
     </button>
-    <ion-fab-list color="black">
-      <button ion-fab (tap)="nuevoBeacon()"><ion-icon name="logo-rss"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab (tap)="nuevoBeacon()"><ion-icon name="ios-disc-outline"></ion-icon></button>
       <button ion-fab (tap)="nuevaNoticia()"><ion-icon name="document"></ion-icon></button>
-      <button ion-fab (tap)="nuevoMarcador()"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab (tap)="nuevoMarcador()"><ion-icon name="md-pin"></ion-icon></button>
       <button ion-fab (tap)="nuevoChat()"><ion-icon name="ios-chatbubbles"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
@@ -168,7 +170,7 @@
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="segment" color="dark">
       <ion-segment-button value="beacons">
-        <ion-icon name="md-wifi"></ion-icon>
+        <ion-icon name="ios-disc-outline"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="news">
         <ion-icon name="md-bookmarks"></ion-icon>

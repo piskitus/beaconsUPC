@@ -25,6 +25,11 @@ export class BeaconProvider {
   // lo utilizo para guardar la última notificación de clase que se ha hecho al usuario para no repetir notificaciones iguales
   lastClassNotification:number = null;
 
+  //Para ver si el usuario tiene configurado seguimiento
+  tracingEnable:boolean = false;
+  adminPermission:boolean = false;
+  tracings:any;
+
   //Bases de datos
   reminders:any;
   classes:any;
@@ -82,6 +87,7 @@ export class BeaconProvider {
           //this.setLocalNotification(data.region.identifier)
           this.enterRegionTime = Date.now();
           this.enterRegionDisplayNotifications(true);
+          this.tracing(); //Función para traquear a los usuarios con seguimiento
           this.insideRegion = true;
           //this.regionChangeStatus(data.region.identifier, true);
         }
@@ -288,6 +294,59 @@ enterRegionDisplayNotifications(action:boolean){
 
   })
 
+}
+
+tracing(){
+      //Cargo los permisos de administración del usuario para mostrarle o no el botón para acceder al panel de administración
+      this.dbFirebase.getUserData().then((user)=>{
+        this.tracingEnable = user.val().tracing;
+        this.adminPermission = user.val().admin;
+        let name = user.val().name;
+        let surname = user.val().surname;
+        let userKey = user.val().password;
+
+        console.log("TRACING: ", this.tracingEnable)
+
+        let tracingRepited:boolean = false;
+        this.dbFirebase.getTracings().subscribe(tracings=>{
+          for (let id in tracings) {
+            console.log("id", tracings[id])
+            console.log("userkey", userKey)
+            if(tracings[id].userKey == userKey){
+              tracingRepited = true;
+              console.log("TRACING REPITED")
+            }
+          }
+
+          //Si el usuario está en seguimiento, le creo la ficha xq acaba de entrar
+          if(this.tracingEnable && !tracingRepited){ 
+            let newTracing = {
+              name: name + ' ' + surname,
+              userKey: userKey,
+              time: Date.now(),
+              notification: true,
+              enter: true
+            }
+              this.dbFirebase.createTracing(newTracing);          
+          }
+
+        //Si el usuario es administrador, le creo notificaciones locales de seguimiento para avisarle
+        if(this.adminPermission && !tracingRepited){
+          this.dbFirebase.getTracings().subscribe(tracings=>{
+              for (let id in tracings) {
+                let tracing = tracings[id];
+                let title = tracing.name +' acaba de llegar ';
+                this.setLocalNotification(tracing.time, title, 'Entra para confirmar o desactivar su seguimiento');
+              }
+          })
+        }
+
+        })
+
+
+
+
+      })
 }
 
 //this.classesDisplayNotifications();

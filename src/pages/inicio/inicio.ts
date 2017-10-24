@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { FirebaseDbProvider } from '../../providers/firebase-db/firebase-db';
@@ -23,6 +23,9 @@ export class InicioPage {
   cardInfoShow:boolean = false;//Card de información principal visible al entrar
   // userProfile: any;
 
+  tracings:any;
+  adminPermission:boolean = false;
+
   nearBeaconKey:any = null;
   newsID:any = null;
 
@@ -37,7 +40,8 @@ export class InicioPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private diagnostic: Diagnostic,
     public platform: Platform, private locationAccuracy: LocationAccuracy, public dbFirebase :FirebaseDbProvider,
-    public beaconProvider: BeaconProvider, private auth: AuthProvider, private iab: InAppBrowser, public settingsProvider: SettingsProvider) {
+    public beaconProvider: BeaconProvider, private auth: AuthProvider, private iab: InAppBrowser, 
+    public settingsProvider: SettingsProvider, public alertCtrl: AlertController) {
 
 
 
@@ -93,6 +97,50 @@ export class InicioPage {
 
   ionViewDidLoad() {
     console.log('➡️ InicioPage');
+        //Cargo los permisos de administración del usuario para cargar los seguimientos de usuarios
+        this.dbFirebase.getUserData().then((user)=>{
+          this.adminPermission = user.val().admin;
+          console.log("Permisos de administrador: ", this.adminPermission)
+          if(this.adminPermission){
+            this.dbFirebase.getTracings().subscribe(tracings=>{
+              this.tracings = tracings;
+            })
+          }
+        })
+  }
+
+  deleteTracing(userKey){
+    this.dbFirebase.deleteTracing(userKey);
+  }
+
+  disableUserTracing(userKey, name){
+
+      const alert = this.alertCtrl.create({
+        title: 'Desactivar seguimiento',
+        message: '¿Estás seguro que quieres deshabilitar el seguimiento a este usuario?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              let user:any= {
+                password: userKey,
+                tracing: false
+              }
+              this.dbFirebase.updateUser(user);
+              this.deleteTracing(userKey);
+              this.settingsProvider.showToast('Seguimiento desactivado para '+name, 2000, 'success', false)
+            }
+          }
+        ]
+      });
+      alert.present();
   }
 
 

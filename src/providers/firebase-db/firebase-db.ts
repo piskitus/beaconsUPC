@@ -283,6 +283,21 @@ export class FirebaseDbProvider {
   }
 
 
+  ////////////////////////////////////////////////
+  ////////////       TRACING        //////////////
+  ////////////////////////////////////////////////
+
+  createTracing(tracing){
+    return this.afDB.database.ref('administration/tracing/'+tracing.userKey).set(tracing)
+  }
+
+  public deleteTracing(key){
+    this.afDB.database.ref('administration/tracing/'+key).remove();
+  }
+
+  getTracings(){
+    return this.afDB.list('administration/tracing')
+  }
 
 
 

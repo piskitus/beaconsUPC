@@ -9,7 +9,39 @@
 
 <ion-content (swipe)="swipeEvent($event)" style="background-color: #333">
 
-  <ion-card *ngIf="cardInfoShow">
+  <div *ngIf="adminPermission">
+  <ion-card *ngFor="let tracing of tracings" style="margin-top: 20px; margin-bottom: 20px;">
+    <ion-card-header style="padding: 0px !important">
+      <ion-row>
+        <ion-col col-2 style="padding: 0 !important; text-align: left !important;">
+          <button class="button-left" color="secondary" ion-button icon-only large style="margin: 0 !important" (click)="deleteTracing(tracing.userKey)">
+              <ion-icon style="padding-right: 10px; padding-left: 12px" name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col col-8 style="padding-top: 0px; padding-bottom:0px;">
+          <ion-row>
+            <ion-col col-12>
+                <div style="font-weight: bold;">{{ tracing.name }}</div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 style="padding-top: 0px">
+                Ha llegado al Campus <p style="float: right; color: #aaa;">{{tracing.time | date:'H:mm'}}h</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-2 style="padding: 0 !important; text-align: right !important;">
+          <button class="button-right" color="warning" ion-button icon-only large style="margin: 0 !important" (click)="disableUserTracing(tracing.userKey, tracing.name)">
+              <ion-icon style="padding-left: 12px; padding-right: 13px" name="eye-off"></ion-icon>
+            </button>
+        </ion-col>
+      </ion-row>
+
+  </ion-card-header>
+  </ion-card>
+</div>
+
+  <!-- <ion-card *ngIf="cardInfoShow">
     <ion-card-content>
       <ion-row>
         <ion-col col-10>
@@ -22,7 +54,7 @@
         </ion-col>
       </ion-row>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <ion-card [ngStyle]="{'background-color': news.color}" (swipe)="swipeEvent($event)">
     <img *ngIf="news.img == ''" src="assets/img/logo_beaconsUPC.png" />
